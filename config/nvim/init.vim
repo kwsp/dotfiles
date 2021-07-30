@@ -63,6 +63,7 @@ call plug#end()
 
 colorscheme halcyon
 so ~/.config/nvim/coc-shortcuts.vim
+so ~/.config/nvim/debug.vim
 
 " Shortcuts
 " Switch between tabs
