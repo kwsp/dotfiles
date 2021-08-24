@@ -315,3 +315,8 @@ bind-key -T copy-mode-vi 'C-\' select-pane -l
 
 set -g default-terminal "screen-256color"
 set -g default-shell /bin/zsh
+
+# Alt # to move between windows
+bind-key -T root 'M-1' select-window -t :=1
+bind-key -T root 'M-2' select-window -t :=2
+bind-key -T root 'M-3' select-window -t :=3
