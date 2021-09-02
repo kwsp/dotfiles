@@ -55,6 +55,12 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'kovisoft/slimv'
     let g:slimv_swank_cmd = '!tmux new-window -d -n REPL-SBCL "sbcl --load ~/.local/share/nvim/plugged/slimv/slime/start-swank.lisp"'
     let g:lisp_rainbow=1
+
+    Plug 'jpalardy/vim-slime', { 'for': 'python' }
+    let g:slime_target = "tmux"
+    let g:slime_default_config = {"socket_name": "default", "target_pane": "{last}"}
+    let g:slime_dont_ask_default = 1
+
     Plug 'neoclide/jsonc.vim'
 		Plug 'vim-airline/vim-airline'
     Plug 'kwsp/halcyon-neovim'
