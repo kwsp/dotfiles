@@ -26,6 +26,7 @@ set noshowmode
 set shortmess+=c
 set number
 set mouse=a
+set conceallevel=2
 
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim  --create-dirs
@@ -57,7 +58,14 @@ call plug#begin(stdpath('data') . '/plugged')
     "let g:slimv_swank_cmd = '!tmux new-window -d -n REPL-SBCL "sbcl --load ~/.local/share/nvim/plugged/slimv/slime/start-swank.lisp"'
     "let g:lisp_rainbow=1
     
-    Plug 'jpalardy/vim-slime', { 'for': 'python' }
+    " Markdown folds, syntax highlight (maths)
+    Plug 'godlygeek/tabular'
+    Plug 'plasticboy/vim-markdown'
+    let g:vim_markdown_folding_disabled = 1
+    let g:vim_markdown_math = 1
+    let g:vim_markdown_frontmatter = 1
+    
+    Plug 'jpalardy/vim-slime', { 'for': ['python', 'markdown'] }
     let g:slime_target = "tmux"
     let g:slime_default_config = {"socket_name": "default", "target_pane": "{last}"}
     let g:slime_dont_ask_default = 1
@@ -91,4 +99,14 @@ autocmd filetype cpp nnoremap <leader>r :w <bar> !tmux split-window -h "(set -x;
 autocmd filetype cpp nnoremap <leader>tp :read ~/.config/nvim/templates/skeleton.cpp<CR>kdd5j
 
 " markdown note taking
-command! Notes autocmd BufWritePost *.md silent !pandoc -s --highlight-style pygments --toc % -o %:r.html
+command! Notes autocmd BufWritePost *.md silent !pandoc -s --katex='https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/' --highlight-style pygments --toc % -o %:r.html
+
+
+" This gets rid of the nasty _ italic bug in tpope's vim-markdown
+" block $$...$$
+syn region math start=/\$\$/ end=/\$\$/
+" inline math
+syn match math '\$[^$].\{-}\$'
+
+" actually highlight the region we defined as "math"
+hi link math Statement

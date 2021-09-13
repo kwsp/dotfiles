@@ -23,13 +23,13 @@ $1
 endsnippet
 
 # Superscript
-#snippet sq "^2" iA
-#^2
-#endsnippet
+snippet sq "^2" iA
+^2
+endsnippet
 
-#snippet cb "^3" iA
-#^3
-#endsnippet
+snippet cb "^3" iA
+^3
+endsnippet
 
 snippet pw "superscript" iA
 ^{$1}$0
@@ -47,22 +47,22 @@ endsnippet
 
 # Bar
 priority 10
-snippet "bar" "bar" riA
+snippet "bar" "bar" rA
 \overline{$1}$0
 endsnippet
 
-priority 100
-snippet "([a-zA-Z])bar" "bar" riA
-\overline{`!p snip.rv=match.group(1)`}
-endsnippet
+#priority 100
+#snippet "([a-zA-Z])bar" "bar" rA
+#\overline{`!p snip.rv=match.group(1)`}
+#endsnippet
 
 # Hat
 priority 10
-snippet "hat" "hat" riA
+snippet "hat" "hat" rA
 \hat{$1}$0
 endsnippet
 
-priority 100
-snippet "([a-zA-Z])hat" "hat" riA
-\hat{`!p snip.rv=match.group(1)`}
-endsnippet
+#priority 100
+#snippet "([a-zA-Z])hat" "hat" rA
+#\hat{`!p snip.rv=match.group(1)`}
+#endsnippet
