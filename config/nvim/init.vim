@@ -52,10 +52,11 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'vim-python/python-syntax'
 		let g:python_highlight_func_calls = 1
 		let g:python_highlight_operators = 1
-    Plug 'kovisoft/slimv'
-    let g:slimv_swank_cmd = '!tmux new-window -d -n REPL-SBCL "sbcl --load ~/.local/share/nvim/plugged/slimv/slime/start-swank.lisp"'
-    let g:lisp_rainbow=1
 
+    "Plug 'kovisoft/slimv'
+    "let g:slimv_swank_cmd = '!tmux new-window -d -n REPL-SBCL "sbcl --load ~/.local/share/nvim/plugged/slimv/slime/start-swank.lisp"'
+    "let g:lisp_rainbow=1
+    
     Plug 'jpalardy/vim-slime', { 'for': 'python' }
     let g:slime_target = "tmux"
     let g:slime_default_config = {"socket_name": "default", "target_pane": "{last}"}
@@ -88,3 +89,6 @@ nmap <leader>9 9gt
 autocmd filetype c nnoremap <leader>r :w <bar> !tmux split-window -h "(set -x; gcc % -o %:r.out); sh -c ./%:r.out; echo '$(tput setaf 2)[finished...]'; read"<CR>
 autocmd filetype cpp nnoremap <leader>r :w <bar> !tmux split-window -h "(set -x; g++ -std=c++17 % -o %:r.out); ./%:r.out; echo '$(tput setaf 2)[finished...]'; read"<CR><CR>
 autocmd filetype cpp nnoremap <leader>tp :read ~/.config/nvim/templates/skeleton.cpp<CR>kdd5j
+
+" markdown note taking
+command! Notes autocmd BufWritePost *.md silent !pandoc -s --highlight-style pygments --toc % -o %:r.html
