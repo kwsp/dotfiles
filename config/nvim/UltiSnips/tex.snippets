@@ -41,9 +41,9 @@ snippet // "Fraction" iA
 \\frac{$1}{$2}$0
 endsnippet
 
-snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "Fraction" wrA
-\\frac{`!p snip.rv = match.group(1)`}{$1}$0
-endsnippet
+#snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "Fraction" wrA
+#\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+#endsnippet
 
 # Bar
 priority 10
@@ -71,4 +71,13 @@ endsnippet
 priority 10
 snippet "bb" "bb" rA
 \mathbb{$1}$0
+endsnippet
+
+snippet "bb" "bb"
+\mathbb{$1}$0
+endsnippet
+
+# integral infinity
+snippet intinf "Integral" wA
+\int_{-\infty}^{\infty} $0
 endsnippet
