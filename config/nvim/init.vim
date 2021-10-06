@@ -101,4 +101,3 @@ autocmd filetype cpp nnoremap <leader>tp :read ~/.config/nvim/templates/skeleton
 
 " markdown note taking
 command! Notes autocmd BufWritePost *.md silent !pandoc -s --katex='https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/' --highlight-style pygments --toc % -o %:r.html
-
