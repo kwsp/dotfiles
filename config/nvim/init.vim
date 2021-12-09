@@ -19,7 +19,7 @@ set nrformats+=alpha,bin,hex
 set ignorecase
 set smartcase
 set showmatch
-set scrolloff=100   " cursor always at the center of the screen
+set scrolloff=2
 let g:mapleader = "\<Space>" "remap leader
 set termguicolors
 set noshowmode
@@ -27,6 +27,11 @@ set shortmess+=c
 set number
 set mouse=a
 set conceallevel=2
+map <ScrollWheelUp> <C-Y>
+map <S-ScrollWheelUp> <C-U>
+map <ScrollWheelDown> <C-E>
+map <S-ScrollWheelDown> <C-D>
+
 
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim  --create-dirs
@@ -95,9 +100,10 @@ nmap <leader>9 9gt
 
 
 " competitive programming
-autocmd filetype c nnoremap <leader>r :w <bar> !tmux split-window -h "(set -x; gcc % -o %:r.out); sh -c ./%:r.out; echo '$(tput setaf 2)[finished...]'; read"<CR>
 autocmd filetype cpp nnoremap <leader>r :w <bar> !tmux split-window -h "(set -x; g++ -std=c++17 % -o %:r.out); ./%:r.out; echo '$(tput setaf 2)[finished...]'; read"<CR><CR>
 autocmd filetype cpp nnoremap <leader>tp :read ~/.config/nvim/templates/skeleton.cpp<CR>kdd5j
+autocmd filetype python nnoremap <leader>r :w <bar> !tmux split-window -h "python3 %:r.py; echo '$(tput setaf 2)[finished...]'; read"<CR><CR>
+autocmd filetype python nnoremap <leader>R :w <bar> !tmux split-window -h "python3 -i %:r.py; echo '$(tput setaf 2)[finished...]'; read"<CR><CR>
 
 " markdown note taking
 command! Notes autocmd BufWritePost *.md silent !pandoc -s --katex='https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/' --highlight-style pygments --toc % -o %:r.html
