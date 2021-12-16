@@ -41,6 +41,7 @@ endif
 
 call plug#begin(stdpath('data') . '/plugged')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'preservim/nerdcommenter'
     Plug 'preservim/nerdtree'
 		map <C-n> :NERDTreeToggle<CR>
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -48,23 +49,16 @@ call plug#begin(stdpath('data') . '/plugged')
 		nnoremap <c-p> :FZF<CR>
 		nnoremap ; :Buffers<CR>
     Plug 'christoomey/vim-tmux-navigator'
-    Plug 'preservim/nerdcommenter'
     Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-repeat'
-    Plug 'jiangmiao/auto-pairs'
+    Plug 'tpope/vim-fugitive'
     Plug 'pangloss/vim-javascript'
     let g:javascript_plugin_jsdoc = 1
     Plug 'vim-python/python-syntax'
-		let g:python_highlight_func_calls = 1
-		let g:python_highlight_operators = 1
-
-    "Plug 'kovisoft/slimv'
-    "let g:slimv_swank_cmd = '!tmux new-window -d -n REPL-SBCL "sbcl --load ~/.local/share/nvim/plugged/slimv/slime/start-swank.lisp"'
-    "let g:lisp_rainbow=1
+    let g:python_highlight_func_calls = 1
+    let g:python_highlight_operators = 1
     
     " Markdown folds, syntax highlight (maths)
-    Plug 'godlygeek/tabular'
     Plug 'plasticboy/vim-markdown'
     let g:vim_markdown_folding_disabled = 1
     let g:vim_markdown_math = 1
@@ -76,10 +70,8 @@ call plug#begin(stdpath('data') . '/plugged')
     let g:slime_default_config = {"socket_name": "default", "target_pane": "{last}"}
     let g:slime_dont_ask_default = 1
 
-    Plug 'neoclide/jsonc.vim'
 		Plug 'vim-airline/vim-airline'
     Plug 'kwsp/halcyon-neovim'
-    Plug 'honza/vim-snippets'
 call plug#end()
 
 colorscheme halcyon
@@ -98,6 +90,8 @@ nmap <leader>7 7gt
 nmap <leader>8 8gt
 nmap <leader>9 9gt
 
+" delete buffer
+nmap <leader>d :bdelete<CR>
 
 " competitive programming
 autocmd filetype cpp nnoremap <leader>r :w <bar> !tmux split-window -h "(set -x; g++ -std=c++17 % -o %:r.out); ./%:r.out; echo '$(tput setaf 2)[finished...]'; read"<CR><CR>
