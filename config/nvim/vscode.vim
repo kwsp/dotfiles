@@ -28,3 +28,7 @@ nnoremap <C-k> <Cmd>call VSCodeNotify('workbench.action.focusAboveGroup')<CR>
 nnoremap <C-h> <Cmd>call VSCodeNotify('workbench.action.focusLeftGroup')<CR>
 nnoremap <C-l> <Cmd>call VSCodeNotify('workbench.action.focusRightGroup')<CR>
 nnoremap <C-\> <Cmd>call VSCodeNotify('workbench.action.focusPreviousGroup')<CR>
+
+" go to prev/next issue
+nmap <silent> ]g <Cmd>call VSCodeNotify('editor.action.marker.next')<CR>
+nmap <silent> [g <Cmd>call VSCodeNotify('editor.action.marker.prev')<CR>
