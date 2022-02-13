@@ -61,16 +61,17 @@ call plug#begin(stdpath('data') . '/plugged')
     let g:vim_markdown_math = 1
     let g:vim_markdown_frontmatter = 1
     let g:vim_markdown_new_list_item_indent = 0
-    
+
     Plug 'jpalardy/vim-slime', { 'for': ['python', 'markdown'] }
     let g:slime_target = "tmux"
     let g:slime_default_config = {"socket_name": "default", "target_pane": "{last}"}
     let g:slime_dont_ask_default = 1
 
-    Plug 'vim-airline/vim-airline'
+    Plug 'nvim-lualine/lualine.nvim'
     Plug 'kwsp/halcyon-neovim'
 
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-treesitter/playground'
 call plug#end()
 
 lua <<EOF
@@ -89,6 +90,7 @@ require'nvim-treesitter.configs'.setup {
     }
   }
 }
+require('lualine').setup()
 EOF
 
 colorscheme halcyon
