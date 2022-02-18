@@ -1,0 +1,36 @@
+# LaTeX math
+snippet eq equation
+	\$\$
+	$0
+	\$\$
+
+snippet beg
+	\\begin{${1:env}}
+	  ${0:${VISUAL}}
+	\\end{$1}
+snippet ali aligned
+	\\begin{aligned}
+		$0
+	\\end{aligned}
+# Superscript
+snippet sq square
+	^2
+snippet pw superscript
+	^{$1}$0
+snippet inv inverse
+	^{-1}$0
+snippet bar inverse
+	\overline $0
+# Math
+snippet frac \frac{}{}
+	\\frac{${1:num}}{${2:denom}} ${0}
+
+snippet sum \sum^{}_{}
+	\\sum^{${1:n}}_{${2:i=1}} ${0}
+
+snippet lim \lim_{}
+	\\lim_{${1:n \\to \\infty}} ${0}
+
+# integral infinity
+snippet intinf
+	\\int_{-\\infty}^{\\infty} $0
