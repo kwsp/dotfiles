@@ -15,8 +15,12 @@ augroup end
 local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
-  use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
+
+  -- Vim plugins
+  use 'preservim/nerdcommenter'
   use 'tpope/vim-surround'
+  use 'tpope/vim-repeat' -- '.' repeating for the above plugins
+  use 'christoomey/vim-tmux-navigator' -- integration with tmux
 
   -- Fuzzy search
   use 'junegunn/fzf'
@@ -25,7 +29,6 @@ require('packer').startup(function()
     config = function()
       vim.api.nvim_set_keymap('n', ';', [[<cmd>Buffers<CR>]], { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<C-p>', [[<cmd>Files<CR>]], { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>Rg<CR>]], { noremap = true, silent = true })
     end
   }
 
@@ -58,7 +61,17 @@ require('packer').startup(function()
       'kyazdani42/nvim-web-devicons',
     },
     config = function()
-      require'nvim-tree'.setup()
+      require'nvim-tree'.setup {
+        view = {
+          mappings = {
+            list = {
+            { key = {"<CR>", "o" }, action = "edit", mode = "n"},
+            { key = "s", action = "vsplit" },
+            { key = "i", action = "split" },
+            }
+          }
+        }
+      }
       vim.api.nvim_set_keymap('n', '<C-n>', '<Cmd>NvimTreeToggle<CR>', { noremap = true })
     end
   }
@@ -83,17 +96,17 @@ require('packer').startup(function()
     end,
 
     requires = {
-      {
+    {
         -- Parenthesis highlighting
         "p00f/nvim-ts-rainbow",
         after = "nvim-treesitter",
       },
-      {
+    {
         -- Autoclose tags
         "windwp/nvim-ts-autotag",
         after = "nvim-treesitter",
       },
-      {
+    {
         -- Context based commenting
         "JoosepAlviste/nvim-ts-context-commentstring",
         after = "nvim-treesitter",
@@ -131,6 +144,8 @@ require('packer').startup(function()
   -- LSP completion source
   use "hrsh7th/cmp-nvim-lsp"
 
+  -- Inject non languagae servers into the LSP framework
+  use "jose-elias-alvarez/null-ls.nvim"
 
   -- LSP manager
   use "williamboman/nvim-lsp-installer"
@@ -185,6 +200,7 @@ end)
 vim.o.termguicolors = true
 vim.cmd [[colorscheme halcyon]]
 
+vim.o.hidden = true
 vim.wo.number = true --Make line numbers default
 vim.o.mouse = 'a' --Enable mouse mode
 vim.o.tabstop = 2
@@ -207,7 +223,7 @@ vim.o.autoread = true
 vim.o.completeopt = 'menuone,noselect'
 
 --Remap space as leader key
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -216,9 +232,6 @@ vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true })
-
---Enable Comment.nvim
-require('Comment').setup()
 
 --Remap for dealing with word wrap
 vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
@@ -276,8 +289,8 @@ require('gitsigns').setup {
   },
   on_attach = function(bufnr)
     local function map(mode, lhs, rhs, opts)
-        opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
-        vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+      opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
+      vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
     end
 
     -- Navigation
@@ -315,18 +328,19 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 require('lspconfig')
 local on_attach = function(_, bufnr)
   local opts = { noremap = true, silent = true }
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  local buf_map = vim.api.nvim_buf_set_keymap
 
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'go', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>p', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  buf_map(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_map(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_map(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_map(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_map(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_map(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_map(bufnr, 'n', 'go', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  buf_map(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
+  buf_map(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
+  buf_map(bufnr, 'n', '<leader>p', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
@@ -381,6 +395,16 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
   border = "rounded",
 })
 
+local null_ls = require("null-ls")
+
+null_ls.setup({
+  sources = {
+    null_ls.builtins.diagnostics.eslint,
+    null_ls.builtins.code_actions.eslint,
+    null_ls.builtins.formatting.prettier
+  },
+  on_attach = on_attach
+})
 
 -- luasnip setup
 local luasnip = require 'luasnip'
@@ -425,23 +449,31 @@ cmp.setup {
     end,
   },
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'path' },
+  { name = 'nvim_lsp' },
+  { name = 'luasnip' },
+  { name = 'path' },
   },
 }
 
 require("toggleterm").setup{
-  -- size can be a number or function which is passed the current terminal
-  open_mapping = [[<c-\>]],
+  open_mapping = [[<leader>t]],
   hide_numbers = true, -- hide the number column in toggleterm buffers
   shade_filetypes = {},
   shade_terminals = true,
-  shading_factor = '<number>', -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+  shading_factor = 2,
   start_in_insert = true,
-  insert_mappings = true, -- whether or not the open mapping applies in insert mode
+  insert_mappings = false, -- whether or not the open mapping applies in insert mode
   terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
   persist_size = true,
+  direction = 'float',
+  float_opts = {
+    border = 'curved',
+    winblend = 0,
+    highlights = {
+      border = "Normal",
+      background = "Normal",
+    },
+  },
   close_on_exit = true, -- close the terminal window when the process exits
   shell = vim.o.shell, -- change the default shell
 }
@@ -460,44 +492,44 @@ vim.g.symbols_outline = {
   show_symbol_details = true,
   preview_bg_highlight = 'Pmenu',
   keymaps = { -- These keymaps can be a string or a table for multiple keys
-  close = {"<Esc>", "q"},
-  goto_location = "<Cr>",
-  focus_location = "o",
-  hover_symbol = "<C-space>",
-  toggle_preview = "K",
-  rename_symbol = "r",
-  code_actions = "a",
-},
-lsp_blacklist = {},
-symbol_blacklist = {},
-symbols = {
-  File = {icon = "", hl = "TSURI"},
-  Module = {icon = "", hl = "TSNamespace"},
-  Namespace = {icon = "", hl = "TSNamespace"},
-  Package = {icon = "", hl = "TSNamespace"},
-  Class = {icon = "𝓒", hl = "TSType"},
-  Method = {icon = "ƒ", hl = "TSMethod"},
-  Property = {icon = "", hl = "TSMethod"},
-  Field = {icon = "", hl = "TSField"},
-  Constructor = {icon = "", hl = "TSConstructor"},
-  Enum = {icon = "ℰ", hl = "TSType"},
-  Interface = {icon = "ﰮ", hl = "TSType"},
-  Function = {icon = "", hl = "TSFunction"},
-  Variable = {icon = "", hl = "TSConstant"},
-  Constant = {icon = "", hl = "TSConstant"},
-  String = {icon = "𝓐", hl = "TSString"},
-  Number = {icon = "#", hl = "TSNumber"},
-  Boolean = {icon = "⊨", hl = "TSBoolean"},
-  Array = {icon = "", hl = "TSConstant"},
-  Object = {icon = "⦿", hl = "TSType"},
-  Key = {icon = "🔐", hl = "TSType"},
-  Null = {icon = "NULL", hl = "TSType"},
-  EnumMember = {icon = "", hl = "TSField"},
-  Struct = {icon = "𝓢", hl = "TSType"},
-  Event = {icon = "🗲", hl = "TSType"},
-  Operator = {icon = "+", hl = "TSOperator"},
-  TypeParameter = {icon = "𝙏", hl = "TSParameter"}
-}
+    close = {"<Esc>", "q"},
+    goto_location = "<Cr>",
+    focus_location = "o",
+    hover_symbol = "<C-space>",
+    toggle_preview = "K",
+    rename_symbol = "r",
+    code_actions = "a",
+  },
+  lsp_blacklist = {},
+  symbol_blacklist = {},
+  symbols = {
+    File = {icon = "", hl = "TSURI"},
+    Module = {icon = "", hl = "TSNamespace"},
+    Namespace = {icon = "", hl = "TSNamespace"},
+    Package = {icon = "", hl = "TSNamespace"},
+    Class = {icon = "𝓒", hl = "TSType"},
+    Method = {icon = "ƒ", hl = "TSMethod"},
+    Property = {icon = "", hl = "TSMethod"},
+    Field = {icon = "", hl = "TSField"},
+    Constructor = {icon = "", hl = "TSConstructor"},
+    Enum = {icon = "ℰ", hl = "TSType"},
+    Interface = {icon = "ﰮ", hl = "TSType"},
+    Function = {icon = "", hl = "TSFunction"},
+    Variable = {icon = "", hl = "TSConstant"},
+    Constant = {icon = "", hl = "TSConstant"},
+    String = {icon = "𝓐", hl = "TSString"},
+    Number = {icon = "#", hl = "TSNumber"},
+    Boolean = {icon = "⊨", hl = "TSBoolean"},
+    Array = {icon = "", hl = "TSConstant"},
+    Object = {icon = "⦿", hl = "TSType"},
+    Key = {icon = "🔐", hl = "TSType"},
+    Null = {icon = "NULL", hl = "TSType"},
+    EnumMember = {icon = "", hl = "TSField"},
+    Struct = {icon = "𝓢", hl = "TSType"},
+    Event = {icon = "🗲", hl = "TSType"},
+    Operator = {icon = "+", hl = "TSOperator"},
+    TypeParameter = {icon = "𝙏", hl = "TSParameter"}
+  }
 }
 vim.api.nvim_set_keymap('n', '<C-s>', [[<cmd>SymbolsOutline<CR>]], { noremap = true, silent = true })
 
