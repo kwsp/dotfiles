@@ -39,11 +39,12 @@ if [[ $(uname) = "Darwin" ]]; then
 
     # Install Übersicht
     UBERSICHT_DIR="$HOME/Library/Application Support/Übersicht"
-    [[ ! -d $UBERSICHT_DIR ]] && echo "$(tput setaf 3)Installing Übersicht . . ." && brew cask install ubersicht || echo "$(tput setaf 2)Übersicht already installed."
+    [[ ! -d $UBERSICHT_DIR ]] && echo "$(tput setaf 3)Installing Übersicht . . ." && brew install --cask ubersicht || echo "$(tput setaf 2)Übersicht already installed."
 
     # Install Pecan
     PECAN_DIR="$HOME/Library/Application Support/Übersicht/widgets/pecan"
-    [[ ! -d $PECAN_DIR ]] && echo "$(tput setaf 3)Installing Pecan . . ." && git clone https://github.com/zzzeyez/pecan.git $PECAN_DIR || echo "$(tput setaf 2)Pecan already installed."
+    mkdir -p $PECAN_DIR
+    [[ ! -d $PECAN_DIR ]] && echo "$(tput setaf 3)Installing Pecan . . ." && git clone https://github.com/zzzeyez/pecan.git "$PECAN_DIR" || echo "$(tput setaf 2)Pecan already installed."
 
     # Install Pecan config
     echo "$(tput setaf 3)Copying Pecan config to $PECAN_DIR . . ."

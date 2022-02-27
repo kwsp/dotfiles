@@ -8,16 +8,16 @@ This is my collection of config files for both Darwin and Linux.
 
 | Software    | Linux                                                                                 | Darwin                                                                                   |
 | ----------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Distro      | [Debian Testing](https://www.debian.org/releases/testing/)                            | macOS Catalina                                                                           |
+| Distro      | [Debian Testing](https://www.debian.org/releases/testing/)                            | macOS Monterey                                                                           |
 | WM          | [sway](https://github.com/swaywm/sway)                                                | [Rectangle](https://rectangleapp.com/)                                                   |
 | Bar         | swaybar                                                                               | [Übersicht](http://tracesof.net/uebersicht/) + [Pecan](https://github.com/zzzeyez/Pecan) |
 | Launcher    | [j4-dmenu-desktop](https://github.com/enkore/j4-dmenu-desktop)                        | Spotlight                                                                                |
 | Screenshot  | [grim](https://github.com/emersion/grim)                                              | screencapture                                                                            |
 | Terminal    | [kitty](https://sw.kovidgoyal.net/kitty/)                                             | [iTerm2](https://iterm2.com/)                                                            |
-| Shell       | [zsh](http://www.zsh.org/) + [Oh My Zsh](https://ohmyz.sh/)                           | ditto                                                                                    |
-| Multiplexer | [tmux](https://github.com/tmux/tmux) + [Oh My Tmux](https://github.com/gpakosz/.tmux) | ditto                                                                                    |
+| Shell       | [zsh](http://www.zsh.org/) + [Oh My Zsh](https://ohmyz.sh/)                           | [zsh](http://www.zsh.org/) + [Oh My Zsh](https://ohmyz.sh/)                              |
+| Multiplexer | [tmux](https://github.com/tmux/tmux) + [Oh My Tmux](https://github.com/gpakosz/.tmux) | [tmux](https://github.com/tmux/tmux) + [Oh My Tmux](https://github.com/gpakosz/.tmux)    |
 | PDF Viewer  | [zathura](https://pwmt.org/projects/zathura/)                                         | [Skim](https://skim-app.sourceforge.io/)                                                 |
-| Editor      | [Neovim](https://neovim.io/)                                                          | ditto                                                                                    |
+| Editor      | [Neovim](https://neovim.io/)                                                          | [Neovim](https://neovim.io/)                                                             |
 
 - iTerm2 theme: [halcyon-iterm](https://github.com/bchiang7/halcyon-iterm)
 - NeoVim theme: [halcyon-neovim](https://github.com/kwsp/halcyon-neovim)
