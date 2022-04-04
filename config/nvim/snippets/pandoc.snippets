@@ -1,0 +1,77 @@
+# LaTeX math
+snippet dm Display math
+	\\begin{displaymath}
+		${0}
+	\\end{displaymath}
+snippet eq Equations
+	\\begin{equation}
+		${0}
+	\\end{equation}
+snippet beg
+	\\begin{${1:env}}
+	  ${0:${VISUAL}}
+	\\end{$1}
+snippet ali aligned
+	\\begin{aligned}
+		$0
+	\\end{aligned}
+# Matrix
+snippet mat smart matrix environment
+	\\begin{${1:p/b/v/V/B/small}matrix}
+		${0:${VISUAL}}
+	\\end{$1matrix}
+# Cases
+snippet cas cases environment
+	\\begin{cases}
+		${1:equation}, &\\text{ if }${2:case}\\
+		${0:${VISUAL}}
+	\\end{cases}
+# Split
+snippet spl split environment
+	\\begin{split}
+		${0:${VISUAL}}
+	\\end{split}
+# Superscript
+snippet sq square
+	^2
+snippet pw superscript
+	^{$1}$0
+snippet inv inverse
+	^{-1}$0
+snippet bar inverse
+	\overline $0
+# Math
+snippet frac \frac{}{}
+	\\frac{${1:num}}{${2:denom}} ${0}
+snippet sum \sum^{}_{}
+	\\sum^{${1:n}}_{${2:i=1}} ${0}
+snippet lim \lim_{}
+	\\lim_{${1:n \\to \\infty}} ${0}
+# Shorthand for time derivative
+snippet dot dot
+	\\dot{{$1}} {$0}
+# Shorthand for second order time derivative
+snippet ddot ddot
+	\\ddot{{$1}} {$0}
+# Vector
+snippet vec vector
+	\\vec{{$1}} {$0}
+# integral infinity
+snippet intinf
+	\\int_{-\\infty}^{\\infty} $0
+# Integral
+snippet int integral
+	\\int_{{$1}}^{{$2}} {$3} \\: d{$4} {$0}
+#delimiter
+snippet lr left right
+	\\left${1} ${0:${VISUAL}} \\right$1
+snippet lr( left( right)
+	\\left( ${0:${VISUAL}} \\right)
+snippet lr| left| right|
+	\\left| ${0:${VISUAL}} \\right|
+snippet lr{ left\{ right\}
+	\\left\\{ ${0:${VISUAL}} \\right\\}
+snippet lr[ left[ right]
+	\\left[ ${0:${VISUAL}} \\right]
+snippet lra langle rangle
+	\\langle ${0:${VISUAL}} \\rangle
