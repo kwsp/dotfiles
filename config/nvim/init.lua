@@ -29,6 +29,7 @@ require('packer').startup(function()
     config = function()
       vim.api.nvim_set_keymap('n', ';', "<cmd>lua require('fzf-lua').buffers()<CR>", { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<C-p>', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<C-f>', "<cmd>lua require('fzf-lua').grep_project()<CR>", { noremap = true, silent = true })
     end,
   }
 
