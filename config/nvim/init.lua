@@ -29,7 +29,7 @@ require('packer').startup(function()
     config = function()
       vim.api.nvim_set_keymap('n', ';', "<cmd>lua require('fzf-lua').buffers()<CR>", { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<C-p>', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<C-f>', "<cmd>lua require('fzf-lua').grep_project()<CR>", { noremap = true, silent = true })
+      vim.cmd [[command! Rg lua require('fzf-lua').grep_project()<CR> ]]
     end,
   }
 
@@ -336,6 +336,7 @@ require('gitsigns').setup {
 }
 
 
+
 -- nvim-cmp supports additional completion capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
@@ -548,7 +549,6 @@ vim.g.symbols_outline = {
   }
 }
 vim.api.nvim_set_keymap('n', '<C-s>', [[<cmd>SymbolsOutline<CR>]], { noremap = true, silent = true })
-
 
 -- Markdown note taking
 vim.cmd [[command! Notes autocmd BufWritePost *.md silent !pandoc -s --katex='https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/' --highlight-style pygments --toc % -o %:r.html ]]
