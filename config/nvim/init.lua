@@ -24,12 +24,18 @@ require('packer').startup(function()
 
   -- Fuzzy search
   use { 'junegunn/fzf', run = './install --bin', }
-  use { 'ibhagwan/fzf-lua',
-    requires = { 'kyazdani42/nvim-web-devicons' },
+  --use { 'ibhagwan/fzf-lua',
+    --requires = { 'kyazdani42/nvim-web-devicons' },
+    --config = function()
+      --vim.api.nvim_set_keymap('n', ';', "<cmd>lua require('fzf-lua').buffers()<CR>", { noremap = true, silent = true })
+      --vim.api.nvim_set_keymap('n', '<C-p>', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
+      --vim.cmd [[command! Rg lua require('fzf-lua').grep_project()<CR> ]]
+    --end,
+  --}
+  use { 'junegunn/fzf.vim',
     config = function()
-      vim.api.nvim_set_keymap('n', ';', "<cmd>lua require('fzf-lua').buffers()<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<C-p>', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
-      vim.cmd [[command! Rg lua require('fzf-lua').grep_project()<CR> ]]
+      vim.api.nvim_set_keymap('n', ';', '<cmd>Buffers<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<C-p>', '<cmd>Files<CR>', { noremap = true, silent = true })
     end,
   }
 
