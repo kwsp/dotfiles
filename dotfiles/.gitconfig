@@ -1,6 +1,6 @@
 # This is Git's per-user configuration file.
 [user]
-  name = Tiger Nie
+  name = TN
   email = tnie@tuta.io
 [core]
   excludesFile = ~/.gitignore
