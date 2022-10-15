@@ -24,23 +24,18 @@ require('packer').startup(function()
 
   -- Fuzzy search
   use { 'junegunn/fzf', run = './install --bin', }
-  --use { 'ibhagwan/fzf-lua',
-    --requires = { 'kyazdani42/nvim-web-devicons' },
-    --config = function()
-      --vim.api.nvim_set_keymap('n', ';', "<cmd>lua require('fzf-lua').buffers()<CR>", { noremap = true, silent = true })
-      --vim.api.nvim_set_keymap('n', '<C-p>', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
-      --vim.cmd [[command! Rg lua require('fzf-lua').grep_project()<CR> ]]
-    --end,
-  --}
-  use { 'junegunn/fzf.vim',
+  use { 'ibhagwan/fzf-lua',
+    requires = { 'kyazdani42/nvim-web-devicons' },
     config = function()
-      vim.api.nvim_set_keymap('n', ';', '<cmd>Buffers<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<C-p>', '<cmd>Files<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', ';', "<cmd>lua require('fzf-lua').buffers()<CR>", { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<C-p>', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
+      vim.cmd [[command! Rg lua require('fzf-lua').grep_project()<CR> ]]
     end,
   }
 
   -- Colorscheme
-  use 'kwsp/halcyon-neovim'
+  --use 'kwsp/halcyon-neovim'
+  use 'folke/tokyonight.nvim'
 
   -- Statusline
   use {
@@ -50,6 +45,7 @@ require('packer').startup(function()
         options = {
           component_separators = '|',
           section_separators = '',
+          theme = 'tokyonight',
         },
       }
     end,
@@ -156,10 +152,12 @@ require('packer').startup(function()
   use "jose-elias-alvarez/null-ls.nvim"
 
   -- LSP manager
-  use "williamboman/nvim-lsp-installer"
+  use {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+  }
 
-  -- Collection of configurations for built-in LSP client
-  use 'neovim/nvim-lspconfig'
 
   use 'simrat39/symbols-outline.nvim' -- symbol tree
   use 'windwp/nvim-ts-autotag'
@@ -201,7 +199,7 @@ require('packer').startup(function()
   -- Slime
   use {
     'jpalardy/vim-slime',
-    ft = { 'python', 'markdown', 'pandoc', 'markdown.pandoc' },
+    ft = { 'python', 'markdown', 'pandoc', 'markdown.pandoc', 'lisp' },
     config = function()
       vim.g.slime_target = "tmux"
       vim.g.slime_default_config = { socket_name = "default", target_pane = "{last}" }
@@ -221,7 +219,7 @@ augroup end
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme halcyon]]
+vim.cmd [[colorscheme tokyonight-moon]]
 
 vim.o.hidden = true
 vim.wo.number = true --Make line numbers default
@@ -231,9 +229,9 @@ vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
 vim.cmd [[ autocmd BufRead,BufNewFile *.py set shiftwidth=4 ]]
 vim.o.expandtab = true
-vim.o.smartindent = true
-vim.o.autoindent = true
-vim.o.copyindent = true
+--vim.o.smartindent = true
+--vim.o.autoindent = true
+--vim.o.copyindent = true
 vim.opt.undofile = true --Save undo history
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -342,18 +340,19 @@ require('gitsigns').setup {
 }
 
 
-
--- nvim-cmp supports additional completion capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
-
 -- LSP settings
-require('lspconfig')
-local on_attach = function(_, bufnr)
-  local opts = { noremap = true, silent = true }
-  local buf_map = vim.api.nvim_buf_set_keymap
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', 'go', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
+vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
+vim.keymap.set('n', '<leader>p', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
+local on_attach = function(_, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+
+  local buf_map = vim.api.nvim_buf_set_keymap
   buf_map(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_map(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -362,28 +361,43 @@ local on_attach = function(_, bufnr)
   buf_map(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_map(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_map(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_map(bufnr, 'n', 'go', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  buf_map(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
-  buf_map(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
-  buf_map(bufnr, 'n', '<leader>p', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-
-  vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
+  buf_map(bufnr, 'n', '<leader>fm', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts)
+  vim.cmd [[ command! Format execute 'lua vim.lsp.buf.format { async = true }' ]]
 
   -- Clangd
   buf_map(bufnr, 'n', '<C-q>', '<cmd>ClangdSwitchSourceHeader<CR>', opts)
 end
 
-local lsp_installer = require("nvim-lsp-installer")
-lsp_installer.on_server_ready(function(server)
-  local opts = {}
-  opts.on_attach = on_attach
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-  -- (optional) Customize the options passed to the server
-  if server.name == "sumneko_lua" then
-    opts.settings = {
-      Lua = {
-        diagnostics = {
-          globals = { 'vim' },
+require("mason").setup()
+require("mason-lspconfig").setup()
+require("mason-lspconfig").setup_handlers {
+  -- The first entry (without a key) will be the default handler
+  -- and will be called for each installed server that doesn't have
+  -- a dedicated handler
+  function(server_name) -- default handler (optional)
+    require("lspconfig")[server_name].setup {
+      capabilities = capabilities,
+      on_attach = on_attach
+    }
+  end,
+  -- Next, you can provide targeted overrides for specific servers.
+  -- For example, a handler override for the rust_analyzer
+  ["rust_analyzer"] = function()
+    require("lspconfig")["rust_analyzer"].setup {
+      capabilities = capabilities,
+      on_attach = on_attach
+    }
+    require("rust-tools").setup {}
+  end,
+  ["sumneko_lua"] = function()
+    require("lspconfig").sumneko_lua.setup({
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = { "vim" },
+          }
         },
         workspace = {
           -- Make the server aware of Neovim runtime files
@@ -391,19 +405,13 @@ lsp_installer.on_server_ready(function(server)
         },
         telemetry = {
           enable = false,
-        }
-      }
-    }
+        },
+      },
+      capabilities = capabilities,
+      on_attach = on_attach
+    })
   end
-
-  --if server.name == "clangd" then
-  --opts.init_options = {
-  --fallbackFlags = {"-std=c++17 -Wall"}
-  --}
-  --end
-
-  server:setup(opts)
-end)
+}
 
 
 -- Builtin LSP settings
@@ -445,7 +453,7 @@ local luasnip = require 'luasnip'
 
 
 -- nvim-cmp setup
-local cmp = require 'cmp'
+local cmp = require('cmp')
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -490,7 +498,6 @@ cmp.setup {
 }
 
 function _G.set_terminal_keymaps()
-  local opts = { noremap = true }
   vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
   vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
   vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
@@ -555,6 +562,8 @@ vim.g.symbols_outline = {
   }
 }
 vim.api.nvim_set_keymap('n', '<C-s>', [[<cmd>SymbolsOutline<CR>]], { noremap = true, silent = true })
+
+
 
 -- Markdown note taking
 vim.cmd [[command! Notes autocmd BufWritePost *.md silent !pandoc -s --katex='https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/' --highlight-style pygments --toc % -o %:r.html ]]
