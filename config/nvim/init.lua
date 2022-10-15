@@ -24,12 +24,10 @@ require('packer').startup(function()
 
   -- Fuzzy search
   use { 'junegunn/fzf', run = './install --bin', }
-  use { 'ibhagwan/fzf-lua',
-    requires = { 'kyazdani42/nvim-web-devicons' },
+  use { 'junegunn/fzf.vim',
     config = function()
-      vim.api.nvim_set_keymap('n', ';', "<cmd>lua require('fzf-lua').buffers()<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<C-p>', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
-      vim.cmd [[command! Rg lua require('fzf-lua').grep_project()<CR> ]]
+      vim.api.nvim_set_keymap('n', ';', "<cmd>Buffers<CR>", { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<C-p>', "<cmd>Files<CR>", { noremap = true, silent = true })
     end,
   }
 
@@ -252,7 +250,7 @@ vim.g.maplocalleader = ' '
 vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
 
 --Remap for dealing with word wrap
 vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
