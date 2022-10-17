@@ -17,7 +17,7 @@ require('packer').startup(function()
 end)
 
 -- VSCode specific commands
-vim.api.nvim_set_keymap('n', '<C-j>', '<Cmd>call VSCodeNotify("workbench.action.focusAboveGroup")<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-j>', '<Cmd>call VSCodeNotify("workbench.action.focusBelowGroup")<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-k>', '<Cmd>call VSCodeNotify("workbench.action.focusAboveGroup")<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-h>', '<Cmd>call VSCodeNotify("workbench.action.focusLeftGroup")<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-l>', '<Cmd>call VSCodeNotify("workbench.action.focusRightGroup")<CR>', { noremap = true, silent = true })
