@@ -45,6 +45,7 @@ unsetopt autocd
 export PATH=$PATH:~/dotfiles/scripts
 
 alias p1='ping 1.1.1.1'
+alias ca='conda activate'
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
