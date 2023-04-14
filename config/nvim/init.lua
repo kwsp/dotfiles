@@ -397,26 +397,26 @@ require("mason-lspconfig").setup_handlers {
   ["rust_analyzer"] = function()
     require("rust-tools").setup {}
   end,
-  ["sumneko_lua"] = function()
-    require("lspconfig").sumneko_lua.setup({
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { "vim" },
-          }
-        },
-        workspace = {
-          -- Make the server aware of Neovim runtime files
-          library = vim.api.nvim_get_runtime_file('', true),
-        },
-        telemetry = {
-          enable = false,
-        },
-      },
-      capabilities = capabilities,
-      on_attach = on_attach
-    })
-  end
+  --["sumneko_lua"] = function()
+    --require("lspconfig").sumneko_lua.setup({
+      --settings = {
+        --Lua = {
+          --diagnostics = {
+            --globals = { "vim" },
+          --}
+        --},
+        --workspace = {
+          ---- Make the server aware of Neovim runtime files
+          --library = vim.api.nvim_get_runtime_file('', true),
+        --},
+        --telemetry = {
+          --enable = false,
+        --},
+      --},
+      --capabilities = capabilities,
+      --on_attach = on_attach
+    --})
+  --end
 }
 
 
