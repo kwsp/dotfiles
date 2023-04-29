@@ -19,7 +19,7 @@ require('packer').startup(function()
   -- Vim plugins
   use 'preservim/nerdcommenter'
   use 'tpope/vim-surround'
-  use 'tpope/vim-repeat' -- '.' repeating for the above plugins
+  use 'tpope/vim-repeat'        -- '.' repeating for the above plugins
   use 'kwsp/vim-tmux-navigator' -- integration with tmux
 
   -- Fuzzy search
@@ -58,22 +58,12 @@ require('packer').startup(function()
 
   -- File explorer
   use {
-    'kyazdani42/nvim-tree.lua',
+    'nvim-tree/nvim-tree.lua',
     requires = {
-      'kyazdani42/nvim-web-devicons',
+      'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      require 'nvim-tree'.setup {
-        view = {
-          mappings = {
-            list = {
-              { key = { "<CR>", "o" }, action = "edit", mode = "n" },
-              { key = "s", action = "vsplit" },
-              { key = "i", action = "split" },
-            }
-          }
-        }
-      }
+      require('nvim-tree').setup()
       vim.api.nvim_set_keymap('n', '<C-n>', '<Cmd>NvimTreeToggle<CR>', { noremap = true })
     end
   }
@@ -208,12 +198,13 @@ require('packer').startup(function()
     end
   }
 
+  use 'simrat39/rust-tools.nvim'
 end)
 
 -- Use pandoc syntax for markdown
-vim.cmd [[ 
+vim.cmd [[
 augroup pandoc_syntax
-  autocmd! 
+  autocmd!
   autocmd BufNewFile,BufFilePre,BufRead *.md setfiletype markdown.pandoc
 augroup end
 ]]
@@ -224,7 +215,8 @@ vim.cmd [[colorscheme tokyonight-moon]]
 
 vim.o.hidden = true
 vim.wo.number = true --Make line numbers default
-vim.o.mouse = 'a' --Enable mouse mode
+vim.o.mouse = 'a'    --Enable mouse mode
+vim.o.mousescroll = 'ver:1'
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
@@ -277,7 +269,7 @@ require('gitsigns').setup {
     topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
     changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
   },
-  signcolumn                   = true, -- Toggle with `:Gitsigns toggle_signs`
+  signcolumn                   = true,  -- Toggle with `:Gitsigns toggle_signs`
   numhl                        = false, -- Toggle with `:Gitsigns toggle_numhl`
   linehl                       = false, -- Toggle with `:Gitsigns toggle_linehl`
   word_diff                    = false, -- Toggle with `:Gitsigns toggle_word_diff`
@@ -375,13 +367,14 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require("mason").setup {
   log_level = vim.log.levels.DEBUG
 }
+local lspconfig = require("lspconfig")
 require("mason-lspconfig").setup()
 require("mason-lspconfig").setup_handlers {
   -- The first entry (without a key) will be the default handler
   -- and will be called for each installed server that doesn't have
   -- a dedicated handler
   function(server_name) -- default handler (optional)
-    require("lspconfig")[server_name].setup {
+    lspconfig[server_name].setup {
       capabilities = capabilities,
       on_attach = on_attach
     }
@@ -389,7 +382,7 @@ require("mason-lspconfig").setup_handlers {
   -- Next, you can provide targeted overrides for specific servers.
   -- For example, a handler override for the rust_analyzer
   ["clangd"] = function()
-    require("lspconfig")["clangd"].setup {
+    lspconfig["clangd"].setup {
       capabilities = capabilities,
       on_attach = on_attach
     }
@@ -397,8 +390,8 @@ require("mason-lspconfig").setup_handlers {
   ["rust_analyzer"] = function()
     require("rust-tools").setup {}
   end,
-  ["sumneko_lua"] = function()
-    require("lspconfig").sumneko_lua.setup({
+  ["lua_ls"] = function()
+    lspconfig.lua_ls.setup({
       settings = {
         Lua = {
           diagnostics = {
@@ -444,7 +437,6 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 })
 
 local null_ls = require("null-ls")
-
 null_ls.setup({
   sources = {
     null_ls.builtins.diagnostics.eslint,
@@ -456,7 +448,6 @@ null_ls.setup({
 
 -- luasnip setup
 local luasnip = require 'luasnip'
-
 
 -- nvim-cmp setup
 local cmp = require('cmp')
@@ -527,7 +518,8 @@ vim.g.symbols_outline = {
   show_relative_numbers = false,
   show_symbol_details = true,
   preview_bg_highlight = 'Pmenu',
-  keymaps = { -- These keymaps can be a string or a table for multiple keys
+  keymaps = {
+    -- These keymaps can be a string or a table for multiple keys
     close = { "<Esc>", "q" },
     goto_location = "<Cr>",
     focus_location = "o",
