@@ -329,6 +329,3 @@ bind-key -T root 'M-7' select-window -t :=7
 bind-key -T root 'M-8' select-window -t :=8
 bind-key -T root 'M-9' select-window -t :=9
 bind-key -T root 'M-0' select-window -t :=0
-
-
-bind-key -T vi-copy WheelUpPane scroll-up -l 3
