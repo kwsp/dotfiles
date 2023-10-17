@@ -72,25 +72,9 @@ local config = {
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
   config.term = "" -- Set to empty so FZF works on windows
 
-  table.insert(config.launch_menu, { label = "PowerShell", args = {"powershell.exe"} })
   table.insert(config.launch_menu, {
-    label = 'Florence Developer Powershell for VS 2022',
-    args = {
-      'powershell.exe',
-      '-noe',
-      '-c',
-      '&{Import-Module "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/Tools/Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell f869764e}',
-    },
-  })
-
-  table.insert(config.launch_menu, {
-    label = 'OULAB Developer Powershell for VS 2022',
-    args = {
-      'powershell.exe',
-      '-noe',
-      '-c',
-      '&{Import-Module "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/Tools/Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell b0d2db3d}',
-    },
+    label = "PowerShell",
+    args = {"powershell.exe"}
   })
 
 else
