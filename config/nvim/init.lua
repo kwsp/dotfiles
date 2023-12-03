@@ -393,9 +393,11 @@ require("mason-lspconfig").setup_handlers {
       }
     }
   end,
+
   ["rust_analyzer"] = function()
     require("rust-tools").setup {}
   end,
+
   ["lua_ls"] = function()
     lspconfig.lua_ls.setup({
       settings = {
