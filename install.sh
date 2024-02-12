@@ -32,8 +32,12 @@ cp -r $CWD/dotfiles/. $HOME_DIR
 echo "$(tput setaf 3)Copying config files to $CONFIG_INSTALL_DIR . . ."
 cp -r $CWD/config/* $CONFIG_INSTALL_DIR
 
-# Install macOS specific config
-if [[ $(uname) = "Darwin" ]]; then
+### Install platform specific config
+case "$(uname -s)" in
+  Linux*)
+    ;;
+
+  Darwin*)
     echo
     echo "$(tput setaf 3)Detected Darwin, installing Darwin specific configs . . ."
 
@@ -49,7 +53,9 @@ if [[ $(uname) = "Darwin" ]]; then
     # Install Pecan config
     echo "$(tput setaf 3)Copying Pecan config to $PECAN_DIR . . ."
     cp $CWD/pecan/* "$PECAN_DIR"
-fi
+
+    ;;
+esac
 
 echo
 echo "$(tput setaf 2)Done ✨"
