@@ -1,6 +1,6 @@
 # Halcyon
 
-This is my collection of config files for both Darwin and Linux.
+This is my collection of config files for *nix systems.
 
 | **Linux**                                                                                                   | **Darwin**                                                                                                 |
 | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
@@ -8,7 +8,7 @@ This is my collection of config files for both Darwin and Linux.
 
 | Software    | Linux                                                                                 | Darwin                                                                                   |
 | ----------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Distro      | [Debian Testing](https://www.debian.org/releases/testing/)                            | macOS Monterey                                                                           |
+| Distro      | [Debian Testing](https://www.debian.org/releases/testing/)                            | macOS Sonoma                                                                           |
 | WM          | [sway](https://github.com/swaywm/sway)                                                | [Rectangle](https://rectangleapp.com/)                                                   |
 | Bar         | swaybar                                                                               | [Übersicht](http://tracesof.net/uebersicht/) + [Pecan](https://github.com/zzzeyez/Pecan) |
 | Launcher    | [j4-dmenu-desktop](https://github.com/enkore/j4-dmenu-desktop)                        | Spotlight                                                                                |
@@ -24,7 +24,7 @@ This is my collection of config files for both Darwin and Linux.
 - kitty theme: custom halcyon in config
 - Pecan theme: custom halcyon in config
 
-I basically live inside tmux, NeoVim and friends (ripgrep, fzf, coc.nvim ...) so a lot of the software config is in my Neovim config.
+I basically live inside tmux, NeoVim and friends (ripgrep, fzf, ...) so a lot of config is in my Neovim config.
 
 ## Usage
 
