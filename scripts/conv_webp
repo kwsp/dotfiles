@@ -9,7 +9,10 @@ FILES=$(find $DIR -type f | xargs file | grep "Web/P" | awk '{str=$1;gsub(":",""
 
 for FILE in $FILES
 do
-    echo Converting $FILE
-    dwebp $FILE -o $FILE
+  filename=$(basename -- "$FILE")
+  filename="${filename%.*}"
+  newfile="${filename}.png"
+  echo Converting $FILE, saving to $newfile
+  dwebp $FILE -o $newfile
+  rm $FILE
 done
-

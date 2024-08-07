@@ -42,6 +42,7 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'preservim/nerdcommenter'
     Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-repeat'
     Plug 'jiangmiao/auto-pairs'
     Plug 'pangloss/vim-javascript'
@@ -49,6 +50,9 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'vim-python/python-syntax'
 		let g:python_highlight_func_calls = 1
 		let g:python_highlight_operators = 1
+    Plug 'kovisoft/slimv'
+    let g:slimv_swank_cmd = '!tmux new-window -d -n REPL-SBCL "sbcl --load ~/.local/share/nvim/plugged/slimv/slime/start-swank.lisp"'
+    let g:lisp_rainbow=1
     Plug 'neoclide/jsonc.vim'
 		Plug 'vim-airline/vim-airline'
     Plug 'NieTiger/halcyon-neovim'

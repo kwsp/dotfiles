@@ -1,6 +1,6 @@
 {
   "coc.preferences.jumpCommand": "tab drop",
-  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "go"],
+  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "go", "javascript"],
   "python.linting.pylintEnabled": false,
   "python.linting.mypyEnabled": true,
   "python.linting.enabled": true,
