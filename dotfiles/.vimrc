@@ -3,73 +3,28 @@
 " ============================================================================ "
 scriptencoding utf-8
 set encoding=utf-8
-
+syntax enable
+filetype plugin indent on
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
-set shiftwidth=4    " number of spaces to use for autoindent
-set smartindent
+set shiftwidth=4    " number of spaces to use for autoindent set smartindent
 set expandtab       " tabs are space
 set autoindent
 set copyindent      " copy indent from the previous line
-
 set clipboard+=unnamedplus  " All yank to system clipboard
 set path+=**
-syntax enable
-filetype plugin indent on
 set backspace=indent,eol,start " Fixes common backspace problems
-
 set mouse=c " Mouse support
 set noshiftround
 set scrolloff=2
-
-" Some servers have issues with backup files
 set nobackup
 set nowritebackup
 set noswapfile
-
-set updatetime=300
 set signcolumn=auto
-
-" Enable spellcheck for markdown files
-autocmd BufRead,BufNewFile *.md setlocal spell
-
+autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_nz
 set autoread        " Auto reread file if a change was detected
-
-" Allows you to save files you opened without write permissions via sudo
-cmap w!! w !sudo tee %
-
-" cursor always at the center of the screen
-set scrolloff=100
-
-" remap leader
-let g:mapleader = "\<Space>"
-
-
-" ============================================================================ "
-" ===                                UI                                    === "
-" ============================================================================ "
-set hidden
-set number          " show line number
-set wildmenu        " autocomplete for command menu
-set showmatch       " highlight matching brace
-set laststatus=2    " Always have status line
-set noshowmode      " Lightline already show mode
-set showcmd
-"set termguicolors
-set cmdheight=1     " One line for command line
-set shortmess+=c    " don't give completion messages
-set splitbelow      " Set preview window to appear at bottom
-
-set winbl=10        " Set floating window to be slightly transparent
-
-" Search
-set hlsearch        " Highlight matching search patterns
-set incsearch       " Enable incremental search
-set ignorecase      " Ignore case when searching
-set smartcase       " Include only uppercase words with uppercase search term
-
-" Set floating window background to white
-hi Pmenu guibg=Black
+set scrolloff=100   " cursor always at the center of the screen
+let g:mapleader = "\<Space>" "remap leader
 
 " ============================================================================ "
 " ===                               VimPlug                                === "
@@ -85,8 +40,6 @@ Plug 'jiangmiao/auto-pairs'
 
 " Git plugin
 Plug 'tpope/vim-fugitive'
-" Fix broken syntax highlight in gitcommit files
-" (https://github.com/tpope/vim-git/issues/12)
 let g:fugitive_git_executable = 'LANG=en_US.UTF-8 git'
 
 nnoremap <silent> <leader>gs :Gstatus<CR>
@@ -126,37 +79,109 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
+" Gruvbox colorscheme
+"Plug 'morhetz/gruvbox'
+" Theme
+Plug 'chuling/vim-equinusocio-material'
+
+" Grammar
+Plug 'rhysd/vim-grammarous'
+
+" Markdown
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+
+" Tex
+Plug 'lervag/vimtex'
+
+" Tmux integration
+Plug 'christoomey/vim-tmux-navigator'
+
 call plug#end()
+
+" LaTeX
+"let g:vimtex_latexmk_progname = 'nvr'
+"let g:vimtex_view_method = 'zathura'
+"let g:vimtex_fold_manual=1
+"let g:vimtex_quickfix_ignore_all_warnings = 0
+"let g:vimtex_quickfix_open_on_warning = 0
+"let g:vimtex_fold_enabled = 1
+"
+"let g:formatdef_latexindent = '"latexindent"'
+"let g:formatters_tex = ['latexindent']
+"
+"let g:tex_flavor='latex'
+"let g:tex_indent_brace=1
+"let g:tex_indent_items=1
+"let g:tex_items='\\bibitem\|\\item'
+"let g:tex_itemize_env='itemize\|description\|enumerate\|thebibliography'
+"let g:tex_noindent_env='document\|verbatim\|comment\|lstlisting'
+"let g:tex_indent_ifelsefi = 1
+"let g:tex_indent_and=1
+"let g:tex_conceal="abdgm"
+
+" Markdown
+let g:mkdp_page_title = '${name}'
+let g:mkdx#settings = { 'highlight': { 'enable': 1 },
+                        \ 'enter': { 'shift': 1 },
+                        \ 'links': { 'external': { 'enable': 1 } },
+                        \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
+                        \ 'fold': { 'enable': 1 } }
+"autocmd FileType org,markdown :TableModeToggle
+
+" ============================================================================ "
+" ===                                UI                                    === "
+" ============================================================================ "
+set hidden
+set number          " show line number
+set wildmenu        " autocomplete for command menu
+set showmatch       " highlight matching brace
+set laststatus=2    " Always have status line
+set noshowmode      " Lightline already show mode
+set showcmd
+set termguicolors
+set cmdheight=1     " One line for command line
+set shortmess+=c    " don't give completion messages
+set splitbelow      " Set preview window to appear at bottom
+
+if has('nvim')
+  set winbl=10        " Set floating window to be slightly transparent
+endif
+
+" Search
+set hlsearch        " Highlight matching search patterns
+set incsearch       " Enable incremental search
+set ignorecase      " Ignore case when searching
+set smartcase       " Include only uppercase words with uppercase search term
+
+" Set floating window background
+hi Pmenu guibg=Black
+
+
+"""" Theme settings
+" if you prefer the default one, comment out this line
+let g:equinusocio_material_darker = 1
+
+" make vertsplit invisible
+let g:equinusocio_material_hide_vertsplit = 1
+
+colorscheme equinusocio_material
+
+hi Normal ctermbg=None
 
 
 " ============================================================================ "
 " ===                            Denite setup                              === "
 " ============================================================================ "
 try
-" Use ripgrep for searching current directory for files
-" By default, ripgrep will respect rules in .gitignore
-"   --files: Print each file that would be searched (but don't search)
-"   --glob:  Include or exclues files for searching that match the given glob
-"            (aka ignore .git files)
-"
 call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
-
 " Use ripgrep in place of "grep"
 call denite#custom#var('grep', 'command', ['rg'])
-
-" Custom options for ripgrep
-"   --vimgrep:  Show results with every match on it's own line
-"   --hidden:   Search hidden directories and files
-"   --heading:  Show the file name above clusters of matches from each file
-"   --S:        Search case insensitively if the pattern is all lowercase
 call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
-
 " Recommended defaults for ripgrep via Denite docs
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
-
 " Remove date from buffer list
 call denite#custom#var('buffer', 'date_format', '')
 
@@ -183,7 +208,6 @@ let s:denite_options = {'default' : {
 \ 'winrow': 1,
 \ 'vertical_preview': 1
 \ }}
-
 " Loop through denite options and enable them
 function! s:profile(opts) abort
   for l:fname in keys(a:opts)
@@ -197,7 +221,6 @@ call s:profile(s:denite_options)
 catch
   echo 'Denite not installed. It should work after running :PlugInstall'
 endtry
-
 
 " ============================================================================ "
 " ===                             KEY MAPPINGS                             === "
@@ -272,7 +295,6 @@ function! s:denite_my_settings() abort
 endfunction
 
 
-
 " === Nerdtree toggle === "
 map <C-n> :NERDTreeToggle<CR>
 nmap <leader>n :NERDTreeToggle<CR>
@@ -283,13 +305,11 @@ nnoremap <c-k> <c-w><c-k>
 nnoremap <c-h> <c-w><c-h>
 nnoremap <c-l> <c-w><c-l>
 
-
 " Creating splits with empty buffers in all directions
 nnoremap <Leader>hn :leftabove  vnew<CR>
 nnoremap <Leader>ln :rightbelow vnew<CR>
 nnoremap <Leader>kn :leftabove  new<CR>
 nnoremap <Leader>jn :rightbelow new<CR>
-
 
 " If split in given direction exists - jump, else create new split
 function! JumpOrOpenNewSplit(key, cmd, fzf) "
@@ -312,17 +332,15 @@ nnoremap <silent> <Leader>ll :call JumpOrOpenNewSplit('l', ':rightbelow vsplit',
 nnoremap <silent> <Leader>kk :call JumpOrOpenNewSplit('k', ':leftabove split', 0)<CR>
 nnoremap <silent> <Leader>jj :call JumpOrOpenNewSplit('j', ':rightbelow split', 0)<CR>
 
-
 " Opening splits with terminal in all directions
 nnoremap <Leader>h<Enter> :leftabove  vnew<CR>:terminal<CR>
 nnoremap <Leader>l<Enter> :rightbelow vnew<CR>:terminal<CR>
 nnoremap <Leader>k<Enter> :leftabove  new<CR>:terminal<CR>
 nnoremap <Leader>j<Enter> :rightbelow new<CR>:terminal<CR>
 
-
 " === fzf === "
 nnoremap <c-p> :FZF<CR>
-
+autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
 " Switch between tabs
 nmap <leader>1 1gt
@@ -335,10 +353,8 @@ nmap <leader>7 7gt
 nmap <leader>8 8gt
 nmap <leader>9 9gt
 
-
 " Nvim escape terminal
 tnoremap <Esc> <C-\><C-n>
-
 
 "
 " === coc config
@@ -400,4 +416,4 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " ============================================================================ "
 " ===                                 MISC.                                === "
 " ============================================================================ "
-:hi ErrorMsg ctermfg=15 ctermbg=1 guifg=black guibg=Red
+":hi ErrorMsg ctermfg=15 ctermbg=1 guifg=black guibg=Red

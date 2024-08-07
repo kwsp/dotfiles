@@ -104,7 +104,7 @@ alias open=xdg-open
 ## Vi keyboard bindings for the shell
 #set -o vi
 
-export PATH=$PATH:$HOME/.local/bin
+#export PATH=$PATH:$HOME/.local/bin
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -117,33 +117,48 @@ export PATH=$PATH:$GOPATH/bin
 
 autoload -Uz tetriscurses
 
-# No autocd
+# No autocd for directories
 unsetopt autocd
 
+# alias to activate platformio tools
 alias activate_pio="source ~/.platformio/penv/bin/activate"
 
-#alias python3=python3.8
+
+# Autocomplete java classes in the current directory
+export CLASSPATH=.:$CLASSPATH
+
 
 ## Booting into TTY
-#if [ "$TERM" = "linux" ]; then
-  #/bin/echo -e "
-  #\e]P0282a2e
-  #\e]P1a54242
-  #\e]P28c9440
-  #\e]P3de935f
-  #\e]P45f819d
-  #\e]P585678f
-  #\e]P65e8d87
-  #\e]P7707880
-  #\e]P8373b41
-  #\e]P9cc6666
-  #\e]PAb5bd68
-  #\e]PBf0c674
-  #\e]PC81a2be
-  #\e]PDb294bb
-  #\e]PE8abeb7
-  #\e]PFc5c8c6
-  #"
-  ## get rid of artifacts
-  #clear
-#fi
+# Gruvbox
+if [ "$TERM" = "linux" ]; then
+  /bin/echo -e "
+  \e]P0282828
+  \e]P1cc241d
+  \e]P298971a
+  \e]P3d79921
+  \e]P4458588
+  \e]P5b16286
+  \e]P6689b6a
+  \e]P7a89984
+  \e]P8928374
+  \e]P9fb4934
+  \e]PAb8bb26
+  \e]PBfabd2f
+  \e]PC83a598
+  \e]PDd3869b
+  \e]PE8ec07c
+  \e]PFebdbb2
+  "
+  # get rid of artifacts
+  clear
+fi
+
+
+# Colour for man pages
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'

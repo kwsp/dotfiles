@@ -139,7 +139,6 @@ type = internal/backlight
 ; $ ls -1 /sys/class/backlight/
 card = intel_backlight
 
-;format = LIGHT <label>
 format = LIGHT <label>
 
 ; Enable changing the backlight with the scroll wheel (unreleased)
