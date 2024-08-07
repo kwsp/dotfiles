@@ -24,6 +24,7 @@ let g:mapleader = "\<Space>" "remap leader
 set termguicolors
 set noshowmode
 set shortmess+=c
+set number
 
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim  --create-dirs
