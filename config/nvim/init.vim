@@ -46,10 +46,14 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source ~/.config/nvim/init.vim
 endif
+
 call plug#begin(stdpath('data') . '/plugged')
 
 if !exists('g:vscode')
     Plug 'preservim/nerdtree'
+    map <C-n> :NERDTreeToggle<CR>
+    nmap <leader>n :NERDTreeToggle<CR>
+
     Plug 'preservim/tagbar'
     nmap <F8> :TagbarToggle<CR>
     Plug 'jiangmiao/auto-pairs'
@@ -92,46 +96,172 @@ if !exists('g:vscode')
     " Tmux integration
     Plug 'christoomey/vim-tmux-navigator'
 
+    " slime
+    Plug 'jpalardy/vim-slime'
+    let g:slime_target = "tmux"
+    let g:slime_default_config = {"socket_name": get(split($TMUX, ","), 0), "target_pane": ":.2"}
+
 endif
 
 " Editing
 Plug 'preservim/nerdcommenter'
-let g:NERDSpaceDelims = 1
+let g:NERDSpaceDelims = 0
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 
 call plug#end()
 
 if !exists('g:vscode')
-" ============================================================================ "
-" ===                                UI                                    === "
-" ============================================================================ "
-set hidden
-set number          " show line number
-set wildmenu        " autocomplete for command menu
-set showmatch       " highlight matching brace
-set laststatus=2    " Always have status line
-set noshowmode      " Lightline already show mode
-set showcmd
-set termguicolors
-set cmdheight=1     " One line for command line
-set shortmess+=c    " don't give completion messages
-set splitbelow      " Set preview window to appear at bottom
+    " ============================================================================ "
+    " ===                                UI                                    === "
+    " ============================================================================ "
+    set hidden
+    set number          " show line number
+    set wildmenu        " autocomplete for command menu
+    set showmatch       " highlight matching brace
+    set laststatus=2    " Always have status line
+    set noshowmode      " Lightline already show mode
+    set showcmd
+    set termguicolors
+    set cmdheight=1     " One line for command line
+    set shortmess+=c    " don't give completion messages
+    set splitbelow      " Set preview window to appear at bottom
 
-let g:lightline = {'colorscheme': 'halcyon'}
-colorscheme halcyon
+    if has('nvim')
+      set winbl=10        " Set floating window to be slightly transparent
+    endif
 
-if has('nvim')
-  set winbl=10        " Set floating window to be slightly transparent
+    let g:lightline = {'colorscheme': 'halcyon'}
+    colorscheme halcyon
+
+    " Set floating window background
+    hi Pmenu guibg=Black
+    hi Normal ctermbg=None
+
+    " === fzf === "
+    nnoremap <c-p> :FZF<CR>
+    "nnoremap ; :Buffers<CR>
+    nnoremap <Leader>w :Windows<CR>                 " Search open windows
+    nnoremap <Leader>/ :BLines<CR>                  " Search in open buffers
+    nnoremap <Leader>? :Lines<CR>                   " Search in current directory
+    autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
+
+    " Nvim escape terminal
+    tnoremap <Esc> <C-\><C-n>
+
+
+    " === coc.nvim === "
+    nmap <silent> <leader>dd <Plug>(coc-definition)
+    nmap <silent> <leader>dr <Plug>(coc-references)
+    nmap <silent> <leader>dj <Plug>(coc-implementation)
+
+    " Use tab for trigger completion with characters ahead and navigate.
+    " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+    inoremap <silent><expr> <TAB>
+          \ pumvisible() ? "\<C-n>" :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ coc#refresh()
+    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+
+
+    " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+    "nmap <silent> <TAB> <Plug>(coc-range-select)
+    "xmap <silent> <TAB> <Plug>(coc-range-select)
+
+    " Use `:Format` to format current buffer
+    command! -nargs=0 Format :call CocAction('format')
+
+    " Use `:Fold` to fold current buffer
+    command! -nargs=? Fold :call   CocAction('fold', <f-args>)
+
+    " use `:OR` for organize import of current buffer
+    command! -nargs=0 OR   :call   CocAction('runCommand', 'editor.action.organizeImport')
+
+    " Add status line support, for integration with other plugin, checkout `:h coc-status`
+    set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+    " Using CocList
+    " Manage extensions
+    nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+    " Show commands
+    nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+    " Find symbol of current document
+    nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+    " Search workspace symbols
+    nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+    " Do default action for next item.
+    nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+    " Do default action for previous item.
+    nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+    " Resume latest coc list
+    nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+
+    """ coc-snippets
+    " Use <C-l> for trigger snippet expand.
+    imap <C-l> <Plug>(coc-snippets-expand)
+
+    " Use <C-j> for select text for visual placeholder of snippet.
+    vmap <C-j> <Plug>(coc-snippets-select)
+
+    " Use <C-j> for jump to next placeholder, it's default of coc.nvim
+    let g:coc_snippet_next = '<c-j>'
+
+    " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+    let g:coc_snippet_prev = '<c-k>'
+
+    " Use <C-j> for both expand and jump (make expand higher priority.)
+    imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+    " Use <leader>x for convert visual selected code to snippet
+    xmap <leader>x  <Plug>(coc-convert-snippet)
+
+    " Make <tab> used for trigger completion, completion confirm, snippet expand and jump like VSCode.
+    inoremap <silent><expr> <TAB>
+          \ pumvisible() ? coc#_select_confirm() :
+          \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ coc#refresh()
+
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+
+    let g:coc_snippet_next = '<tab>'
+
+
+    " ============================================================================ "
+    " ===                                 MISC.                                === "
+    " ============================================================================ "
+    ":hi ErrorMsg ctermfg=15 ctermbg=1 guifg=black guibg=Red
+
+    function! ToggleSyntax()
+       if exists("g:syntax_on")
+          syntax off
+       else
+          syntax enable
+       endif
+    endfunction
+     
+    nmap <silent> ;s :call ToggleSyntax()<CR>
+
+    " Get syntax highlight group
+    map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+    \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+    \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+    " Reload vimrc
+    map <F9> :so ~/.config/nvim/init.vim<CR>
+
+
+    " ============================================================================ "
 endif
-
-" Set floating window background
-hi Pmenu guibg=Black
-hi Normal ctermbg=None
-
-" === Nerdtree toggle === "
-map <C-n> :NERDTreeToggle<CR>
-nmap <leader>n :NERDTreeToggle<CR>
 
 " === split navigation === "
 nnoremap <c-j> <c-w><c-j>
@@ -172,16 +302,6 @@ nnoremap <Leader>l<Enter> :rightbelow vnew<CR>:terminal<CR>
 nnoremap <Leader>k<Enter> :leftabove  new<CR>:terminal<CR>
 nnoremap <Leader>j<Enter> :rightbelow new<CR>:terminal<CR>
 
-
-" === fzf === "
-nnoremap <c-p> :FZF<CR>
-"nnoremap ; :Buffers<CR>
-nnoremap <Leader>w :Windows<CR>                 " Search open windows
-nnoremap <Leader>/ :BLines<CR>                  " Search in open buffers
-nnoremap <Leader>? :Lines<CR>                   " Search in current directory
-autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
-
-
 " Switch between tabs
 nmap <leader>1 1gt
 nmap <leader>2 2gt
@@ -192,125 +312,3 @@ nmap <leader>6 6gt
 nmap <leader>7 7gt
 nmap <leader>8 8gt
 nmap <leader>9 9gt
-
-" Nvim escape terminal
-tnoremap <Esc> <C-\><C-n>
-
-"
-" === coc config
-"
-
-" === coc.nvim === "
-nmap <silent> <leader>dd <Plug>(coc-definition)
-nmap <silent> <leader>dr <Plug>(coc-references)
-nmap <silent> <leader>dj <Plug>(coc-implementation)
-
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-
-" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-"nmap <silent> <TAB> <Plug>(coc-range-select)
-"xmap <silent> <TAB> <Plug>(coc-range-select)
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" use `:OR` for organize import of current buffer
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Using CocList
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-
-
-""" coc-snippets
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-" Use <leader>x for convert visual selected code to snippet
-xmap <leader>x  <Plug>(coc-convert-snippet)
-
-" Make <tab> used for trigger completion, completion confirm, snippet expand and jump like VSCode.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-let g:coc_snippet_next = '<tab>'
-
-
-" ============================================================================ "
-" ===                                 MISC.                                === "
-" ============================================================================ "
-":hi ErrorMsg ctermfg=15 ctermbg=1 guifg=black guibg=Red
-
-function! ToggleSyntax()
-   if exists("g:syntax_on")
-      syntax off
-   else
-      syntax enable
-   endif
-endfunction
- 
-nmap <silent>  ;s  :call ToggleSyntax()<CR>
-
-" Get syntax highlight group
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-" Reload vimrc
-map <F9> :so ~/.config/nvim/init.vim<CR>
-
-
-" ============================================================================ "
-endif
