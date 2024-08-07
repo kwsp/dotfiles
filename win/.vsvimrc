@@ -4,8 +4,7 @@ set smartcase
 
 let mapleader = " "
 
-nnoremap <leader>gd :vsc Edit.GoToDeclaration <C-r><C-w><CR>
-nnoremap <leader>fm :vsc Edit.FormatDocument<CR>
+nnoremap <leader>gd :vsc Edit.GoToDefinition <C-r><C-w><CR>
 " Show tooltip 
 nnoremap K :vsc Edit.QuickInfo<CR>
 
