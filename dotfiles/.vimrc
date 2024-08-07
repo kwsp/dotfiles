@@ -57,19 +57,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 let g:fugitive_git_executable = 'LANG=en_US.UTF-8 git'
 
-nnoremap <silent> <leader>gs :Gstatus<CR>
-nnoremap <silent> <leader>gd :Gdiff<CR>
-nnoremap <silent> <leader>gc :Gcommit<CR>
-nnoremap <silent> <leader>gb :Gblame<CR>
-nnoremap <silent> <leader>ge :Gedit<CR>
-nnoremap <silent> <leader>gE :Gedit<space>
-nnoremap <silent> <leader>gr :Gread<CR>
-nnoremap <silent> <leader>gR :Gread<space>
-nnoremap <silent> <leader>gw :Gwrite<CR>
-nnoremap <silent> <leader>gW :Gwrite!<CR>
-nnoremap <silent> <leader>gq :Gwq<CR>
-nnoremap <silent> <leader>gQ :Gwq!<CR>
-
 " Status line
 Plug 'itchyny/lightline.vim'
 
@@ -89,22 +76,12 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Theme
 Plug 'tiega/halcyon.vim'
-Plug 'hardcoreplayers/oceanic-material'
 
 " Grammar
 Plug 'rhysd/vim-grammarous'
 
 " Markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-
-" LaTeX
-Plug 'lervag/vimtex'
-let g:tex_flavor='latex'
-let g:vimtex_view_method='zathura'
-let g:vimtex_quickfix_mode=0
-set conceallevel=1
-let g:tex_conceal='abdmg'
-let g:vimtex_latexmk_progname= '/usr/bin/nvr'
 
 " Snippets
 Plug 'SirVer/ultisnips'
