@@ -1,3 +1,4 @@
+" Config for the VsVim plugin of Visual Studio
 set ignorecase
 set smartcase
 
