@@ -10,38 +10,6 @@ export ZSH=~/.oh-my-zsh
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="simple"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -70,13 +38,6 @@ export PATH=$PATH:~/.local/bin
 # Flatpak
 export PATH=$PATH:/var/lib/flatpak/app
 
-# GO path
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-
-# Golang tools
-export PATH=$PATH:/usr/local/go/bin
-
 # Open command
 case "$(uname -s)" in
     Linux*) alias open=xdg-open;;
@@ -90,31 +51,6 @@ autoload -Uz tetriscurses
 # No autocd for directories
 unsetopt autocd
 
-## Booting into TTY
-# Gruvbox
-#if [ "$TERM" = "linux" ]; then
-  #/bin/echo -e "
-  #\e]P0282828
-  #\e]P1cc241d
-  #\e]P298971a
-  #\e]P3d79921
-  #\e]P4458588
-  #\e]P5b16286
-  #\e]P6689b6a
-  #\e]P7a89984
-  #\e]P8928374
-  #\e]P9fb4934
-  #\e]PAb8bb26
-  #\e]PBfabd2f
-  #\e]PC83a598
-  #\e]PDd3869b
-  #\e]PE8ec07c
-  #\e]PFebdbb2
-  #"
-  ## get rid of artifacts
-  #clear
-#fi
-
 # Colour for man pages
 export LESS_TERMCAP_mb=$'\e[1;32m'
 export LESS_TERMCAP_md=$'\e[1;32m'
@@ -124,19 +60,34 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
-#export PATH=$PATH:/System/Volumes/Data/Library/Developer/CommandLineTools/usr/bin
 export PATH=$PATH:~/dotfiles/scripts
 export PATH="/usr/sbin:$PATH"
+export PATH="$PATH:/Library/Developer/CommandLineTools/usr/bin" # for clangd on macOS
 
 alias activate_pio='source ~/.platformio/penv/bin/activate'
 alias p1='ping 1.1.1.1'
-
 alias venv='
 for dirname in venv env .venv .env
 do
   if [ -e $dirname ]
   then
-    source ./$dirname/bin/activate
+# source ./$dirname/bin/activate  # commented out by conda initialize
   fi
 done
 '
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
