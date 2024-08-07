@@ -53,6 +53,7 @@ require('packer').startup(function()
 
   -- Add git related info in the signs columns and popups
   use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+  use { 'tpope/vim-fugitive' }
 
   -- File explorer
   use {
@@ -96,17 +97,17 @@ require('packer').startup(function()
     end,
 
     requires = {
-    {
+      {
         -- Parenthesis highlighting
         "p00f/nvim-ts-rainbow",
         after = "nvim-treesitter",
       },
-    {
+      {
         -- Autoclose tags
         "windwp/nvim-ts-autotag",
         after = "nvim-treesitter",
       },
-    {
+      {
         -- Context based commenting
         "JoosepAlviste/nvim-ts-context-commentstring",
         after = "nvim-treesitter",
@@ -156,8 +157,16 @@ require('packer').startup(function()
   use 'simrat39/symbols-outline.nvim' -- symbol tree
   use 'windwp/nvim-ts-autotag'
 
+  -- Pandoc integration
+  use 'vim-pandoc/vim-pandoc'
+
   -- Standalone pandoc syntax module
-  use 'vim-pandoc/vim-pandoc-syntax'
+  use {
+    'vim-pandoc/vim-pandoc-syntax',
+    config = function()
+      vim.cmd [[ let g:pandoc#syntax#codeblocks#embeds#langs = [ 'python', 'lua', 'c' ] ]]
+    end
+  }
 
   -- colorizer
   use {
@@ -188,7 +197,7 @@ require('packer').startup(function()
   -- Slime
   use {
     'jpalardy/vim-slime',
-    ft = {'python', 'markdown'},
+    ft = {'python', 'markdown', 'pandoc', 'markdown.pandoc'},
     config = function()
       vim.g.slime_target = "tmux"
       vim.g.slime_default_config = { socket_name = "default", target_pane = "{last}" }
@@ -258,17 +267,6 @@ augroup end
 
 -- Gitsigns
 require('gitsigns').setup {
-  signs = {
-    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-  },
-  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
-  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
-  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
-  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
   signs = {
     add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
     change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
@@ -389,6 +387,12 @@ lsp_installer.on_server_ready(function(server)
     }
   end
 
+  if server.name == "clangd" then
+    opts.init_options = {
+      fallbackFlags = {"-std=c++17 -Wall"}
+    }
+  end
+
   server:setup(opts)
 end)
 
@@ -470,9 +474,9 @@ cmp.setup {
     end,
   },
   sources = {
-  { name = 'nvim_lsp' },
-  { name = 'luasnip' },
-  { name = 'path' },
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'path' },
   },
 }
 
