@@ -139,6 +139,7 @@ set laststatus=2    " Always have status line
 set noshowmode      " Lightline already show mode
 set showcmd
 set termguicolors
+"set notermguicolors
 set cmdheight=1     " One line for command line
 set shortmess+=c    " don't give completion messages
 set splitbelow      " Set preview window to appear at bottom
@@ -159,7 +160,7 @@ hi Pmenu guibg=Black
 
 """" Theme settings
 " if you prefer the default one, comment out this line
-let g:equinusocio_material_darker = 1
+"let g:equinusocio_material_darker = 1
 
 " make vertsplit invisible
 let g:equinusocio_material_hide_vertsplit = 1

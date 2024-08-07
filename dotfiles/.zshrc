@@ -127,6 +127,11 @@ alias activate_pio="source ~/.platformio/penv/bin/activate"
 # Autocomplete java classes in the current directory
 export CLASSPATH=.:$CLASSPATH
 
+# Clangd
+export PATH=$PATH:/usr/lib/llvm-10/bin
+
+# Local path
+export PATH=$PATH:/home/tiger/.local/bin
 
 ## Booting into TTY
 # Gruvbox
