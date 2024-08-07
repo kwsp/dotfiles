@@ -1,25 +1,20 @@
 {
-    "coc.preferences.jumpCommand": "tab drop",
-    "coc.preferences.formatOnSaveFiletypes": [
-        "css",
-        "python",
-        "markdown",
-        "go"
-    ],
-    "python.formatting.provider": "black",
-    "python.linting.mypyEnabled": true,
-    "languageserver": {
-        "go": {
-            "command": "gopls",
-            "rootPatterns": [
-                "go.mod"
-            ],
-            "trace.server": "verbose",
-            "filetypes": [
-                "go"
-            ]
-        }
-    },
-    "suggest.maxPreviewWidth": 20,
-    "list.previewSplitRight": true,
+  "coc.preferences.jumpCommand": "tab drop",
+  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "go"],
+  "python.linting.pylintEnabled": false,
+  "python.linting.mypyEnabled": true,
+  "python.linting.enabled": true,
+  "python.formatting.provider": "black",
+  "python.venvFolders": [".env", "venv", "env", ".pyenv", ".direnv"],
+  "python.pythonPath": "python3",
+  "languageserver": {
+    "go": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod"],
+      "trace.server": "verbose",
+      "filetypes": ["go"]
+    }
+  },
+  "suggest.maxPreviewWidth": 20,
+  "list.previewSplitRight": true
 }
