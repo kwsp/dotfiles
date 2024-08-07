@@ -19,5 +19,7 @@
                 "go"
             ]
         }
-    }
+    },
+    "suggest.maxPreviewWidth": 20,
+    "list.previewSplitRight": true,
 }
