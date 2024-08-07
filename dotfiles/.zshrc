@@ -64,6 +64,9 @@ alias :e='echo "Nerd..." && sleep 1 && vim'
 # Local bin
 export PATH=$PATH:~/.local/bin
 
+# Flatpak
+export PATH=$PATH:/var/lib/flatpak/app
+
 # GO path
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin

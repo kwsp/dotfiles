@@ -4,12 +4,12 @@ output DP-1 res 2560x1440
 ### Appearance
 # Colours
 # class                 border  backgr. text    indicator child_border
-client.focused          #4a71c7 #282828 #ebdbb2 #458588   #4a71c7
-client.focused_inactive #d79921 #282828 #ebdbb2 #d79921   #d79921
-client.unfocused        #32302f #282828 #ebdbb2 #32302f   #32302f
-client.urgent           #cc241d #282828 #ebdbb2 #cc241d   #cc241d
-client.placeholder      #282828 #282828 #ebdbb2 #282828   #282828
-client.background       #282828
+#client.focused          #4a71c7 #282828 #ebdbb2 #458588   #4a71c7
+#client.focused_inactive #d79921 #282828 #ebdbb2 #d79921   #d79921
+#client.unfocused        #32302f #282828 #ebdbb2 #32302f   #32302f
+#client.urgent           #cc241d #282828 #ebdbb2 #cc241d   #cc241d
+#client.placeholder      #282828 #282828 #ebdbb2 #282828   #282828
+#client.background       #282828
 
 # gaps
 gaps inner 6
@@ -23,17 +23,6 @@ input "type:touchpad" {
     tap enabled
     natural_scroll enabled
 }
-
-### Keyboard
-input "type:keyboard" {
-    xkb_options caps:escape
-}
-
-# set brightness logarithmically by factor 1.4
-# .72 is just slightly bigger than 1 / 1.4
-bindsym --locked XF86MonBrightnessUp exec light -S "$(light -G | awk '{ print int(($1 + .72) * 1.4) }')"
-bindsym --locked XF86MonBrightnessDown exec light -S "$(light -G | awk '{ print int($1 / 1.4) }')"
-
 
 
 # Default config for sway
@@ -56,9 +45,8 @@ set $term kitty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
-## start rofi
-#bindsym $mod+d exec "sh ~/.config/rofi/launchers/executable_launcher.sh"
+set $menu j4-dmenu-desktop --term="kitty" --no-generic | xargs swaymsg exec --
+
 
 ### Output configuration
 #
@@ -75,10 +63,10 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # Example configuration:
 #
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -99,6 +87,35 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 # Read `man 5 sway-input` for more information about this section.
 
 ### Key bindings
+#
+# Remap capslock to escape
+#
+input "type:keyboard" {
+    xkb_options caps:escape
+}
+
+# set brightness logarithmically by factor 1.4
+# .72 is just slightly bigger than 1 / 1.4
+#bindsym --locked XF86MonBrightnessUp exec light -S "$(light -G | awk '{ print int(($1 + .72) * 1.4) }')"
+#bindsym --locked XF86MonBrightnessDown exec light -S "$(light -G | awk '{ print int($1 / 1.4) }')"
+
+#
+# Volume keys
+#
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +4000
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -4000
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+#
+# Screenshot
+#
+# Full screen
+bindsym Print exec ~/.config/sway/grimshot save screen
+# Area selection
+bindsym Print+Shift exec ~/.config/sway/grimshot save area
+# Window selection
+bindsym $mod+Print exec ~/.config/sway/grimshot save window
+
 #
 # Basics:
 #
