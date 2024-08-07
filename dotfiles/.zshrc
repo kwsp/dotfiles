@@ -130,3 +130,13 @@ export PATH="/usr/sbin:$PATH"
 
 alias activate_pio='source ~/.platformio/penv/bin/activate'
 alias p1='ping 1.1.1.1'
+
+alias venv='
+for dirname in venv env .venv .env
+do
+  if [ -e $dirname ]
+  then
+    source ./$dirname/bin/activate
+  fi
+done
+'

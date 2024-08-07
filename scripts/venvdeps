@@ -1,0 +1,15 @@
+#!/bin/sh
+dirdepth=$(which pip | tr '/' '\n' | wc -l)
+
+echo dirpath is $dirdepth, pip path is $(which pip)
+
+if [ $dirdepth -gt 5 ]
+then
+  echo Probably in a virtual env. Good! Installing dev dependencies . . .
+  pip install -U pip
+  pip install pynvim jedi rope mypy black
+  echo "$(tput setaf 2)Done ✨"
+else
+  echo Pip location not at least 5 slashes deep, probably not using a virtual env.
+  echo "$(tput setaf 1)Aborting"
+fi
