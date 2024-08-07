@@ -1,0 +1,8 @@
+#!/bin/bash
+[[ $(uname) != "Darwin" ]] && exit 1
+
+if [ -z "$1" ]; then
+  launchctl load /Library/LaunchAgents/com.paloaltonetworks.gp.pangp*
+else
+  launchctl unload /Library/LaunchAgents/com.paloaltonetworks.gp.pangp*
+fi
