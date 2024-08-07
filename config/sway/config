@@ -1,7 +1,7 @@
 # Read `man 5 sway` for a complete reference.
 
 ## Font
-font pango:JetBrainsMono Nerd Font 12
+font pango:NerdFonts 16px
 
 ### Appearance
 # Colours
@@ -14,8 +14,8 @@ client.placeholder      #000000 #404040 #b4b4b4 #000000   #171c28
 client.background       #000000
 
 # gaps
-gaps inner 8
-smart_gaps off
+gaps inner 6
+smart_gaps on
 
 # Set border pixel to 1 removes titlebar
 default_border pixel 2
@@ -56,30 +56,19 @@ set $menu j4-dmenu-desktop --term="kitty" --no-generic | xargs swaymsg exec --
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Samsung LU28R55
-output DP-1 {
-    res 2560x1440
+output * {
+    bg ~/dotfiles/wp1.jpeg fill
 }
-
-output eDP-1 {
-    #bg ~/dotfiles/background.jpg fill
-    bg ~/dotfiles/fantasy_sunset.jpg fill
-    res 1920x1080
-}
-
 
 ### Idle configuration
 #
 # Example configuration:
 #
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 20252b' \
+         timeout 300 '~/dotfiles/sway/lock' \
          timeout 330 'swaymsg "output * dpms off"' \
-         resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -c 20252b'
-
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
+            resume 'swaymsg "output * dpms on"' \
+         before-sleep '~/dotfiles/sway/lock'
 
 ### Disable idle when firefox is fullscreen
 # xwayland version
@@ -281,20 +270,21 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while ~/.config/sway/status.sh; do sleep 1; done
-    mode dock
-    position bottom
+    swaybar_command waybar
 
-    colors {
-        background #27262788
-        statusline #ffffff
+    #status_command while ~/.config/sway/status.sh; do sleep 1; done
 
-        # class             border    backgr.   text
-        focused_workspace   #404040   #40404099 #ffffff
-        inactive_workspace  #272627ff #27262788 #ffffff
-    }
+    #mode dock
+    #position bottom
+
+    #colors {
+        #background #27262788
+        #statusline #ffffff
+
+        ## class             border    backgr.   text
+        #focused_workspace   #404040   #40404099 #ffffff
+        #inactive_workspace  #272627ff #27262788 #ffffff
+    #}
 }
 
 include /etc/sway/config.d/*

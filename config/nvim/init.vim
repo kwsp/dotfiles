@@ -78,6 +78,7 @@ if !exists('g:vscode')
     Plug 'vim-python/python-syntax'
     Plug 'pangloss/vim-javascript'
     Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+    Plug 'neoclide/jsonc.vim'
 
     " Markdown
     Plug 'godlygeek/tabular'
@@ -105,7 +106,7 @@ if !exists('g:vscode')
 endif
 
 " Editing
-Plug 'preservim/nerdcommenter'
+Plug 'NieTiger/nerdcommenter'
 let g:NERDSpaceDelims = 0
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'

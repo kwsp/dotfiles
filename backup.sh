@@ -40,7 +40,7 @@ main() {
     echo "Starting backup ..."
 
     # backup config
-    rsync -q -av ~/.config/sway ~/.config/kitty ~/.config/nvim ~/.config/zathura config
+    rsync -q -av ~/.config/sway ~/.config/waybar ~/.config/kitty ~/.config/nvim ~/.config/zathura config
     # backup dotfiles
     rsync -q -av ~/.tmux.conf.local ~/.zshrc ~/.gitconfig dotfiles/
 
