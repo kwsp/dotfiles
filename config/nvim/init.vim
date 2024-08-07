@@ -100,6 +100,7 @@ if !exists('g:vscode')
     Plug 'jpalardy/vim-slime'
     let g:slime_target = "tmux"
     let g:slime_default_config = {"socket_name": get(split($TMUX, ","), 0), "target_pane": ":.2"}
+    let g:slime_python_ipython = 1
 
 endif
 
@@ -312,3 +313,22 @@ nmap <leader>6 6gt
 nmap <leader>7 7gt
 nmap <leader>8 8gt
 nmap <leader>9 9gt
+
+" ====================================
+" https://idie.ru/posts/vim-modern-cpp
+" ====================================
+
+" Access cpp docs with K
+" Needs cppman to cache all pages and expose to system man
+function! s:JbzCppMan()
+    let old_isk = &iskeyword
+    setl iskeyword+=:
+    let str = expand("<cword>")
+    let &l:iskeyword = old_isk
+    execute 'Man ' . str
+endfunction
+command! JbzCppMan :call s:JbzCppMan()
+
+au FileType cpp nnoremap <buffer>K :JbzCppMan<CR>
+
+

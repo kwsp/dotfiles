@@ -53,7 +53,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export EDITOR='vim'
+export EDITOR='nvim'
 alias vim='nvim'
 export GIT_EDITOR=nvim
 
