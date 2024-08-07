@@ -3,12 +3,16 @@
 " ============================================================================ "
 scriptencoding utf-8
 set encoding=utf-8
-syntax enable
+"syntax enable
 filetype plugin indent on
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
 set shiftwidth=4    " number of spaces to use for autoindent set smartindent
+autocmd BufRead,BufNewFile *.html set shiftwidth=2  " 2 spaces for HTML
+autocmd BufRead,BufNewFile *.js set shiftwidth=2  " 2 spaces for js
+autocmd BufRead,BufNewFile *.ts set shiftwidth=2  " 2 spaces for js
 set expandtab       " tabs are space
+set smartindent
 set autoindent
 set copyindent      " copy indent from the previous line
 set clipboard+=unnamedplus  " All yank to system clipboard
@@ -47,11 +51,13 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Editing
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdcommenter'
+Plug 'preservim/nerdtree'
+Plug 'preservim/tagbar'
+nmap <F8> :TagbarToggle<CR>
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'jiangmiao/auto-pairs'
+"Plug 'jiangmiao/auto-pairs'
 
 " Git plugin
 Plug 'tpope/vim-fugitive'
