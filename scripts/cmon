@@ -1,0 +1,3 @@
+#!/bin/sh
+# Monitor resource usage of all CLI activity
+ps -m -o %cpu,%mem,command
