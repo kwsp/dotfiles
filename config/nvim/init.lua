@@ -200,7 +200,7 @@ require('packer').startup(function()
   -- Slime
   use {
     'jpalardy/vim-slime',
-    ft = { 'python', 'markdown', 'pandoc', 'markdown.pandoc', 'lisp' },
+    ft = { 'python', 'markdown', 'pandoc', 'markdown.pandoc', 'lisp', 'scheme' },
     config = function()
       vim.g.slime_target = "tmux"
       vim.g.slime_default_config = { socket_name = "default", target_pane = "{last}" }
@@ -371,7 +371,10 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-require("mason").setup()
+-- require("mason").setup()
+require("mason").setup {
+  log_level = vim.log.levels.DEBUG
+}
 require("mason-lspconfig").setup()
 require("mason-lspconfig").setup_handlers {
   -- The first entry (without a key) will be the default handler
@@ -385,11 +388,13 @@ require("mason-lspconfig").setup_handlers {
   end,
   -- Next, you can provide targeted overrides for specific servers.
   -- For example, a handler override for the rust_analyzer
-  ["rust_analyzer"] = function()
-    require("lspconfig")["rust_analyzer"].setup {
+  ["clangd"] = function()
+    require("lspconfig")["clangd"].setup {
       capabilities = capabilities,
       on_attach = on_attach
     }
+  end,
+  ["rust_analyzer"] = function()
     require("rust-tools").setup {}
   end,
   ["sumneko_lua"] = function()
