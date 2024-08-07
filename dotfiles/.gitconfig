@@ -4,5 +4,7 @@
   email = nhl0819@gmail.com
 [core]
   excludesFile = ~/.gitignore
+[init]
+  defaultBranch = main
 [pull]
   rebase = false
