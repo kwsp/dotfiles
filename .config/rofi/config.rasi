@@ -1,9 +1,0 @@
-/** Configured For Applets **/
-
-configuration {
-  modi: "window,drun,ssh,combi";
-  show-icons:         true;
-  location: 5;
-  yoffset: -50;
-  xoffset: -20;
-}
