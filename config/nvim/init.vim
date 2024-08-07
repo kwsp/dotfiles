@@ -1,17 +1,8 @@
-" set runtimepath^=~/.vim runtimepath+=~/.vim/after
-" let &packpath=&runtimepath
-if exists('g:vscode')
-    "
-else
-    "
-endif
-
 " ============================================================================ "
 " ===                               Neovim config                          === "
 " ============================================================================ "
 scriptencoding utf-8
 set encoding=utf-8
-"syntax enable
 filetype plugin indent on
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
@@ -57,56 +48,61 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 endif
 call plug#begin(stdpath('data') . '/plugged')
 
+if !exists('g:vscode')
+    Plug 'preservim/nerdtree'
+    Plug 'preservim/tagbar'
+    nmap <F8> :TagbarToggle<CR>
+    Plug 'jiangmiao/auto-pairs'
+
+    " Git plugin
+    Plug 'tpope/vim-fugitive'
+    let g:fugitive_git_executable = 'LANG=en_US.UTF-8 git'
+    Plug 'airblade/vim-gitgutter'
+    let g:gitgutter_grep = 'rg'
+
+    " Status line
+    Plug 'itchyny/lightline.vim'
+
+    " Autocompletion
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+    " Fuzzy find
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf.vim',
+
+    " Syntax highlighting
+    Plug 'vim-python/python-syntax'
+    Plug 'pangloss/vim-javascript'
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+    " Markdown
+    Plug 'godlygeek/tabular'
+    Plug 'plasticboy/vim-markdown'
+    let g:vim_markdown_new_list_item_indent = 0
+    let g:vim_markdown_folding_disabled = 1
+
+    " Common Lisp
+    Plug 'kovisoft/slimv'
+    let g:slimv_swank_cmd = '!tmux new-window -d -n REPL-SBCL "sbcl --load ~/.vim/plugged/slimv/slime/start-swank.lisp"'
+    let g:lisp_rainbow=1
+
+    " Theme
+    Plug 'NieTiger/halcyon-neovim'
+
+    " Tmux integration
+    Plug 'christoomey/vim-tmux-navigator'
+
+endif
+
 " Editing
 Plug 'preservim/nerdcommenter'
 let g:NERDSpaceDelims = 1
-Plug 'preservim/nerdtree'
-Plug 'preservim/tagbar'
-nmap <F8> :TagbarToggle<CR>
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'jiangmiao/auto-pairs'
-
-" Git plugin
-Plug 'tpope/vim-fugitive'
-let g:fugitive_git_executable = 'LANG=en_US.UTF-8 git'
-Plug 'airblade/vim-gitgutter'
-let g:gitgutter_grep = 'rg'
-
-" Status line
-Plug 'itchyny/lightline.vim'
-
-" Autocompletion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Fuzzy find
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim',
-
-" Syntax highlighting
-Plug 'vim-python/python-syntax'
-Plug 'pangloss/vim-javascript'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
-" Markdown
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-let g:vim_markdown_new_list_item_indent = 0
-let g:vim_markdown_folding_disabled = 1
-
-" Common Lisp
-Plug 'kovisoft/slimv'
-let g:slimv_swank_cmd = '!tmux new-window -d -n REPL-SBCL "sbcl --load ~/.vim/plugged/slimv/slime/start-swank.lisp"'
-let g:lisp_rainbow=1
-
-" Theme
-Plug 'NieTiger/halcyon-neovim'
-
-" Tmux integration
-Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
+if !exists('g:vscode')
 " ============================================================================ "
 " ===                                UI                                    === "
 " ============================================================================ "
@@ -314,3 +310,7 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 
 " Reload vimrc
 map <F9> :so ~/.config/nvim/init.vim<CR>
+
+
+" ============================================================================ "
+endif
