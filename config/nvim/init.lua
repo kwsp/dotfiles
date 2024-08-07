@@ -179,14 +179,6 @@ require('packer').startup(function()
     end
   }
 
-  -- smooth scroll
-  use {
-    'karb94/neoscroll.nvim',
-    config = function()
-      require('neoscroll').setup()
-    end
-  }
-
   -- Slime
   use {
     'jpalardy/vim-slime',
@@ -335,7 +327,7 @@ require('gitsigns').setup {
 
 -- LSP settings
 local opts = { noremap = true, silent = true }
-vim.keymap.set('n', 'go', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.keymap.set('n', '<leader>go', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
 vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
 vim.keymap.set('n', '<leader>p', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
@@ -348,6 +340,7 @@ local on_attach = function(_, bufnr)
   local buf_map = vim.api.nvim_buf_set_keymap
   buf_map(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_map(bufnr, 'n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_map(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_map(bufnr, 'n', '<leader>qf', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_map(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
