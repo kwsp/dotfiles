@@ -69,6 +69,7 @@ Plug 'junegunn/fzf.vim',
 
 " Syntax highlighting
 Plug 'vim-python/python-syntax'
+Plug 'pangloss/vim-javascript'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Markdown
@@ -81,7 +82,7 @@ let g:vim_markdown_folding_disabled = 1
 Plug 'vlime/vlime', {'rtp': 'vim/'}
 
 " Theme
-Plug 'tiega/halcyon.vim'
+Plug 'NieTiger/halcyon-neovim'
 
 " Tmux integration
 Plug 'christoomey/vim-tmux-navigator'
