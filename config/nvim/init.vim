@@ -64,6 +64,7 @@ call plug#begin(stdpath('data') . '/plugged')
     let g:vim_markdown_folding_disabled = 1
     let g:vim_markdown_math = 1
     let g:vim_markdown_frontmatter = 1
+    let g:vim_markdown_new_list_item_indent = 0
     
     Plug 'jpalardy/vim-slime', { 'for': ['python', 'markdown'] }
     let g:slime_target = "tmux"
@@ -101,12 +102,3 @@ autocmd filetype cpp nnoremap <leader>tp :read ~/.config/nvim/templates/skeleton
 " markdown note taking
 command! Notes autocmd BufWritePost *.md silent !pandoc -s --katex='https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/' --highlight-style pygments --toc % -o %:r.html
 
-
-" This gets rid of the nasty _ italic bug in tpope's vim-markdown
-" block $$...$$
-syn region math start=/\$\$/ end=/\$\$/
-" inline math
-syn match math '\$[^$].\{-}\$'
-
-" actually highlight the region we defined as "math"
-hi link math Statement

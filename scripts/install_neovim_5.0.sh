@@ -15,7 +15,7 @@ fi
 
 # Download latest appimage
 echo Downloading latest neovim appimage...
-curl -sSL https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage > /tmp/nvim.appimage
+curl -sSL https://github.com/neovim/neovim/releases/download/v0.5.0/nvim.appimage > /tmp/nvim.appimage
 chmod a+x /tmp/nvim.appimage
 echo Copying to /opt/nvim/nvim.appimage
 mv /tmp/nvim.appimage /opt/nvim/nvim.appimage
