@@ -1,8 +1,8 @@
-<h2 align="center">Halcyon</h1>
+# Halcyon
 
-<h4 aligh="center">This is my collection of config files for both Darwin and Linux. </h4>
+This is my collection of config files for both Darwin and Linux.
 
-<img src="https://github.com/NieTiger/halcyon-assets/raw/master/macOS-neofetch.png" alt="img" align="center" width="700px">
+<img src="https://github.com/NieTiger/halcyon-assets/raw/master/macOS-neofetch.png" alt="img">
 
 | Software    | Linux                                                                                 | Darwin                                   |
 | ----------- | ------------------------------------------------------------------------------------- | ---------------------------------------- |
@@ -21,6 +21,8 @@
 - NeoVim theme: [halcyon-neovim](https://github.com/NieTiger/halcyon-neovim)
 - kitty theme: custom halcyon in config
 - Pecan theme: custom halcyon in config
+
+I basically live inside tmux, NeoVim and friends (ripgrep, fzf, coc.nvim ...) so a lot of the software config is in my Neovim config.
 
 ## Usage
 
