@@ -68,52 +68,16 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim',
 
 " Syntax highlighting
-Plug 'leafgarland/typescript-vim'
-Plug 'maxmellon/vim-jsx-pretty'
 Plug 'vim-python/python-syntax'
-Plug 'peitalin/vim-jsx-typescript'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Theme
 Plug 'tiega/halcyon.vim'
 
-" Grammar
-Plug 'rhysd/vim-grammarous'
-
-" Markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-
-" Snippets
-Plug 'SirVer/ultisnips'
-let g:UltiSnipsExpandTrigger = '<Tab>'
-let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<s-Tab>'
-
 " Tmux integration
 Plug 'christoomey/vim-tmux-navigator'
 
-" Distraction free writing
-Plug 'junegunn/goyo.vim'
-
 call plug#end()
-
-" Markdown
-let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 1
-let g:mkdp_refresh_slow = 0
-let g:mkdp_browser = 'firefox'
-
-let g:mkdp_page_title = '${name}'
-let g:mkdx#settings = { 'highlight': { 'enable': 1 },
-                        \ 'enter': { 'shift': 1 },
-                        \ 'links': { 'external': { 'enable': 1 } },
-                        \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
-                        \ 'fold': { 'enable': 1 } }
-
-nmap <silent> <F7> <Plug>MarkdownPreview
-imap <silent> <F7> <Plug>MarkdownPreview
-nmap <silent> <F8> <Plug>StopMarkdownPreview
-imap <silent> <F8> <Plug>StopMarkdownPreview
 
 " ============================================================================ "
 " ===                                UI                                    === "

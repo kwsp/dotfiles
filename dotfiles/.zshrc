@@ -47,7 +47,7 @@ ZSH_THEME="simple"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git docker tmux)
+plugins=(git tmux)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -61,11 +61,6 @@ alias :e='echo "Nerd..." && sleep 1 && vim'
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-
 # Local bin
 export PATH=$PATH:~/.local/bin
 
@@ -77,7 +72,10 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
 
 # Open command
-alias open=xdg-open
+unames="$(uname -s)"
+case "$(uname -s)" in
+    Linux*) alias open=xdg-open;;
+esac
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -87,16 +85,8 @@ autoload -Uz tetriscurses
 # No autocd for directories
 unsetopt autocd
 
-# alias to activate platformio tools
-alias activate_pio="source ~/.platformio/penv/bin/activate"
-
-
 # Autocomplete java classes in the current directory
 export CLASSPATH=.:$CLASSPATH
-
-# NVM
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 ## Booting into TTY
 # Gruvbox
