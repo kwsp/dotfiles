@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
+# Finds all files in the current directory for files of type 'PNG'
+# and converts them to jpeg formats.
 if ! command -v convert &> /dev/null
 then
   echo "$(tput setaf 3)Error: Please install ImageMagick"

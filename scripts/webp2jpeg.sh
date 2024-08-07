@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Finds all files in the current directory for files of type 'Web/P'
 # and converts them to jpeg formats.
 if ! command -v convert &> /dev/null
@@ -7,9 +7,13 @@ then
   exit 1
 fi
 
+n=$(ls -l *.webp *.WEBP | wc -l | sed 's/ //g')
+if [ $n = 0 ]; then
+  echo "$(tput setaf 1)No webp files found."
+fi
+
 i=0
-n=$(ls -l *.webp | wc -l | sed 's/ //g')
-ls *.webp | while read name
+ls *.webp *.WEBP | while read name
 do
   percent=$(((i*100)/(n)))
   filename=$(basename -- "$name")
