@@ -4,3 +4,5 @@
     email = nhl0819@gmail.com
 [core]
 	excludesFile = ~/.gitignore
+[pull]
+	rebase = false
