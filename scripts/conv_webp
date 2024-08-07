@@ -2,9 +2,7 @@
 # Finds all files in the current directory for files of type 'Web/P'
 # and converts them to jpg formats.
 DIR=./
-if [[ $# > 1 ]]; then
-    DIR=$1
-fi
+[[ $# > 1 ]] && DIR=$1
 echo Looking in directory $1
 
 FILES=$(find $DIR -type f | xargs file | grep "Web/P" | awk '{str=$1;gsub(":","",str);print str}')

@@ -1,0 +1,13 @@
+:root {
+  /* Halcyon */
+  --bg: #171c28;
+  --grey1: #6679a4;
+  --grey2: #8695b7;
+  --purple: #c3a6ff;
+  --cyan: #5ccfe6;
+  --green: #bae67e;
+  --yellow: #ffcc66;
+  --white: #d7dce2;
+  --red: #ef6b73;
+  --fg: var(--white);
+}

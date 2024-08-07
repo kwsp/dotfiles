@@ -20,7 +20,8 @@ RUN apt-get update -qq && \
     tmux \
     unzip \
     wget \
-    zsh
+    zsh \
+    ripgrep
 
 # Install node and yarn
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
