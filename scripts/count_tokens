@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+from collections import Counter
+import os
+import sys
+
+
+def _usage():
+    script_name = os.path.basename(sys.argv[0])
+    print(f"Usage: {script_name} <corpus>")
+    sys.exit(0)
+
+
+data = []
+
+if len(sys.argv) <= 1:
+    # Act as unix pipe
+    for line in sys.stdin:
+        data.extend(line.replace(" ", "\n").split("\n"))
+
+else:
+    if "-h" in sys.argv or "--help" in sys.argv:
+        _usage()
+
+    print(" ".join(sys.argv[1:]))
+
+    for fname in sys.argv[1:]:
+        with open(fname) as f:
+            data.extend(f.read().replace(" ", "\n").split("\n"))
+
+c: Counter = Counter()
+c.update(data)
+print(f"No. of unique word level tokens: {len(c)}")
+print(
+    f"No. of unique tokens appearing more than 3 times: {len([k for k, v in c.items() if v > 3])}"
+)
+lens = [len(k) for k in c.keys()]
+avg_len = sum(lens) / len(lens)
+print(f"Avg. length of tokens: {avg_len}")
