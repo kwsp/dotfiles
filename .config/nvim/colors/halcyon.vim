@@ -1,1 +1,0 @@
-/home/tiger/code/rice/halcyon.vim/colors/halcyon.vim

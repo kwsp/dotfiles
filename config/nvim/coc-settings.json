@@ -3,7 +3,8 @@
     "coc.preferences.formatOnSaveFiletypes": [
         "css",
         "python",
-        "markdown"
+        "markdown",
+        "go"
     ],
     "python.formatting.provider": "black",
     "python.linting.mypyEnabled": true,
