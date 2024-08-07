@@ -60,6 +60,8 @@ let g:fugitive_git_executable = 'LANG=en_US.UTF-8 git'
 " Status line
 Plug 'itchyny/lightline.vim'
 
+Plug 'ryanoasis/vim-devicons'
+
 " Autocompletion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -70,6 +72,11 @@ Plug 'junegunn/fzf.vim',
 " Syntax highlighting
 Plug 'vim-python/python-syntax'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" LaTex
+Plug 'lervag/vimtex'
+let g:tex_flavor = 'latex'
+let g:vimtex_view_method = 'zathura'
 
 " Theme
 Plug 'tiega/halcyon.vim'

@@ -53,8 +53,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export EDITOR='nvim'
-alias vim='nvim'
+export EDITOR='vim'
+#alias vim='nvim'
 alias :q='echo "Nerd..." && sleep 1 && exit'
 alias :e='echo "Nerd..." && sleep 1 && vim'
 
