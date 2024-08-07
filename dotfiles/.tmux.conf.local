@@ -314,4 +314,4 @@ bind-key -T copy-mode-vi 'C-l' select-pane -R
 bind-key -T copy-mode-vi 'C-\' select-pane -l
 
 set -g default-terminal "screen-256color"
-setw remain-on-exit on
+set -g default-shell /bin/zsh

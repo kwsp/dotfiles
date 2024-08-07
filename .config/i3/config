@@ -3,11 +3,11 @@
 for_window [class="^.*"] border pixel 0
 
 # Gaps
-gaps inner 6
-gaps top 0
-gaps right 0
-gaps bottom 0
-gaps left 0
+#gaps inner 6
+#gaps top 0
+#gaps right 0
+#gaps bottom 0
+#gaps left 0
 
 # Font 
 font pango:Consolas 12
@@ -175,7 +175,7 @@ exec deadd-notification-center &
 # Restore nitrogen wallpaper
 exec nitrogen --restore &
 # Redshift
-exec redshift
+exec redshift -P -O 4500
 # Set natural scrolling and tap click
 exec xinput set-prop 10 282 1
 exec xinput set-prop 10 290 1

@@ -24,6 +24,7 @@ set signcolumn=auto
 autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_nz
 set autoread        " Auto reread file if a change was detected
 set scrolloff=100   " cursor always at the center of the screen
+set nrformats+=alpha 
 
 set foldmethod=marker
 
@@ -82,12 +83,13 @@ Plug 'junegunn/fzf.vim',
 " Syntax highlighting
 Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'vim-python/python-syntax'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Theme
-Plug 'chuling/vim-equinusocio-material'
 Plug 'tiega/halcyon.vim'
+Plug 'hardcoreplayers/oceanic-material'
 
 " Grammar
 Plug 'rhysd/vim-grammarous'
@@ -152,6 +154,9 @@ set shortmess+=c    " don't give completion messages
 set splitbelow      " Set preview window to appear at bottom
 
 colorscheme halcyon
+let g:lightline = {
+      \ 'colorscheme': 'halcyon',
+      \ }
 
 if has('nvim')
   set winbl=10        " Set floating window to be slightly transparent
@@ -308,6 +313,5 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 " Reload vimrc
 map <F9> :so ~/.vimrc <CR>
 
-let g:lightline = {
-      \ 'colorscheme': 'halcyon',
-      \ }
+" Python documentation
+nnoremap <F2> :<C-u>execute "!pydoc3 " . expand("<cword>")<CR>

@@ -14,27 +14,35 @@ adddate() {
 }
 
 gitupdate() {
-    CHANGED=$(git diff --name-only HEAD)
-    if [[ $CHANGED ]]; then
-        echo Changed files: $CHANGED
-        echo Uploading to github
+
+    if [[ $# = 0 ]]; then
+        echo "no args"
+        commit_msg="Updated config $(date -Iseconds)"
+    else
+        commit_msg=$1
+    fi
+
+    changed=$(git diff --name-only HEAD)
+    if [[ $changed ]]; then
+        echo changed files: $changed
+        echo uploading to github
         git add . > /dev/null
-        git commit -m "Updated config $(date -Iseconds)" > /dev/null
+        git commit -m "$commit_msg" > /dev/null
         git push > /dev/null
     else
-        echo Nothing changed
+        echo nothing changed
     fi
 }
 
 main() {
     echo "Starting backup ..."
     rsync -q -av ~/.config/zathura ~/.config/redshift ~/.config/deadd ~/.config/kitty ~/.config/nvim ~/.config/i3* ~/.config/polybar ~/.config/rofi ~/.config/compton .config
-    rsync -q -av ~/.Xdefaults ~/.vimrc ~/.tmux.conf.local ~/.zshrc ~/.gitconfig dotfiles/
+    rsync -q -av ~/.Xdefaults ~/.vimrc ~/.tmux.conf.local ~/.zshrc ~/.gitconfig ~/.xinitrc dotfiles/
 
-    gitupdate
+    gitupdate $1
     echo "Backup complete."
 }
 
 
-main | adddate
+main $@ | adddate
 echo
