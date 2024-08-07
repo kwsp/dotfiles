@@ -74,8 +74,8 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " Markdown
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
-let g:vim_markdown_folding_level = 2
 let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_folding_disabled = 1
 
 " Common Lisp
 Plug 'vlime/vlime', {'rtp': 'vim/'}
@@ -103,10 +103,8 @@ set cmdheight=1     " One line for command line
 set shortmess+=c    " don't give completion messages
 set splitbelow      " Set preview window to appear at bottom
 
+let g:lightline = {'colorscheme': 'halcyon'}
 colorscheme halcyon
-let g:lightline = {
-      \ 'colorscheme': 'halcyon',
-      \ }
 
 if has('nvim')
   set winbl=10        " Set floating window to be slightly transparent
