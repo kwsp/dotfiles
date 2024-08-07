@@ -6,11 +6,11 @@ font pango:JetBrainsMono Nerd Font 12
 ### Appearance
 # Colours
 # class                 border  backgr. text    indicator child_border
-client.focused          #918992 #404040 #ffffff #000000   #918992
-client.focused_inactive #000000 #404040 #b4b4b4 #000000   #000000
-client.unfocused        #000000 #404040 #b4b4b4 #000000   #000000
-client.urgent           #000000 #404040 #b4b4b4 #000000   #000000
-client.placeholder      #000000 #404040 #b4b4b4 #000000   #000000
+client.focused          #ffd580 #404040 #ffffff #000000   #8795b7
+client.focused_inactive #000000 #404040 #b4b4b4 #000000   #171c28
+client.unfocused        #000000 #404040 #b4b4b4 #000000   #171c28
+client.urgent           #000000 #404040 #b4b4b4 #000000   #171c28
+client.placeholder      #000000 #404040 #b4b4b4 #000000   #171c28
 client.background       #000000
 
 # gaps
@@ -18,13 +18,13 @@ gaps inner 8
 smart_gaps off
 
 # Set border pixel to 1 removes titlebar
-default_border pixel 1
+default_border pixel 2
 
 # Move mouse to centre of focused container
 mouse_warping container
 
 # Set opacity
-for_window [class="Code"] opacity 0.8
+# for_window [class="Code"] opacity 0.8
 
 
 ### Variables
