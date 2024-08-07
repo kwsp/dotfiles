@@ -25,6 +25,7 @@ set termguicolors
 set noshowmode
 set shortmess+=c
 set number
+set mouse=a
 
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim  --create-dirs
@@ -76,5 +77,6 @@ nmap <leader>9 9gt
 
 
 " competitive programming
-autocmd filetype c nnoremap <leader>r :w <bar> !tmux new-window "(set -x; gcc % -o %:r.out && ./%:r.out); echo '\n$(tput setaf 2)[finished...]'; read"<CR>
-autocmd filetype cpp nnoremap <leader>r :w <bar> !tmux new-window "(set -x; g++ -std=c++14 % -o %:r.out && ./%:r.out); echo '\n$(tput setaf 2)[finished...]'; read"<CR>
+autocmd filetype c nnoremap <leader>r :w <bar> !tmux split-window -h "(set -x; gcc % -o %:r.out && sh -c ./%:r.out); echo '$(tput setaf 2)[finished...]'; read"<CR>
+autocmd filetype cpp nnoremap <leader>r :w <bar> !tmux split-window -h "(set -x; g++ -std=c++17 % -o %:r.out && sh -c ./%:r.out); echo '$(tput setaf 2)[finished...]'; read"<CR><CR>
+autocmd filetype cpp nnoremap <leader>tp :read ~/.config/nvim/templates/skeleton.cpp<CR>kdd9j
