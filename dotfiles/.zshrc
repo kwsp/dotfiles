@@ -104,3 +104,6 @@ source /Users/tnie/vcpkg/scripts/vcpkg_completion.zsh
 # VCPKG binary cache
 export VCPKG_FEED_URL="https://nuget.pkg.github.com/kwsp/index.json"
 export VCPKG_BINARY_SOURCES="nuget,$VCPKG_FEED_URL,readwrite"
+
+# Ensure GPG can use the terminal for passphrase input
+export GPG_TTY=$(tty)
