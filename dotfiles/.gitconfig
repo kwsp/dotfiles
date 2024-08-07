@@ -1,8 +1,8 @@
 # This is Git's per-user configuration file.
 [user]
-    name = Tiger Nie
-    email = nhl0819@gmail.com
+  name = Tiger Nie
+  email = nhl0819@gmail.com
 [core]
-	excludesFile = ~/.gitignore
+  excludesFile = ~/.gitignore
 [pull]
-	rebase = false
+  rebase = false
