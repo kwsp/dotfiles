@@ -73,10 +73,8 @@ Plug 'junegunn/fzf.vim',
 Plug 'vim-python/python-syntax'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-" LaTex
-Plug 'lervag/vimtex'
-let g:tex_flavor = 'latex'
-let g:vimtex_view_method = 'zathura'
+" Common Lisp
+Plug 'vlime/vlime', {'rtp': 'vim/'}
 
 " Theme
 Plug 'tiega/halcyon.vim'
