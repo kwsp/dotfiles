@@ -72,7 +72,6 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
 
 # Open command
-unames="$(uname -s)"
 case "$(uname -s)" in
     Linux*) alias open=xdg-open;;
 esac
