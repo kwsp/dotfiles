@@ -84,12 +84,12 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
   })
 
   table.insert(config.launch_menu, {
-    label = 'Lab Developer Powershell for VS 2019',
+    label = 'OULAB Developer Powershell for VS 2022',
     args = {
       'powershell.exe',
       '-noe',
       '-c',
-      '&{Import-Module "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/Tools/Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell a203a09a}',
+      '&{Import-Module "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/Tools/Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell b0d2db3d}',
     },
   })
 
