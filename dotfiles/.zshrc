@@ -15,32 +15,23 @@ ZSH_THEME="simple"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux fzf)
+plugins=(git tmux)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
 export EDITOR='nvim'
-alias minivim='nvim -u ~/.config/nvim/mini.vim'
 alias vim='nvim'
 export GIT_EDITOR=nvim
 
 alias :q='echo "Nerd..." && sleep 1 && exit'
 alias :e='echo "Nerd..." && sleep 1 && vim'
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
 # Local bin
 export PATH=$PATH:~/.local/bin
 
-# Flatpak
-export PATH=$PATH:/var/lib/flatpak/app
-
-# Open command
 case "$(uname -s)" in
-    Linux*) alias open=xdg-open;;
+  Linux*) alias open=xdg-open;;
 esac
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -51,29 +42,9 @@ autoload -Uz tetriscurses
 # No autocd for directories
 unsetopt autocd
 
-# Colour for man pages
-export LESS_TERMCAP_mb=$'\e[1;32m'
-export LESS_TERMCAP_md=$'\e[1;32m'
-export LESS_TERMCAP_me=$'\e[0m'
-export LESS_TERMCAP_se=$'\e[0m'
-export LESS_TERMCAP_so=$'\e[01;33m'
-export LESS_TERMCAP_ue=$'\e[0m'
-export LESS_TERMCAP_us=$'\e[1;4;31m'
-
 export PATH=$PATH:~/dotfiles/scripts
-export PATH="$PATH:/Library/Developer/CommandLineTools/usr/bin" # for clangd on macOS
 
-alias activate_pio='source ~/.platformio/penv/bin/activate'
 alias p1='ping 1.1.1.1'
-alias venv='
-for dirname in venv env .venv .env
-do
-  if [ -e $dirname ]
-  then
-  source ./$dirname/bin/activate  # commented out by conda initialize
-  fi
-done
-'
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -90,3 +61,4 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+export LIBRARY_PATH=/opt/homebrew/lib/
