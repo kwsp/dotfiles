@@ -14,7 +14,8 @@ client.placeholder      #000000 #404040 #b4b4b4 #000000   #000000
 client.background       #000000
 
 # gaps
-smart_gaps on
+gaps inner 8
+smart_gaps off
 
 # Set border pixel to 1 removes titlebar
 default_border pixel 1
