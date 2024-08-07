@@ -23,13 +23,13 @@ require('packer').startup(function()
   use 'kwsp/vim-tmux-navigator' -- integration with tmux
 
   -- Fuzzy search
-  use 'junegunn/fzf'
-  use {
-    'junegunn/fzf.vim',
+  use { 'junegunn/fzf', run = './install --bin', }
+  use { 'ibhagwan/fzf-lua',
+    requires = { 'kyazdani42/nvim-web-devicons' },
     config = function()
-      vim.api.nvim_set_keymap('n', ';', [[<cmd>Buffers<CR>]], { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<C-p>', [[<cmd>Files<CR>]], { noremap = true, silent = true })
-    end
+      vim.api.nvim_set_keymap('n', ';', "<cmd>lua require('fzf-lua').buffers()<CR>", { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<C-p>', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
+    end,
   }
 
   -- Colorscheme
@@ -62,13 +62,13 @@ require('packer').startup(function()
       'kyazdani42/nvim-web-devicons',
     },
     config = function()
-      require'nvim-tree'.setup {
+      require 'nvim-tree'.setup {
         view = {
           mappings = {
             list = {
-            { key = {"<CR>", "o" }, action = "edit", mode = "n"},
-            { key = "s", action = "vsplit" },
-            { key = "i", action = "split" },
+              { key = { "<CR>", "o" }, action = "edit", mode = "n" },
+              { key = "s", action = "vsplit" },
+              { key = "i", action = "split" },
             }
           }
         }
@@ -184,7 +184,7 @@ require('packer').startup(function()
   }
 
   -- Terminal
-  use {"akinsho/toggleterm.nvim"}
+  --use {"akinsho/toggleterm.nvim"}
 
   -- smooth scroll
   use {
@@ -197,7 +197,7 @@ require('packer').startup(function()
   -- Slime
   use {
     'jpalardy/vim-slime',
-    ft = {'python', 'markdown', 'pandoc', 'markdown.pandoc'},
+    ft = { 'python', 'markdown', 'pandoc', 'markdown.pandoc' },
     config = function()
       vim.g.slime_target = "tmux"
       vim.g.slime_default_config = { socket_name = "default", target_pane = "{last}" }
@@ -267,35 +267,35 @@ augroup end
 
 -- Gitsigns
 require('gitsigns').setup {
-  signs = {
-    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+  signs                        = {
+    add          = { hl = 'GitSignsAdd', text = '│', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
+    change       = { hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+    delete       = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+    topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+    changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
   },
-  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
-  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
-  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
-  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
-  watch_gitdir = {
+  signcolumn                   = true, -- Toggle with `:Gitsigns toggle_signs`
+  numhl                        = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl                       = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff                    = false, -- Toggle with `:Gitsigns toggle_word_diff`
+  watch_gitdir                 = {
     interval = 1000,
     follow_files = true
   },
-  attach_to_untracked = true,
-  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
-  current_line_blame_opts = {
+  attach_to_untracked          = true,
+  current_line_blame           = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame_opts      = {
     virt_text = true,
     virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
     delay = 1000,
     ignore_whitespace = false,
   },
   current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
-  sign_priority = 6,
-  update_debounce = 100,
-  status_formatter = nil, -- Use default
-  max_file_length = 40000,
-  preview_config = {
+  sign_priority                = 6,
+  update_debounce              = 100,
+  status_formatter             = nil, -- Use default
+  max_file_length              = 40000,
+  preview_config               = {
     -- Options passed to nvim_open_win
     border = 'single',
     style = 'minimal',
@@ -303,18 +303,18 @@ require('gitsigns').setup {
     row = 0,
     col = 1
   },
-  yadm = {
+  yadm                         = {
     enable = false
   },
-  on_attach = function(bufnr)
+  on_attach                    = function(bufnr)
     local function map(mode, lhs, rhs, opts)
-      opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
+      opts = vim.tbl_extend('force', { noremap = true, silent = true }, opts or {})
       vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
     end
 
     -- Navigation
-    map('n', ']c', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", {expr=true})
-    map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
+    map('n', ']c', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
+    map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
 
     -- Actions
     map('n', '<leader>hs', ':Gitsigns stage_hunk<CR>')
@@ -352,6 +352,7 @@ local on_attach = function(_, bufnr)
   buf_map(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_map(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_map(bufnr, 'n', '<leader>qf', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_map(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_map(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_map(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
@@ -362,6 +363,9 @@ local on_attach = function(_, bufnr)
   buf_map(bufnr, 'n', '<leader>p', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
+
+  -- Clangd
+  buf_map(bufnr, 'n', '<C-q>', '<cmd>ClangdSwitchSourceHeader<CR>', opts)
 end
 
 local lsp_installer = require("nvim-lsp-installer")
@@ -387,18 +391,18 @@ lsp_installer.on_server_ready(function(server)
     }
   end
 
-  if server.name == "clangd" then
-    opts.init_options = {
-      fallbackFlags = {"-std=c++17 -Wall"}
-    }
-  end
+  --if server.name == "clangd" then
+  --opts.init_options = {
+  --fallbackFlags = {"-std=c++17 -Wall"}
+  --}
+  --end
 
   server:setup(opts)
 end)
 
 
 -- Builtin LSP settings
-vim.diagnostic.config{
+vim.diagnostic.config {
   update_in_insert = true,
   underline = true,
   severity_sort = true,
@@ -480,7 +484,7 @@ cmp.setup {
   },
 }
 
-require("toggleterm").setup{
+require("toggleterm").setup {
   open_mapping = [[<C-\>]],
   hide_numbers = true, -- hide the number column in toggleterm buffers
   shade_filetypes = {},
@@ -503,7 +507,7 @@ require("toggleterm").setup{
 }
 
 function _G.set_terminal_keymaps()
-  local opts = {noremap = true}
+  local opts = { noremap = true }
   vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
   vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
   vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
@@ -511,6 +515,7 @@ function _G.set_terminal_keymaps()
   vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
   vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
 end
+
 vim.cmd [[ autocmd! TermOpen term://* lua set_terminal_keymaps() ]]
 
 require('symbols-outline').setup()
@@ -527,7 +532,7 @@ vim.g.symbols_outline = {
   show_symbol_details = true,
   preview_bg_highlight = 'Pmenu',
   keymaps = { -- These keymaps can be a string or a table for multiple keys
-    close = {"<Esc>", "q"},
+    close = { "<Esc>", "q" },
     goto_location = "<Cr>",
     focus_location = "o",
     hover_symbol = "<C-space>",
@@ -538,32 +543,32 @@ vim.g.symbols_outline = {
   lsp_blacklist = {},
   symbol_blacklist = {},
   symbols = {
-    File = {icon = "", hl = "TSURI"},
-    Module = {icon = "", hl = "TSNamespace"},
-    Namespace = {icon = "", hl = "TSNamespace"},
-    Package = {icon = "", hl = "TSNamespace"},
-    Class = {icon = "𝓒", hl = "TSType"},
-    Method = {icon = "ƒ", hl = "TSMethod"},
-    Property = {icon = "", hl = "TSMethod"},
-    Field = {icon = "", hl = "TSField"},
-    Constructor = {icon = "", hl = "TSConstructor"},
-    Enum = {icon = "ℰ", hl = "TSType"},
-    Interface = {icon = "ﰮ", hl = "TSType"},
-    Function = {icon = "", hl = "TSFunction"},
-    Variable = {icon = "", hl = "TSConstant"},
-    Constant = {icon = "", hl = "TSConstant"},
-    String = {icon = "𝓐", hl = "TSString"},
-    Number = {icon = "#", hl = "TSNumber"},
-    Boolean = {icon = "⊨", hl = "TSBoolean"},
-    Array = {icon = "", hl = "TSConstant"},
-    Object = {icon = "⦿", hl = "TSType"},
-    Key = {icon = "🔐", hl = "TSType"},
-    Null = {icon = "NULL", hl = "TSType"},
-    EnumMember = {icon = "", hl = "TSField"},
-    Struct = {icon = "𝓢", hl = "TSType"},
-    Event = {icon = "🗲", hl = "TSType"},
-    Operator = {icon = "+", hl = "TSOperator"},
-    TypeParameter = {icon = "𝙏", hl = "TSParameter"}
+    File = { icon = "", hl = "TSURI" },
+    Module = { icon = "", hl = "TSNamespace" },
+    Namespace = { icon = "", hl = "TSNamespace" },
+    Package = { icon = "", hl = "TSNamespace" },
+    Class = { icon = "𝓒", hl = "TSType" },
+    Method = { icon = "ƒ", hl = "TSMethod" },
+    Property = { icon = "", hl = "TSMethod" },
+    Field = { icon = "", hl = "TSField" },
+    Constructor = { icon = "", hl = "TSConstructor" },
+    Enum = { icon = "ℰ", hl = "TSType" },
+    Interface = { icon = "ﰮ", hl = "TSType" },
+    Function = { icon = "", hl = "TSFunction" },
+    Variable = { icon = "", hl = "TSConstant" },
+    Constant = { icon = "", hl = "TSConstant" },
+    String = { icon = "𝓐", hl = "TSString" },
+    Number = { icon = "#", hl = "TSNumber" },
+    Boolean = { icon = "⊨", hl = "TSBoolean" },
+    Array = { icon = "", hl = "TSConstant" },
+    Object = { icon = "⦿", hl = "TSType" },
+    Key = { icon = "🔐", hl = "TSType" },
+    Null = { icon = "NULL", hl = "TSType" },
+    EnumMember = { icon = "", hl = "TSField" },
+    Struct = { icon = "𝓢", hl = "TSType" },
+    Event = { icon = "🗲", hl = "TSType" },
+    Operator = { icon = "+", hl = "TSOperator" },
+    TypeParameter = { icon = "𝙏", hl = "TSParameter" }
   }
 }
 vim.api.nvim_set_keymap('n', '<C-s>', [[<cmd>SymbolsOutline<CR>]], { noremap = true, silent = true })
