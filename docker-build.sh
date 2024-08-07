@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build . -t dotfiles
+docker build . -t tigernie/dotfiles
