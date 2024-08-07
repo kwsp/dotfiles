@@ -7,7 +7,6 @@ then
   exit 1
 fi
 
-<<<<<<< HEAD
 n=$(ls -l *.webp *.WEBP | wc -l | sed 's/ //g')
 if [ $n = 0 ]; then
   echo "$(tput setaf 1)No webp files found."
@@ -15,11 +14,6 @@ fi
 
 i=0
 ls *.webp *.WEBP | while read name
-=======
-i=0
-n=$(ls -l *.webp | wc -l | sed 's/ //g')
-ls *.webp | while read name
->>>>>>> 4f4d4c0 (parallelize convert scripts)
 do
   percent=$(((i*100)/(n)))
   filename=$(basename -- "$name")
