@@ -50,4 +50,5 @@ if [[ $(uname) = "Darwin" ]]; then
     cp $CWD/pecan/* "$PECAN_DIR"
 fi
 
+echo
 echo "$(tput setaf 2)Done ✨"
