@@ -57,7 +57,7 @@ call plug#begin(stdpath('data') . '/plugged')
     let g:lisp_rainbow=1
     Plug 'neoclide/jsonc.vim'
 		Plug 'vim-airline/vim-airline'
-    Plug 'NieTiger/halcyon-neovim'
+    Plug 'kwsp/halcyon-neovim'
     Plug 'honza/vim-snippets'
 call plug#end()
 
