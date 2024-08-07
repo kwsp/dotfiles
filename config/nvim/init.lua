@@ -156,22 +156,13 @@ require('packer').startup(function()
   use 'simrat39/symbols-outline.nvim' -- symbol tree
   use 'windwp/nvim-ts-autotag'
 
-  -- Markdown syntax highlight (maths)
-  use {
-    'plasticboy/vim-markdown',
-    config = function()
-      -- vim-markdown highlight latex
-      vim.g.vim_markdown_folding_disabled = 1
-      vim.g.vim_markdown_math = 1
-      vim.g.vim_markdown_frontmatter = 1
-      vim.g.vim_markdown_new_list_item_indent = 0
-    end
-  }
+  -- Standalone pandoc syntax module
+  use 'vim-pandoc/vim-pandoc-syntax'
 
   -- colorizer
   use {
     'norcalli/nvim-colorizer.lua',
-    config = function ()
+    config = function()
       require('colorizer').setup()
     end
   }
@@ -194,7 +185,26 @@ require('packer').startup(function()
     end
   }
 
+  -- Slime
+  use {
+    'jpalardy/vim-slime',
+    ft = {'python', 'markdown'},
+    config = function()
+      vim.g.slime_target = "tmux"
+      vim.g.slime_default_config = { socket_name = "default", target_pane = "{last}" }
+      vim.g.slime_dont_ask_default = 1
+    end
+  }
+
 end)
+
+-- Use pandoc syntax for markdown
+vim.cmd [[ 
+augroup pandoc_syntax
+  autocmd! 
+  autocmd BufNewFile,BufFilePre,BufRead *.md setfiletype markdown.pandoc
+augroup end
+]]
 
 -- Set colorscheme
 vim.o.termguicolors = true
@@ -248,6 +258,17 @@ augroup end
 
 -- Gitsigns
 require('gitsigns').setup {
+  signs = {
+    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+  },
+  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
   signs = {
     add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
     change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
@@ -475,16 +496,16 @@ require("toggleterm").setup{
     },
   },
   close_on_exit = true, -- close the terminal window when the process exits
-  shell = vim.o.shell, -- change the default shell
 }
+
 function _G.set_terminal_keymaps()
-  local opts = { noremap = true }
-  vim.api.nvim_buf_set_keymap(0, "t", "<esc>", [[<C-\><C-n>]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "jk", [[<C-\><C-n>]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
+  local opts = {noremap = true}
+  vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
+  vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
+  vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
+  vim.api.nvim_buf_set_keymap(0, 't', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
+  vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
+  vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
 end
 vim.cmd [[ autocmd! TermOpen term://* lua set_terminal_keymaps() ]]
 
