@@ -1,0 +1,17 @@
+#!/bin/bash
+# Finds all files in the current directory for files of type 'Web/P'
+# and converts them to jpg formats.
+DIR=./
+if [[ $# > 1 ]]; then
+    DIR=$1
+fi
+echo Looking in directory $1
+
+FILES=$(find $DIR -type f | xargs file | grep "Web/P" | awk '{str=$1;gsub(":","",str);print str}')
+
+for FILE in $FILES
+do
+    echo Converting $FILE
+    dwebp $FILE -o $FILE
+done
+

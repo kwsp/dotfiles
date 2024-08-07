@@ -8,9 +8,7 @@ filetype plugin indent on
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
 set shiftwidth=4    " number of spaces to use for autoindent set smartindent
-autocmd BufRead,BufNewFile *.html set shiftwidth=2  " 2 spaces for HTML
-autocmd BufRead,BufNewFile *.js set shiftwidth=2  " 2 spaces for js
-autocmd BufRead,BufNewFile *.ts set shiftwidth=2  " 2 spaces for js
+autocmd BufRead,BufNewFile *.html,*.js,*css,*.ts,*.yaml,*.toml set shiftwidth=2  " 2 spaces for certain files
 set expandtab       " tabs are space
 set smartindent
 set autoindent
@@ -245,6 +243,41 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 
+
+""" coc-snippets
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
+" Make <tab> used for trigger completion, completion confirm, snippet expand and jump like VSCode.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
+
 " ============================================================================ "
 " ===                                 MISC.                                === "
 " ============================================================================ "
@@ -270,3 +303,4 @@ map <F9> :so ~/.vimrc <CR>
 
 " Python documentation
 nnoremap <F2> :<C-u>execute "!pydoc3 " . expand("<cword>")<CR>
+

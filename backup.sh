@@ -5,11 +5,11 @@ BASEDIR=$(dirname "$0")
 cd $BASEDIR
 
 # redirect stdout/stderr to a file
-exec &>> log.txt
+#exec &>> log.txt
 
 adddate() {
     while IFS= read -r line; do
-        printf '%s %s\n' "$(date -Iseconds)" "$line";
+        printf '%s %s\n' "$(date)" "$line";
     done
 }
 
@@ -17,7 +17,7 @@ gitupdate() {
 
     if [[ $# = 0 ]]; then
         echo "no args"
-        commit_msg="Updated config $(date -Iseconds)"
+        commit_msg="Updated config $(date)"
     else
         commit_msg=$1
     fi
@@ -39,7 +39,7 @@ main() {
     rsync -q -av ~/.config/sway ~/.config/kitty ~/.config/nvim ~/.config/zathura .config
     rsync -q -av ~/.vimrc ~/.tmux.conf.local ~/.zshrc ~/.gitconfig dotfiles/
 
-    gitupdate $1
+    #gitupdate $1
     echo "Backup complete."
 }
 

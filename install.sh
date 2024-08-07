@@ -33,14 +33,14 @@ cp -r $CWD/dotfiles/. $HOME_DIR
 
 
 # Install config files only if system is Linux
-if [[ $(uname) = "Linux" ]]; then
+#if [[ $(uname) = "Linux" ]]; then
 
-    if [ ! -d $CONFIG_INSTALL_DIR ]; then
-        mkdir $CONFIG_INSTALL_DIR
-    fi
-    echo "Copying config files to $CONFIG_INSTALL_DIR"
-    cp -r $CWD/.config/* $CONFIG_INSTALL_DIR
-
-else
-    echo "Skipping installation of config files as the system is not Linux."
+if [ ! -d $CONFIG_INSTALL_DIR ]; then
+    mkdir $CONFIG_INSTALL_DIR
 fi
+echo "Copying config files to $CONFIG_INSTALL_DIR"
+cp -r $CWD/.config/* $CONFIG_INSTALL_DIR
+
+#else
+    #echo "Skipping installation of config files as the system is not Linux."
+#fi
