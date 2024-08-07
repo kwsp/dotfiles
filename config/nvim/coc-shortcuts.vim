@@ -36,6 +36,8 @@ function! s:check_back_space() abort
 endfunction
 
 command! -nargs=0 Format :call CocAction('format')
+nnoremap <leader>f :Format<CR>
+
 xmap <leader>x  <Plug>(coc-convert-snippet)
 nmap <leader>qf  <Plug>(coc-fix-current)
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
