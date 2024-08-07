@@ -6,7 +6,7 @@ font pango:NerdFonts 16px
 ### Appearance
 # Colours
 # class                 border  backgr. text    indicator child_border
-client.focused          #ffd580 #404040 #ffffff #000000   #8795b7
+client.focused          #4c7899 #404040 #ffffff #000000   #4c7899
 client.focused_inactive #000000 #404040 #b4b4b4 #000000   #171c28
 client.unfocused        #000000 #404040 #b4b4b4 #000000   #171c28
 client.urgent           #000000 #404040 #b4b4b4 #000000   #171c28
@@ -18,7 +18,7 @@ gaps inner 6
 smart_gaps on
 
 # Set border pixel to 1 removes titlebar
-default_border pixel 2
+default_border pixel 4
 
 # Move mouse to centre of focused container
 mouse_warping container
@@ -61,20 +61,22 @@ output * {
 }
 
 ### Idle configuration
-#
-# Example configuration:
-#
 exec swayidle -w \
          timeout 300 '~/.config/sway/lock' \
          timeout 330 'swaymsg "output * dpms off"' \
             resume 'swaymsg "output * dpms on"' \
          before-sleep '~/.config/sway/lock'
 
+### Notification daemon
+exec mako 
+bindsym $mod+p exec makoctl restore
+
 ### Disable idle when firefox is fullscreen
 # xwayland version
 for_window [class="Firefox"] inhibit_idle fullscreen
 # wayland vesion
 for_window [app_id="firefox"] inhibit_idle fullscreen
+for_window [app_id="Popcorn-Time"] inhibit_idle fullscreen
 
 ### Input configuration
 #

@@ -7,7 +7,7 @@ filetype plugin indent on
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
 set shiftwidth=4    " number of spaces to use for autoindent set smartindent
-autocmd BufRead,BufNewFile *.c,*.cc,*.cpp,*.h,*.html,*.js,*css,*.ts,*.yml,*.yaml,*.toml set shiftwidth=2  " 2 spaces for certain files
+autocmd BufRead,BufNewFile *.html,*.js,*css,*.ts,*.yml,*.yaml,*.toml set shiftwidth=2  " 2 spaces for certain files
 autocmd BufRead,BufNewFile *.py set keywordprg=pydoc3
 set expandtab       " tabs are space
 set smartindent
