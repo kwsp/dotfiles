@@ -19,9 +19,15 @@ plugins=(git tmux)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-export EDITOR='nvim'
-alias vim='nvim'
+### Zsh specific config
+# Zsh tetris
+autoload -Uz tetriscurses
+# No autocd for directories
+unsetopt autocd
+
+### General configuration
+export EDITOR=nvim
+alias vim=nvim
 export GIT_EDITOR=nvim
 
 alias :q='echo "Nerd..." && sleep 1 && exit'
@@ -30,44 +36,51 @@ alias :e='echo "Nerd..." && sleep 1 && vim'
 # Local bin
 export PATH=$PATH:~/.local/bin
 
-case "$(uname -s)" in
-  Linux*) alias open=xdg-open;;
-esac
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Zsh tetris
-autoload -Uz tetriscurses
-
-# No autocd for directories
-unsetopt autocd
-
-export PATH=$PATH:~/dotfiles/scripts
-
 alias p1='ping 1.1.1.1'
 
-# Use LLVM from homebrew
-#export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
-export CC=clang
-export CXX=clang++
+# add some scripts to path
+export PATH=$PATH:~/dotfiles/scripts
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+
+### Platform specific setup
+case "$(uname -s)" in
+  Linux*) 
+    alias open=xdg-open
+    ;;
+
+  Darwin*)
+    ### macOS specific setup
+    #
+    # homebrew paths
+
+    export LIBRARY_PATH=/opt/homebrew/lib/
+
+    # Use LLVM from homebrew
+    export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+    export CC=clang
+    export CXX=clang++
+
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
     else
-        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+        if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+            . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+        else
+            export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+        fi
     fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+    unset __conda_setup
+    # <<< conda initialize <<<
+    ;;
 
-export LIBRARY_PATH=/opt/homebrew/lib/
+esac
+
 
 export PATH=~/.nimble/bin:$PATH
 export PATH=~/vcpkg:$PATH
-
