@@ -65,10 +65,10 @@ output * {
 # Example configuration:
 #
 exec swayidle -w \
-         timeout 300 '~/dotfiles/sway/lock' \
+         timeout 300 '~/.config/sway/lock' \
          timeout 330 'swaymsg "output * dpms off"' \
             resume 'swaymsg "output * dpms on"' \
-         before-sleep '~/dotfiles/sway/lock'
+         before-sleep '~/.config/sway/lock'
 
 ### Disable idle when firefox is fullscreen
 # xwayland version
