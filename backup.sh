@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+# cd into script dir
 BASEDIR=$(dirname "$0")
+cd $BASEDIR
+
 # redirect stdout/stderr to a file
-exec &>> $BASEDIR/log.txt
+exec &>> log.txt
 
 adddate() {
     while IFS= read -r line; do
@@ -14,20 +17,22 @@ gitupdate() {
     CHANGED=$(git diff --name-only HEAD)
     if [[ $CHANGED ]]; then
         echo Changed files: $CHANGED
-        #echo Uploading to github
-        #git add . > /dev/null
-        #git commit -m "Updated config $(date -Iseconds)" > /dev/null
-        #git push > /dev/null
+        echo Uploading to github
+        git add . > /dev/null
+        git commit -m "Updated config $(date -Iseconds)" > /dev/null
+        git push > /dev/null
     else
         echo Nothing changed
     fi
 }
 
 main() {
-    rsync -av ~/.config/i3* ~/.config/polybar ~/.config/plasma* config/
-    rsync -av ~/.vimrc ~/.tmux.conf.local ~/.zshrc dotfiles
+    echo "Starting backup ..."
+    rsync -q -av ~/.config/nvim ~/.config/i3* ~/.config/polybar ~/.config/rofi config/ ~/.config/compton
+    rsync -q -av ~/.Xdefaults ~/.vimrc ~/.tmux.conf.local ~/.zshrc ~/.doom.d dotfiles/
 
     gitupdate
+    echo "Backup complete."
 }
 
 

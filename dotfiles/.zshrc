@@ -81,6 +81,7 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='nvim'
 alias vim='nvim'
+alias e='emacsclient -nw'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -111,21 +112,6 @@ export PATH=$PATH:$HOME/.local/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/tiger/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/tiger/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/tiger/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/tiger/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
 # added by travis gem
 [ -f /home/tiger/.travis/travis.sh ] && source /home/tiger/.travis/travis.sh
 
@@ -135,3 +121,31 @@ autoload -Uz tetriscurses
 
 # No autocd
 unsetopt autocd
+
+alias activate_pio="source ~/.platformio/penv/bin/activate"
+
+alias python3=python3.8
+
+## Booting into TTY
+#if [ "$TERM" = "linux" ]; then
+  #/bin/echo -e "
+  #\e]P0282a2e
+  #\e]P1a54242
+  #\e]P28c9440
+  #\e]P3de935f
+  #\e]P45f819d
+  #\e]P585678f
+  #\e]P65e8d87
+  #\e]P7707880
+  #\e]P8373b41
+  #\e]P9cc6666
+  #\e]PAb5bd68
+  #\e]PBf0c674
+  #\e]PC81a2be
+  #\e]PDb294bb
+  #\e]PE8abeb7
+  #\e]PFc5c8c6
+  #"
+  ## get rid of artifacts
+  #clear
+#fi
