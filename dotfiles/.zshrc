@@ -70,7 +70,7 @@ for dirname in venv env .venv .env
 do
   if [ -e $dirname ]
   then
-# source ./$dirname/bin/activate  # commented out by conda initialize
+  source ./$dirname/bin/activate  # commented out by conda initialize
   fi
 done
 '
