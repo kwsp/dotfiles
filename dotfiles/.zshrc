@@ -53,15 +53,23 @@ case "$(uname -s)" in
 
   Darwin*)
     ### macOS specific setup
-    #
-    # homebrew paths
 
+    # homebrew paths
     export LIBRARY_PATH=/opt/homebrew/lib/
 
-    # Use LLVM from homebrew
-    export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+    ### Use Homebrew LLVM
+    export PATH=/opt/homebrew/opt/llvm/bin:$PATH
     export CC=clang
     export CXX=clang++
+
+    ## Use Homebrew LLVM bundled libc++
+    #export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
+    ## For compilers to find llvm you may need to set:
+    #export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+    #export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+
+    # Put Apple Command Line Tools before Homebrew clang...
+    PATH=/usr/bin:$PATH
 
     # Vulkan SDK
     export VULKAN_SDK=~/VulkanSDK/1.3.275.0/macOS
@@ -84,11 +92,9 @@ case "$(uname -s)" in
     fi
     unset __conda_setup
     # <<< conda initialize <<<
+
     ;;
-
 esac
-
-export PATH=~/.nimble/bin:$PATH
 
 # VCPKG
 export PATH=~/vcpkg:$PATH
@@ -96,3 +102,4 @@ export VCPKG_ROOT=~/vcpkg
 autoload bashcompinit
 bashcompinit
 source /Users/tnie/vcpkg/scripts/vcpkg_completion.zsh
+
