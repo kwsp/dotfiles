@@ -1,4 +1,6 @@
 #!/bin/sh
+# Finds all files in the current directory for files of type 'Web/P'
+# and converts them to jpg formats.
 if ! command -v convert &> /dev/null
 then
   echo "$(tput setaf 3)Error: Please install ImageMagick"
@@ -6,8 +8,8 @@ then
 fi
 
 i=0
-n=$(ls -l *.png | wc -l | sed 's/ //g')
-ls *.png | while read name
+n=$(ls -l *.webp | wc -l | sed 's/ //g')
+ls *.webp | while read name
 do
   percent=$(((i*100)/(n)))
   filename=$(basename -- "$name")
@@ -18,4 +20,4 @@ do
   i=$((i+1))
 done
 
-echo "$(tput setaf 2)✨ Converted $n files from png to jpg. Please manually remove png files if you wish."
+echo "$(tput setaf 2)✨ Converted $n files from webp to jpg. Please manually remove webp files if you wish."
