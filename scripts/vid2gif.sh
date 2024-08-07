@@ -1,5 +1,6 @@
 #!/bin/bash
 # Convert a video to a gif using ffmeg
+set -e
 
 # check dependencies
 if ! command -v ffmpeg &> /dev/null
