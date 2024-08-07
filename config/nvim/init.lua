@@ -86,7 +86,10 @@ require('packer').startup(function()
         highlight = { enable = true },
         incremental_selection = { enable = true },
         autopairs = { enable = true },
-        indent = { enable = true },
+        indent = {
+          enable = true,
+          disable = { "python" },
+        },
         rainbow = {
           enable = true,
           disable = { "html" },
@@ -227,9 +230,9 @@ vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
 vim.cmd [[ autocmd BufRead,BufNewFile *.py set shiftwidth=4 ]]
 vim.o.expandtab = true
---vim.o.smartindent = true
---vim.o.autoindent = true
---vim.o.copyindent = true
+vim.o.smartindent = true
+vim.o.autoindent = true
+vim.o.copyindent = true
 vim.opt.undofile = true --Save undo history
 vim.o.ignorecase = true
 vim.o.smartcase = true
