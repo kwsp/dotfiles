@@ -60,8 +60,6 @@ let g:fugitive_git_executable = 'LANG=en_US.UTF-8 git'
 " Status line
 Plug 'itchyny/lightline.vim'
 
-Plug 'ryanoasis/vim-devicons'
-
 " Autocompletion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -72,6 +70,12 @@ Plug 'junegunn/fzf.vim',
 " Syntax highlighting
 Plug 'vim-python/python-syntax'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" Markdown
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+let g:vim_markdown_folding_level = 2
+let g:vim_markdown_new_list_item_indent = 0
 
 " Common Lisp
 Plug 'vlime/vlime', {'rtp': 'vim/'}

@@ -54,7 +54,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 export EDITOR='vim'
-#alias vim='nvim'
+alias vim='nvim'
 alias :q='echo "Nerd..." && sleep 1 && exit'
 alias :e='echo "Nerd..." && sleep 1 && vim'
 
@@ -124,3 +124,4 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
+export PATH=$PATH:/System/Volumes/Data/Library/Developer/CommandLineTools/usr/bin
