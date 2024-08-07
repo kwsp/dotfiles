@@ -83,6 +83,16 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
     },
   })
 
+  table.insert(config.launch_menu, {
+    label = 'Lab Developer Powershell for VS 2019',
+    args = {
+      'powershell.exe',
+      '-noe',
+      '-c',
+      '&{Import-Module "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/Tools/Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell a203a09a}',
+    },
+  })
+
 else
     table.insert(config.launch_menu, { label = "zsh", args = {"zsh", "-l"} })
 end
