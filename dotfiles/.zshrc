@@ -55,6 +55,8 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='vim'
 alias vim='nvim'
+export GIT_EDITOR=nvim
+
 alias :q='echo "Nerd..." && sleep 1 && exit'
 alias :e='echo "Nerd..." && sleep 1 && vim'
 
