@@ -6,8 +6,10 @@ then
 fi
 
 i=0
-n=$(ls -l *.png | wc -l | sed 's/ //g')
-ls *.png | while read name
+# no. of png files (to calculate progress correctly)
+n=$(ls -l *.png *.PNG 2>/dev/null | wc -l | sed 's/ //g')
+# Redirect error to /dev/null since *.PNG files may not exist and will print a message.
+ls *.png *.PNG 2>/dev/null | while read name
 do
   percent=$(((i*100)/(n)))
   filename=$(basename -- "$name")
