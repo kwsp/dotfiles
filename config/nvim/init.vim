@@ -1,6 +1,5 @@
 set nocompatible
 filetype plugin indent on
-syntax on
 set hidden
 set cmdheight=1
 set nobackup
@@ -40,25 +39,23 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 endif
 
 call plug#begin(stdpath('data') . '/plugged')
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-fugitive'
     Plug 'preservim/nerdcommenter'
     Plug 'preservim/nerdtree'
 		map <C-n> :NERDTreeToggle<CR>
+
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim',
 		nnoremap <c-p> :FZF<CR>
 		nnoremap ; :Buffers<CR>
+
     Plug 'christoomey/vim-tmux-navigator'
-    Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-repeat'
-    Plug 'tpope/vim-fugitive'
-    Plug 'pangloss/vim-javascript'
-    let g:javascript_plugin_jsdoc = 1
-    Plug 'vim-python/python-syntax'
-    let g:python_highlight_func_calls = 1
-    let g:python_highlight_operators = 1
     
-    " Markdown folds, syntax highlight (maths)
+    "" Markdown folds, syntax highlight (maths)
     Plug 'plasticboy/vim-markdown'
     let g:vim_markdown_folding_disabled = 1
     let g:vim_markdown_math = 1
@@ -70,9 +67,29 @@ call plug#begin(stdpath('data') . '/plugged')
     let g:slime_default_config = {"socket_name": "default", "target_pane": "{last}"}
     let g:slime_dont_ask_default = 1
 
-		Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline'
     Plug 'kwsp/halcyon-neovim'
+
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    }
+  }
+}
+EOF
 
 colorscheme halcyon
 so ~/.config/nvim/coc-shortcuts.vim
