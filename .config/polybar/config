@@ -1,60 +1,41 @@
 [colors]
-background = #282828
+background = "#601d1f21"
 background-alt = #4d3902
-foreground = #ebdbb2
+foreground = #ebdbb1
 foreground-alt = #d79921
-primary = #ffb52a
-secondary = #e60053
-alert = #bd2c40
+;primary = #ffb52a
+;secondary = #e60053
+;alert = #bd2c40
+primary = #fe8019
+secondary = #b16286
+alert = #fb4934
 
 green = #32CD32
 yellow = #f3ff0d
 red = #f50a0a
 
-[bar/example]
-width = 100%
-height = 26
-radius = 6.0
-fixed-center = false
-background = ${colors.background}
-foreground = ${colors.foreground}
-line-size = 3
-line-color = #f00
-border-size = 4
-border-color = #00000000
-padding-left = 0
-padding-right = 2
-module-margin-left = 1
-module-margin-right = 2
-font-0 = fixed:pixelsize=11;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=11;1
-modules-left = i3
-modules-center = mpd
-modules-right = filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature date powermenu
-tray-position = right
-tray-padding = 2
-;tray-background = #0063ff
-cursor-click = pointer
-cursor-scroll = ns-resize
-
 [bar/top]
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-module-margin = 1
+module-margin = 2
 padding-left = 0
 padding-right = 2
 line-size = 1
-height=2.5%
+width = 100%
+height = 2.5%
 
-modules-left = i3
+modules-left = i3 cpu temperature
 modules-center = date
-modules-right = backlight pulseaudio memory cpu temperature battery
+modules-right = network backlight volume memory battery powermenu
 
-font-0 = DejaVu Sans Mono:style=Regular:pixelsize=13;
-font-1 = DejaVu Sans:style=Regular
-font-2 = siji:pixelsize=20;
+font-0 = Iosevka:style=regular:size=12
+font-1 = Font Awesome:style=Regular:size=13
+
+tray-position = right
+tray-padding = 2
+tray-maxsize = 10
+tray-reparent = true
 
 [module/xwindow]
 type = internal/xwindow
@@ -64,17 +45,10 @@ label = %title:0:30:...%
 type = internal/xkeyboard
 blacklist-0 = num lock
 
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = ${colors.secondary}
-
+format-prefix = " "
 label-layout = %layout%
-label-layout-underline = ${colors.secondary}
-
 label-indicator-padding = 2
 label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
-label-indicator-underline = ${colors.secondary}
 
 [module/filesystem]
 type = internal/fs
@@ -117,7 +91,7 @@ wrapping-scroll = false
 ; Only show workspaces on the same output as the bar
 ;pin-workspaces = true
 
-label-mode-padding = 1
+label-mode-padding = 2
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
@@ -161,11 +135,11 @@ label-song-ellipsis = true
 
 [module/backlight]
 type = internal/backlight
-
 ; Use the following command to list available cards:
 ; $ ls -1 /sys/class/backlight/
 card = intel_backlight
 
+;format = LIGHT <label>
 format = LIGHT <label>
 
 ; Enable changing the backlight with the scroll wheel (unreleased)
@@ -189,14 +163,31 @@ scroll-down = light -U 5
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-underline = #be0af5
-label = CPU %percentage:2%%
+
+format-prefix = ""
+label = %percentage:2%%
+format-padding = 1
+
+format-underline = ${colors.foreground-alt}
+;label = CPU %percentage:2%%
 
 [module/memory]
 type = internal/memory
 interval = 2
-format-underline = #2ff0f5
-label = RAM %percentage_used%%
+
+format = <label>
+label = "  %gb_used% / %gb_total%"
+format-underline = ${colors.foreground-alt}
+
+[module/network]
+type = internal/network
+interface = wlp2s0
+interval = 3.0
+format-connected = <label-connected> 
+label-connected = %{A1:networkmanager_dmenu:} %downspeed%  %upspeed% | %essid%%{A}
+
+format-disconnected = 
+format-disconnected-foreground = ${colors.alert}
 
 [module/wlan]
 type = internal/network
@@ -237,16 +228,12 @@ format-disconnected =
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 1
 
-date =
+date = %A, %d %B %Y
 date-alt = "%d %h %Y"
-
 time = %I:%M %p
 time-alt = %I:%M %p
-
-format-underline = #0a6cf5
-
 label = %date% %time%
 
 [module/pulseaudio]
@@ -275,33 +262,30 @@ bar-volume-empty = ─
 bar-volume-empty-font =
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
-[module/alsa]
-type = internal/alsa
+[module/volume]
+type = internal/pulseaudio
 
-format-volume = <label-volume> <bar-volume>
-label-volume = %percentage%%
-label-volume-foreground = ${root.foreground}
+format-volume = <ramp-volume> <label-volume>
+format-muted = <ramp-volume> <label-muted>
+format-muted-foreground = ${colors.alert}
 
-format-muted-prefix = " "
-format-muted-foreground = ${colors.foreground}
-label-muted = sound muted
+label-volume = "%percentage%%"
+label-muted = "%percentage%%"
 
 bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
 bar-volume-indicator = |
-bar-volume-indicator-font = 2
 bar-volume-fill = ─
-bar-volume-fill-font = 4
 bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground}
+
+ramp-volume-0 = ""
+ramp-volume-1 = ""
+ramp-volume-2 = ""
+
+click-left = pulsemixer --toggle-mute
+scroll-up = pulsemixer --change-volume +1
+scroll-down = pulsemixer --change-volume -1
+
+interval = 5
 
 [module/battery]
 type = internal/battery
@@ -309,35 +293,46 @@ battery = BAT0
 adapter = AC
 full-at = 98
 
-label-charging = BAT %percentage%%
-label-discharging = BAT %percentage%%
-label-full = BAT %percentage%%
-
-format-charging = <label-charging>
-format-charging-underline = ${colors.green}
-format-discharging = <label-discharging>
-format-discharging-underline = ${colors.yellow}
-format-full = <label-full>
+format-charging = <animation-charging> <label-charging>
+format-charging-underline = ${colors.primary}
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-underline = ${self.format-charging-underline}
+format-full = " <label-full>"
 format-full-underline = ${self.format-charging-underline}
+label-charging = %percentage%%
+label-discharging = %percentage%%
+label-full = %percentage%%
+animation-charging-0 = ""
+animation-charging-1 = ""
+animation-charging-2 = ""
+animation-charging-3 = ""
+animation-charging-4 = ""
+animation-charging-framerate = 750
+ramp-capacity-0 = ""
+ramp-capacity-1 = ""
+ramp-capacity-2 = ""
 
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
 warn-temperature = 60
 
-format = <label>
-format-underline = ${colors.green}
-format-warn = <label-warn>
-format-warn-underline = ${colors.red}
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+format-padding = 1
 
-label = TEMP %temperature-c%
-label-warn = TEMP %temperature-c%
-label-warn-foreground = ${colors.secondary}
+format-underline = ${colors.foreground-alt}
 
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground}
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-background = #400
+label-warn-padding = 1
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
 
 [module/powermenu]
 type = custom/menu

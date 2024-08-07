@@ -55,7 +55,7 @@ set showmatch       " highlight matching brace
 set laststatus=2    " Always have status line
 set noshowmode      " Lightline already show mode
 set showcmd
-set termguicolors
+"set termguicolors
 set cmdheight=1     " One line for command line
 set shortmess+=c    " don't give completion messages
 set splitbelow      " Set preview window to appear at bottom

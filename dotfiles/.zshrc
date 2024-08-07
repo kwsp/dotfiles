@@ -115,8 +115,6 @@ export PATH=$PATH:$GOPATH/bin
 # added by travis gem
 [ -f /home/tiger/.travis/travis.sh ] && source /home/tiger/.travis/travis.sh
 
-eval $(thefuck --alias)
-
 autoload -Uz tetriscurses
 
 # No autocd
@@ -124,7 +122,7 @@ unsetopt autocd
 
 alias activate_pio="source ~/.platformio/penv/bin/activate"
 
-alias python3=python3.8
+#alias python3=python3.8
 
 ## Booting into TTY
 #if [ "$TERM" = "linux" ]; then

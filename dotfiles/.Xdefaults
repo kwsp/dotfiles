@@ -44,7 +44,7 @@ URxvt*font: xft:Consolas:size=13, style=regular
 *.italicFont: xft:Consolas:size=13, style=italic
 *.boldItalicFont: xft:Consolas:size=13, style=bold italic
 
-URxvt.letterSpace: -0.5
+!URxvt.letterSpace: -0.5
 URxvt.lineSpace: 0
 !URxvt.geometry: 92x24
 URxvt.internalBorder: 10
