@@ -2,7 +2,9 @@
 
 This is my collection of config files for both Darwin and Linux.
 
-<img src="https://github.com/NieTiger/halcyon-assets/raw/master/macOS-neofetch.png" alt="img">
+| **Linux** | **Darwin** |
+| ---------- | --------- |
+| <img src="https://github.com/NieTiger/halcyon-assets/raw/master/halcyon-debian.png" alt="debian" align="right"> | <img src="https://github.com/NieTiger/halcyon-assets/raw/master/macOS-neofetch.png" alt="macos" align="right"> |
 
 | Software    | Linux                                                                                 | Darwin                                   |
 | ----------- | ------------------------------------------------------------------------------------- | ---------------------------------------- |
@@ -38,5 +40,5 @@ cd && git clone https://github.com/NieTiger/dotfiles && cd dotfiles
 The Dockerfile completely reproduces the CLI environment. NeoVim will attempt to install all plugins the first time you open it. Give it a shot :)
 
 ```bash
-docker run -it tigernie/dotfiles
+docker run --rm -it tigernie/dotfiles
 ```
