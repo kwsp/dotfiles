@@ -66,6 +66,9 @@ alias :e='echo "Nerd..." && sleep 1 && vim'
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
+# Local bin
+export PATH=$PATH:~/.local/bin
+
 # GO path
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
