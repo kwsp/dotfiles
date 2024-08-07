@@ -61,7 +61,6 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
 export PATH=$PATH:~/dotfiles/scripts
-export PATH="/usr/sbin:$PATH"
 export PATH="$PATH:/Library/Developer/CommandLineTools/usr/bin" # for clangd on macOS
 
 alias activate_pio='source ~/.platformio/penv/bin/activate'
