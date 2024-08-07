@@ -129,3 +129,6 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 export PATH=$PATH:/System/Volumes/Data/Library/Developer/CommandLineTools/usr/bin
 export PATH=$PATH:~/dotfiles/scripts
 export PATH="/usr/local/sbin:$PATH"
+
+alias activate_pio='source ~/.platformio/penv/bin/activate'
+alias p1='ping 1.1.1.1'

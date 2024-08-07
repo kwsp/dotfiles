@@ -2,3 +2,5 @@
 [user]
     name = Tiger Nie
     email = nhl0819@gmail.com
+[core]
+	excludesFile = ~/.gitignore
