@@ -10,7 +10,7 @@ local config = {
   default_prog = { 'powershell.exe' },
   launch_menu = {},
 
-  leader = { key="b", mods="CTRL" },
+  leader = { key="a", mods="CTRL" },
   use_dead_keys = false,
   keys = {
     -- New/close pane
