@@ -65,7 +65,7 @@ Plug 'preservim/tagbar'
 nmap <F8> :TagbarToggle<CR>
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-"Plug 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
 
 " Git plugin
 Plug 'tpope/vim-fugitive'

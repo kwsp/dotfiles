@@ -9,12 +9,7 @@ CWD=$(pwd)
 echo WORKDIR: $CWD
 
 # Install oh my zsh
-if [[ -z "${ZSH}" ]]; then
-    echo Installing Oh My Zsh
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-else
-    echo Oh My Zsh already installed, skipping.
-fi
+[[ -z "${ZSH}" ]] && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
 # Install oh my tmux
 if [[ -d "$OHMYTMUX_DIR" ]]; then
@@ -31,16 +26,7 @@ fi
 echo "Copying dotfiles to $HOME_DIR"
 cp -r $CWD/dotfiles/. $HOME_DIR
 
-
-# Install config files only if system is Linux
-#if [[ $(uname) = "Linux" ]]; then
-
-if [ ! -d $CONFIG_INSTALL_DIR ]; then
-    mkdir $CONFIG_INSTALL_DIR
-fi
+# Install config
+[ -d $CONFIG_INSTALL_DIR ] || mkdir $CONFIG_INSTALL_DIR
 echo "Copying config files to $CONFIG_INSTALL_DIR"
 cp -r $CWD/.config/* $CONFIG_INSTALL_DIR
-
-#else
-    #echo "Skipping installation of config files as the system is not Linux."
-#fi
