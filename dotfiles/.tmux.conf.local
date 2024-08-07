@@ -277,10 +277,15 @@ set -g history-limit 10000
 # start with mouse mode enabled
 set -g mouse on
 
+
 # force Vi mode
 #   really you should export VISUAL or EDITOR environment variable, see manual
 set -g status-keys vi
 set -g mode-keys vi
+
+# Mouse scroll speed
+bind-key -T copy-mode-vi WheelUpPane send-keys -X scroll-up
+bind-key -T copy-mode-vi WheelDownPane send-keys -X scroll-down
 
 # replace C-b by C-a instead of using both prefixes
 set -gu prefix2
@@ -329,6 +334,3 @@ bind-key -T root 'M-7' select-window -t :=7
 bind-key -T root 'M-8' select-window -t :=8
 bind-key -T root 'M-9' select-window -t :=9
 bind-key -T root 'M-0' select-window -t :=0
-
-
-bind-key -T vi-copy WheelUpPane scroll-up -l 3
