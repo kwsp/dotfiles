@@ -63,6 +63,13 @@ case "$(uname -s)" in
     export CC=clang
     export CXX=clang++
 
+    # Vulkan SDK
+    export VULKAN_SDK=~/VulkanSDK/1.3.275.0/macOS
+    export PATH=$VULKAN_SDK/bin:$PATH
+    export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH
+    export VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json
+    export VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d
+
     # >>> conda initialize >>>
     # !! Contents within this block are managed by 'conda init' !!
     __conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -81,6 +88,11 @@ case "$(uname -s)" in
 
 esac
 
-
 export PATH=~/.nimble/bin:$PATH
+
+# VCPKG
 export PATH=~/vcpkg:$PATH
+export VCPKG_ROOT=~/vcpkg
+autoload bashcompinit
+bashcompinit
+source /Users/tnie/vcpkg/scripts/vcpkg_completion.zsh
