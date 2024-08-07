@@ -1,0 +1,13 @@
+set ignorecase
+set smartcase
+
+let mapleader = " "
+
+nnoremap <leader>gd :vsc Edit.GoToDeclaration <C-r><C-w><CR>
+nnoremap <leader>fm :vsc Edit.FormatDocument<CR>
+" Show tooltip 
+nnoremap K :vsc Edit.QuickInfo<CR>
+
+" Go to issues
+nnoremap [d :vsc Edit.GotoPreviousIssueinFile<CR>
+nnoremap ]d :vsc Edit.GotoNextIssueinFile<CR>
