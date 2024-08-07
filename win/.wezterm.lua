@@ -4,7 +4,7 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 
 local config = {
-  fot = wezterm.font 'Hack Nerd Font Mono',
+  font = wezterm.font 'Hack Nerd Font Mono',
 
   tab_bar_at_bottom = true,
   default_prog = { 'powershell.exe' },
