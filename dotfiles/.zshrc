@@ -81,7 +81,8 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='nvim'
 alias vim='nvim'
-alias e='emacsclient -nw'
+alias :q='echo "Nerd..." && sleep 1 && exit'
+alias :e='echo "Nerd..." && sleep 1 && vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -103,8 +104,6 @@ alias open=xdg-open
 
 ## Vi keyboard bindings for the shell
 #set -o vi
-
-#export PATH=$PATH:$HOME/.local/bin
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -135,28 +134,28 @@ export PATH=$PATH:/home/tiger/.local/bin
 
 ## Booting into TTY
 # Gruvbox
-if [ "$TERM" = "linux" ]; then
-  /bin/echo -e "
-  \e]P0282828
-  \e]P1cc241d
-  \e]P298971a
-  \e]P3d79921
-  \e]P4458588
-  \e]P5b16286
-  \e]P6689b6a
-  \e]P7a89984
-  \e]P8928374
-  \e]P9fb4934
-  \e]PAb8bb26
-  \e]PBfabd2f
-  \e]PC83a598
-  \e]PDd3869b
-  \e]PE8ec07c
-  \e]PFebdbb2
-  "
-  # get rid of artifacts
-  clear
-fi
+#if [ "$TERM" = "linux" ]; then
+  #/bin/echo -e "
+  #\e]P0282828
+  #\e]P1cc241d
+  #\e]P298971a
+  #\e]P3d79921
+  #\e]P4458588
+  #\e]P5b16286
+  #\e]P6689b6a
+  #\e]P7a89984
+  #\e]P8928374
+  #\e]P9fb4934
+  #\e]PAb8bb26
+  #\e]PBfabd2f
+  #\e]PC83a598
+  #\e]PDd3869b
+  #\e]PE8ec07c
+  #\e]PFebdbb2
+  #"
+  ## get rid of artifacts
+  #clear
+#fi
 
 
 # Colour for man pages

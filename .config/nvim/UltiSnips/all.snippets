@@ -1,0 +1,18 @@
+snippet sign "Signature"
+Yours sincerely,
+
+Tiger Nie
+endsnippet
+
+snippet date "Date"
+`date +%F`
+endsnippet
+
+snippet box "Box"
+`!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'`
+│ $1 │
+`!p snip.rv = '└' + '─' * (len(t[1]) + 2) + '┘'`
+$0
+endsnippet
+
+

@@ -24,7 +24,16 @@ set signcolumn=auto
 autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_nz
 set autoread        " Auto reread file if a change was detected
 set scrolloff=100   " cursor always at the center of the screen
+
+set foldmethod=marker
+
 let g:mapleader = "\<Space>" "remap leader
+
+" Search
+set hlsearch        " Highlight matching search patterns
+set incsearch       " Enable incremental search
+set ignorecase      " Ignore case when searching
+set smartcase       " Include only uppercase words with uppercase search term
 
 " ============================================================================ "
 " ===                               VimPlug                                === "
@@ -71,12 +80,14 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim',
 
 " Syntax highlighting
-Plug 'leafgarland/typescript-vim',
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'leafgarland/typescript-vim'
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'peitalin/vim-jsx-typescript'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Theme
 Plug 'chuling/vim-equinusocio-material'
+Plug 'tiega/halcyon.vim'
 
 " Grammar
 Plug 'rhysd/vim-grammarous'
@@ -84,43 +95,46 @@ Plug 'rhysd/vim-grammarous'
 " Markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
-" Tex
+" LaTeX
 Plug 'lervag/vimtex'
+let g:tex_flavor='latex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
+let g:vimtex_latexmk_progname= '/usr/bin/nvr'
+
+" Snippets
+Plug 'SirVer/ultisnips'
+let g:UltiSnipsExpandTrigger = '<Tab>'
+let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-Tab>'
 
 " Tmux integration
 Plug 'christoomey/vim-tmux-navigator'
 
+" Distraction free writing
+Plug 'junegunn/goyo.vim'
+
 call plug#end()
 
-" LaTeX
-"let g:vimtex_latexmk_progname = 'nvr'
-"let g:vimtex_view_method = 'zathura'
-"let g:vimtex_fold_manual=1
-"let g:vimtex_quickfix_ignore_all_warnings = 0
-"let g:vimtex_quickfix_open_on_warning = 0
-"let g:vimtex_fold_enabled = 1
-"
-"let g:formatdef_latexindent = '"latexindent"'
-"let g:formatters_tex = ['latexindent']
-"
-"let g:tex_flavor='latex'
-"let g:tex_indent_brace=1
-"let g:tex_indent_items=1
-"let g:tex_items='\\bibitem\|\\item'
-"let g:tex_itemize_env='itemize\|description\|enumerate\|thebibliography'
-"let g:tex_noindent_env='document\|verbatim\|comment\|lstlisting'
-"let g:tex_indent_ifelsefi = 1
-"let g:tex_indent_and=1
-"let g:tex_conceal="abdgm"
-
 " Markdown
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
+let g:mkdp_refresh_slow = 0
+let g:mkdp_browser = 'firefox'
+
 let g:mkdp_page_title = '${name}'
 let g:mkdx#settings = { 'highlight': { 'enable': 1 },
                         \ 'enter': { 'shift': 1 },
                         \ 'links': { 'external': { 'enable': 1 } },
                         \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
                         \ 'fold': { 'enable': 1 } }
-"autocmd FileType org,markdown :TableModeToggle
+
+nmap <silent> <F7> <Plug>MarkdownPreview
+imap <silent> <F7> <Plug>MarkdownPreview
+nmap <silent> <F8> <Plug>StopMarkdownPreview
+imap <silent> <F8> <Plug>StopMarkdownPreview
 
 " ============================================================================ "
 " ===                                UI                                    === "
@@ -133,34 +147,18 @@ set laststatus=2    " Always have status line
 set noshowmode      " Lightline already show mode
 set showcmd
 set termguicolors
-"set notermguicolors
 set cmdheight=1     " One line for command line
 set shortmess+=c    " don't give completion messages
 set splitbelow      " Set preview window to appear at bottom
+
+colorscheme halcyon
 
 if has('nvim')
   set winbl=10        " Set floating window to be slightly transparent
 endif
 
-" Search
-set hlsearch        " Highlight matching search patterns
-set incsearch       " Enable incremental search
-set ignorecase      " Ignore case when searching
-set smartcase       " Include only uppercase words with uppercase search term
-
 " Set floating window background
 hi Pmenu guibg=Black
-
-
-"""" Theme settings
-" if you prefer the default one, comment out this line
-"let g:equinusocio_material_darker = 1
-
-" make vertsplit invisible
-let g:equinusocio_material_hide_vertsplit = 1
-
-colorscheme equinusocio_material
-
 hi Normal ctermbg=None
 
 " === Nerdtree toggle === "
@@ -209,10 +207,10 @@ nnoremap <Leader>j<Enter> :rightbelow new<CR>:terminal<CR>
 
 " === fzf === "
 nnoremap <c-p> :FZF<CR>
-nnoremap ; :Buffers<CR>
-nnoremap <Leader>w :Windows<CR>
-nnoremap <Leader>/ :BLines<CR>
-nnoremap <Leader>? :Lines<CR>
+"nnoremap ; :Buffers<CR>
+nnoremap <Leader>w :Windows<CR>                 " Search open windows
+nnoremap <Leader>/ :BLines<CR>                  " Search in open buffers
+nnoremap <Leader>? :Lines<CR>                   " Search in current directory
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
 
@@ -255,8 +253,8 @@ endfunction
 
 
 " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
+"nmap <silent> <TAB> <Plug>(coc-range-select)
+"xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -291,3 +289,25 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " ===                                 MISC.                                === "
 " ============================================================================ "
 ":hi ErrorMsg ctermfg=15 ctermbg=1 guifg=black guibg=Red
+
+function! ToggleSyntax()
+   if exists("g:syntax_on")
+      syntax off
+   else
+      syntax enable
+   endif
+endfunction
+ 
+nmap <silent>  ;s  :call ToggleSyntax()<CR>
+
+" Get syntax highlight group
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+" Reload vimrc
+map <F9> :so ~/.vimrc <CR>
+
+let g:lightline = {
+      \ 'colorscheme': 'halcyon',
+      \ }
