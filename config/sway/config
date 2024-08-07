@@ -112,10 +112,10 @@ input "type:touchpad" {
 # Remap capslock to escape
 #
 input "type:keyboard" {
-    xkb_options ctrl:nocaps
+    xkb_options caps:escape
 }
 
-# set brightness logarithmically by factor 1.4
+# set brightness
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 
