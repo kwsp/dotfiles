@@ -5,16 +5,14 @@
 | Software    | Name                                                                                                                           |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | Distro      | [Debian Testing](https://www.debian.org/releases/testing/)                                                                     |
-| WM          | [i3-gaps](https://github.com/Airblader/i3)                                                                                     |
-| Lock        | [i3lock-color](https://github.com/Raymo111/i3lock-color) + [betterlockscreen](https://github.com/pavanjadhaw/betterlockscreen) |
-| Launcher    | [Rofi](https://github.com/davatorium/rofi)                                                                                     |
-| Bar         | [Polybar](https://github.com/polybar/polybar)                                                                                  |
-| Compositor  | [compton-tryone](https://github.com/tryone144/compton)                                                                         |
+| WM          | [sway](https://github.com/swaywm/sway)                                                                                     |
 | Terminal    | [kitty](https://sw.kovidgoyal.net/kitty/)                                                                                      |
 | Shell       | [zsh](http://www.zsh.org/) + [Oh My Zsh](https://ohmyz.sh/)                                                                    |
 | Multiplexer | [tmux](https://github.com/tmux/tmux) + [Oh My Tmux](https://github.com/gpakosz/.tmux)                                          |
 | PDF Viewer  | [zathura](https://pwmt.org/projects/zathura/)                                                                                  |
 | Editor      | [Neovim](https://neovim.io/) + [Vim Plug](https://github.com/junegunn/vim-plug)                                                |
+
+I'm currently using a Dell XPS 13 7390 and I get really bad screen tearing with Xorg, regardless of desktop environment and window manager. The only solution I found for my problem was Wayland. Sway is an incredible clone of i3 on Wayland (including features like gaps, bar, Dmenu) that just works out of the box. 
 
 ## Usage
 
