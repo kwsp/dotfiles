@@ -1,0 +1,1 @@
+/home/tiger/autostart/wm.sh
