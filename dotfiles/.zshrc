@@ -33,9 +33,6 @@ export GIT_EDITOR=nvim
 alias :q='echo "Nerd..." && sleep 1 && exit'
 alias :e='echo "Nerd..." && sleep 1 && vim'
 
-# Local bin
-export PATH=$PATH:~/.local/bin
-
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -54,13 +51,13 @@ case "$(uname -s)" in
   Darwin*)
     ### macOS specific setup
 
-    # homebrew paths
-    export LIBRARY_PATH=/opt/homebrew/lib/
-
-    ### Use Homebrew LLVM
-    export PATH=/opt/homebrew/opt/llvm/bin:$PATH
+    ### Add Homebrew LLVM to path
+    export PATH=$(brew --prefix llvm)/bin:$PATH
     export CC=clang
     export CXX=clang++
+
+    # Put Apple Clang before LLVM clang
+    export PATH=/usr/bin:$PATH
 
     ## Use Homebrew LLVM bundled libc++
     #export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
@@ -68,8 +65,9 @@ case "$(uname -s)" in
     #export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
     #export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
 
-    # Put Apple Command Line Tools before Homebrew clang...
-    PATH=/usr/bin:$PATH
+    # For compilers to find homebrew libs
+    export LDFLAGS="-L/opt/homebrew/lib"
+    export CPPFLAGS="-I/opt/homebrew/include"
 
     # Vulkan SDK
     export VULKAN_SDK=~/VulkanSDK/1.3.275.0/macOS
