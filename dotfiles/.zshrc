@@ -57,7 +57,7 @@ case "$(uname -s)" in
     export CXX=clang++
 
     # Put Apple Clang before LLVM clang
-    export PATH=/usr/bin:$PATH
+    #export PATH=/usr/bin:$PATH
 
     ## Use Homebrew LLVM bundled libc++
     #export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
@@ -83,9 +83,9 @@ case "$(uname -s)" in
         eval "$__conda_setup"
     else
         if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-            . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+# . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"  # commented out by conda initialize
         else
-            export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+# export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"  # commented out by conda initialize
         fi
     fi
     unset __conda_setup
@@ -94,16 +94,19 @@ case "$(uname -s)" in
     ;;
 esac
 
-# VCPKG
-export PATH=~/vcpkg:$PATH
-export VCPKG_ROOT=~/vcpkg
-autoload bashcompinit
-bashcompinit
-source /Users/tnie/vcpkg/scripts/vcpkg_completion.zsh
+if [ -d ~/vcpkg ]; then
+  # VCPKG
+  export PATH=~/vcpkg:$PATH
+  export VCPKG_ROOT=~/vcpkg
+  autoload bashcompinit
+  bashcompinit
+  source /Users/tnie/vcpkg/scripts/vcpkg_completion.zsh
+  alias nuget='mono `vcpkg fetch nuget | tail -n 1`'
 
-# VCPKG binary cache
-export VCPKG_FEED_URL="https://nuget.pkg.github.com/kwsp/index.json"
-export VCPKG_BINARY_SOURCES="nuget,$VCPKG_FEED_URL,readwrite"
+  # VCPKG binary cache
+  export VCPKG_FEED_URL="https://nuget.pkg.github.com/kwsp/index.json"
+  export VCPKG_BINARY_SOURCES="nuget,$VCPKG_FEED_URL,readwrite"
+fi
 
 # Ensure GPG can use the terminal for passphrase input
 export GPG_TTY=$(tty)
