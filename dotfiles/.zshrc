@@ -50,24 +50,27 @@ case "$(uname -s)" in
 
   Darwin*)
     ### macOS specific setup
-
-    ### Add Homebrew LLVM to path
-    export PATH=$(brew --prefix llvm)/bin:$PATH
     export CC=clang
     export CXX=clang++
 
-    # Put Apple Clang before LLVM clang
-    #export PATH=/usr/bin:$PATH
+    ### Add Homebrew LLVM to path
+    export PATH=$(brew --prefix llvm)/bin:$PATH
 
-    ## Use Homebrew LLVM bundled libc++
+    ### Use Homebrew LLVM bundled libc++
     #export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
     ## For compilers to find llvm you may need to set:
     #export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
     #export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
 
+    ## Put Apple Clang before LLVM clang
+    export PATH=/usr/bin:$PATH
+
     # For compilers to find homebrew libs
     export LDFLAGS="-L/opt/homebrew/lib"
     export CPPFLAGS="-I/opt/homebrew/include"
+
+    # For CMake to find homebrew packages
+    export CMAKE_PREFIX_PATH=/opt/homebrew
 
     # Vulkan SDK
     export VULKAN_SDK=~/VulkanSDK/1.3.275.0/macOS
@@ -103,9 +106,13 @@ if [ -d ~/vcpkg ]; then
   source /Users/tnie/vcpkg/scripts/vcpkg_completion.zsh
   alias nuget='mono `vcpkg fetch nuget | tail -n 1`'
 
-  # VCPKG binary cache
+  ### VCPKG binary cache
+  # Github Packages
   export VCPKG_FEED_URL="https://nuget.pkg.github.com/kwsp/index.json"
   export VCPKG_BINARY_SOURCES="nuget,$VCPKG_FEED_URL,readwrite"
+
+  # Lab NAS
+  export VCPKG_BINARY_SOURCES="$VCPKG_BINARY_SOURCES;files,/Volumes/Workspace/tnie/vcpkg/binary-cache,readwrite"
 fi
 
 # Ensure GPG can use the terminal for passphrase input
