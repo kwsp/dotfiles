@@ -281,7 +281,7 @@ local on_attach = function(_, bufnr)
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.format { async = true }' ]]
 
   -- Clangd
-  buf_map(bufnr, 'n', '<C-q>', '<cmd>ClangdSwitchSourceHeader<CR>', opts)
+  buf_map(bufnr, 'n', '<M-o>', '<cmd>ClangdSwitchSourceHeader<CR>', opts)
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
