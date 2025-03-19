@@ -104,16 +104,13 @@ if [ -d ~/vcpkg ]; then
   autoload bashcompinit
   bashcompinit
   source /Users/tnie/vcpkg/scripts/vcpkg_completion.zsh
-  alias nuget='mono `vcpkg fetch nuget | tail -n 1`'
 
   ### VCPKG binary cache
-  # Github Packages
-  export VCPKG_FEED_URL="https://nuget.pkg.github.com/kwsp/index.json"
-  export VCPKG_BINARY_SOURCES="nuget,$VCPKG_FEED_URL,readwrite"
-
   # Lab NAS
-  export VCPKG_BINARY_SOURCES="$VCPKG_BINARY_SOURCES;files,/Volumes/Workspace/tnie/vcpkg/binary-cache,readwrite"
+  export VCPKG_BINARY_SOURCES="files,/Volumes/Workspace/tnie/vcpkg/binary-cache,readwrite"
 fi
 
 # Ensure GPG can use the terminal for passphrase input
 export GPG_TTY=$(tty)
+
+. "$HOME/.local/bin/env"
