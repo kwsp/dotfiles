@@ -40,17 +40,9 @@ main() {
     echo "Starting backup ..."
 
     # backup config
-    rsync -q -av ~/.config/sway ~/.config/waybar ~/.config/kitty ~/.config/nvim ~/.config/zathura config
+    rsync -q -av ~/.config/sway ~/.config/waybar ~/.config/kitty ~/.config/nvim ~/.config/zathura ~/.config/fastfetch config
     # backup dotfiles
     rsync -q -av ~/.tmux.conf.local ~/.zshrc ~/.gitconfig dotfiles/
-
-    if [[ $UNAME = "Darwin" ]]; then
-        echo Backing up Darwin specific config.
-        # backup pecan
-        PECAN_DIR="$HOME/Library/Application Support/Übersicht/widgets/pecan"
-        cp "$PECAN_DIR/style.css" pecan/
-        cp "$PECAN_DIR/halcyon.css" pecan/
-    fi
 
     #gitupdate $1
     echo "Backup complete."
