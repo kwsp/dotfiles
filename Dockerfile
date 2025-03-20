@@ -1,7 +1,7 @@
 FROM ubuntu:24.04
 
 # Noninteractive install
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Install core software
 RUN apt-get update -q && \
@@ -28,9 +28,9 @@ RUN chown -R kwsp:kwsp /home/kwsp/dotfiles
 
 USER kwsp
 WORKDIR /home/kwsp
-ENV SHELL /usr/bin/zsh
+ENV SHELL=/usr/bin/zsh
 
 # Install dotfiles, oh my zsh, oh my tmux, vim plug etc
 RUN cd /home/kwsp/dotfiles && ./install.sh
 
-CMD /usr/bin/zsh
+CMD ["/usr/bin/zsh"]
