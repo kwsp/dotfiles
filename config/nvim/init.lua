@@ -138,13 +138,10 @@ require('packer').startup(function()
   -- LSP completion source
   use "hrsh7th/cmp-nvim-lsp"
 
-  -- Inject non languagae servers into the LSP framework
-  use "jose-elias-alvarez/null-ls.nvim"
-
   -- LSP manager
   use {
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason.nvim",
+    "mason-org/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
 
@@ -286,56 +283,28 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+vim.lsp.config("*", {
+  capabilities = vim.lsp.protocol.make_client_capabilities()
+})
+
 require("mason").setup()
+require("mason-lspconfig").setup {
+  ensure_installed = { "lua_ls" }
+}
+
 local lspconfig = require("lspconfig")
-require("mason-lspconfig").setup()
-require("mason-lspconfig").setup_handlers {
-  -- The first entry (without a key) will be the default handler
-  -- and will be called for each installed server that doesn't have
-  -- a dedicated handler
-  function(server_name) -- default handler (optional)
-    lspconfig[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach
-    }
-  end,
-  -- Next, you can provide targeted overrides for specific servers.
-  -- For example, a handler override for the rust_analyzer
-  ["clangd"] = function()
-    lspconfig["clangd"].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      cmd = {
-        "clangd",
-        "--clang-tidy",
-      }
-    }
-  end,
-
-  ["rust_analyzer"] = function()
-    require("rust-tools").setup {}
-  end,
-
-  ["lua_ls"] = function()
-    lspconfig.lua_ls.setup({
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { "vim" },
-          }
-        },
-        workspace = {
-          -- Make the server aware of Neovim runtime files
-          library = vim.api.nvim_get_runtime_file('', true),
-        },
-        telemetry = {
-          enable = false,
-        },
+lspconfig.lua_ls.setup {
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { 'vim', 'require' },
       },
-      capabilities = capabilities,
-      on_attach = on_attach
-    })
-  end
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = { enable = false, },
+    }
+  }
 }
 
 
@@ -348,7 +317,7 @@ vim.diagnostic.config {
     focusable = false,
     style = "minimal",
     border = "rounded",
-    source = "always",
+    source = true,
     header = "",
     prefix = "",
   },
@@ -360,16 +329,6 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
   border = "rounded",
-})
-
-local null_ls = require("null-ls")
-null_ls.setup({
-  sources = {
-    null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.code_actions.eslint,
-    null_ls.builtins.formatting.prettier
-  },
-  on_attach = on_attach
 })
 
 -- luasnip setup
