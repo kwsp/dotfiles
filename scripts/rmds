@@ -1,3 +1,5 @@
 #!/bin/sh
-# Remove ".DS_Store" files on macOS recursively...
-find . -name '.DS_Store' -type f -print | xargs -p -I '{}' rm '{}'
+# Remove ".DS_Store" files
+find . -name '.DS_Store' -type f -print -delete
+# Remove "._*" created by macos on non Apple filesystems
+find . -name "._*" -type f -print -delete
