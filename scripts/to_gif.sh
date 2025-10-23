@@ -30,5 +30,5 @@ OUT_GIF="${IN_VIDEO%.*}.gif"
 # run
 set -o xtrace
 ffmpeg -i "$IN_VIDEO" \
-  -vf "fps=$FPS,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" \
+  -vf "fps=$FPS,scale=480:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" \
   -loop 0 "$OUT_GIF"
