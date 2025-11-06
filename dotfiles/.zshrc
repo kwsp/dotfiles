@@ -32,10 +32,6 @@ export GIT_EDITOR=nvim
 
 alias :q='echo "Nerd..." && sleep 1 && exit'
 alias :e='echo "Nerd..." && sleep 1 && vim'
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 alias p1='ping 1.1.1.1'
 
 # add some scripts to path
@@ -63,7 +59,7 @@ case "$(uname -s)" in
     #export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
 
     ## Put Apple Clang before LLVM clang
-    export PATH=/usr/bin:$PATH
+    #export PATH=/usr/bin:$PATH
 
     # For compilers to find homebrew libs
     export LDFLAGS="-L/opt/homebrew/lib"
@@ -78,21 +74,6 @@ case "$(uname -s)" in
     export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH
     export VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json
     export VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d
-
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__conda_setup"
-    else
-        if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-# . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"  # commented out by conda initialize
-        else
-# export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"  # commented out by conda initialize
-        fi
-    fi
-    unset __conda_setup
-    # <<< conda initialize <<<
 
     ;;
 esac
@@ -113,4 +94,12 @@ fi
 # Ensure GPG can use the terminal for passphrase input
 export GPG_TTY=$(tty)
 
+# fzf
+source <(fzf --zsh)
+
 . "$HOME/.local/bin/env"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/tnie/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
