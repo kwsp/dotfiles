@@ -8,26 +8,21 @@
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
 -- Markdown note taking
-vim.api.nvim_create_user_command("Notes", function()
-  vim.api.nvim_create_autocmd("BufWritePost", {
-    pattern = "*.md",
-    callback = function()
-      local file = vim.fn.expand("%")
-      local outfile = vim.fn.fnamemodify(file, ":r") .. ".html"
-      local cmd = string.format(
-        "pandoc -s --katex='https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/' --highlight-style pygments --toc %s -o %s",
-        vim.fn.shellescape(file),
-        vim.fn.shellescape(outfile)
-      )
+vim.cmd(
+  [[command! Notes autocmd BufWritePost *.md silent !pandoc -s --katex='https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/' --highlight-style pygments --toc % -o %:r.html ]]
+)
 
-      vim.fn.jobstart(cmd, {
-        stderr_buffered = true,
-        on_stderr = function(_, data)
-          if data and data[1] ~= "" then
-            vim.notify(table.concat(data, "\n"), vim.log.levels.ERROR, { title = "Pandoc Error" })
-          end
-        end,
-      })
-    end,
-  })
-end, {})
+-- Competitive programming
+vim.cmd(
+  [[autocmd filetype cpp nnoremap <leader>r :w <bar> !tmux split-window -h "(set -x; g++ -std=c++20 % -o %:r.out); ./%:r.out; echo '$(tput setaf 2)[finished...]'; read"<CR><CR>]]
+)
+vim.cmd([[autocmd filetype cpp nnoremap <leader>tp :read ~/.config/nvim/templates/skeleton.cpp<CR>kdd5j]])
+vim.cmd(
+  [[autocmd filetype python nnoremap <leader>r :w <bar> !tmux split-window -h "python3 %:r.py; echo '$(tput setaf 2)[finished...]'; read"<CR><CR>]]
+)
+vim.cmd(
+  [[autocmd filetype python nnoremap <leader>R :w <bar> !tmux split-window -h "python3 -i %:r.py; echo '$(tput setaf 2)[finished...]'; read"<CR><CR>]]
+)
+vim.cmd(
+  [[autocmd filetype go nnoremap <leader>r :w <bar> !tmux split-window -h "go run %:r.go; echo '$(tput setaf 2)[finished...]'; read"<CR><CR>]]
+)

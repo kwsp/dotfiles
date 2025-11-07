@@ -5,15 +5,14 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-using namespace std;
 
 int main() {
-  ios::sync_with_stdio(false);
-  cin.tie(0);
+  std::ios::sync_with_stdio(false);
+  std::cin.tie(0);
 
   std::string line;
-  while (getline(cin, line)) {
-    istringstream ss(line);
+  while (std::getline(std::cin, line)) {
+    std::istringstream ss(line);
     // TODO
   }
 }
