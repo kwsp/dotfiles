@@ -8,7 +8,7 @@ if ! command -v magick &>/dev/null; then
   exit 1
 fi
 
-files=$(find . -type f \( -iname "*.jpeg" -o -iname "*.png" \))
+files=$(find . -type f \( -iname "*.jpeg" -o -iname "*.jpg" -o -iname "*.png" \))
 
 echo "The following files will be converted to WebP:"
 echo "$files"
