@@ -26,9 +26,9 @@ if [[ "$base_name" == *.* ]]; then
   base_name="${base_name%.*}"
 fi
 
-new_base_name="${base_name}_hevc"
+new_base_name="${base_name}_avc"
 new_filename="${new_base_name}${extension}"
 new_full_path="${dir_part}/${new_filename}"
 
 echo "Converting '${input_file}' to '${new_full_path}'"
-ffmpeg -i "${input_file}" -c:v libx265 -q:v 65 -vtag hvc1 "${new_full_path}"
+ffmpeg -i "${input_file}" -c:v libx264 -profile:v high -c:a aac -b:a 128k -vf format=yuv420p "${new_full_path}"

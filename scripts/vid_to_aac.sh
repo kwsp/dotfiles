@@ -16,15 +16,14 @@ EOF
   exit 1
 fi
 
-IN_VIDEO="$1"
-
-if [ ! -f "$IN_VIDEO" ]; then
-  echo "Error: File '$IN_VIDEO' doesn't exist."
+input_file="$1"
+if [ ! -f "$input_file" ]; then
+  echo "Error: File '$input_file' doesn't exist."
   exit 1
 fi
 
-OUT_AUDIO="${IN_VIDEO%.*}.m4a"
+output_file="${input_file%.*}.m4a"
 
 # run
-set -o xtrace
-ffmpeg -i "$IN_VIDEO" -vn -acodec aac $OUT_AUDIO
+set -x
+ffmpeg -i "${input_file}" -vn -acodec aac "${output_file}"
