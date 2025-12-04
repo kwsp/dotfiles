@@ -84,7 +84,7 @@ if [ -d ~/vcpkg ]; then
   export VCPKG_ROOT=~/vcpkg
   autoload bashcompinit
   bashcompinit
-  source /Users/tnie/vcpkg/scripts/vcpkg_completion.zsh
+  source $VCPKG_ROOT/scripts/vcpkg_completion.zsh
 
   ### VCPKG binary cache
   # Lab NAS
@@ -94,8 +94,6 @@ fi
 # Ensure GPG can use the terminal for passphrase input
 export GPG_TTY=$(tty)
 
-# fzf
-source <(fzf --zsh)
 
 . "$HOME/.local/bin/env"
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
@@ -103,3 +101,11 @@ fpath=(/Users/tnie/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
