@@ -42,6 +42,13 @@ export PATH=$PATH:~/dotfiles/scripts
 case "$(uname -s)" in
   Linux*) 
     alias open=xdg-open
+
+    # CUDA Toolkit
+    if [ -d /usr/local/cuda ]; then
+      export PATH=/usr/local/cuda/bin:$PATH
+      export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+    fi
+
     ;;
 
   Darwin*)
