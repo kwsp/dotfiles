@@ -59,7 +59,7 @@ case "$(uname -s)" in
     #export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
 
     ## Put Apple Clang before LLVM clang
-    #export PATH=/usr/bin:$PATH
+    export PATH=/usr/bin:$PATH
 
     # For compilers to find homebrew libs
     export LDFLAGS="-L/opt/homebrew/lib"
@@ -103,3 +103,4 @@ fpath=(/Users/tnie/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
+
