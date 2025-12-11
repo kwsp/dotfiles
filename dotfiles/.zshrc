@@ -42,6 +42,13 @@ export PATH=$PATH:~/dotfiles/scripts
 case "$(uname -s)" in
   Linux*) 
     alias open=xdg-open
+
+    # CUDA Toolkit
+    if [ -d /usr/local/cuda ]; then
+      export PATH=/usr/local/cuda/bin:$PATH
+      export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+    fi
+
     ;;
 
   Darwin*)
@@ -84,7 +91,7 @@ if [ -d ~/vcpkg ]; then
   export VCPKG_ROOT=~/vcpkg
   autoload bashcompinit
   bashcompinit
-  source /Users/tnie/vcpkg/scripts/vcpkg_completion.zsh
+  source $VCPKG_ROOT/scripts/vcpkg_completion.zsh
 
   ### VCPKG binary cache
   # Lab NAS
@@ -94,8 +101,6 @@ fi
 # Ensure GPG can use the terminal for passphrase input
 export GPG_TTY=$(tty)
 
-# fzf
-source <(fzf --zsh)
 
 . "$HOME/.local/bin/env"
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
@@ -104,3 +109,12 @@ autoload -Uz compinit
 compinit
 # End of Docker CLI completions
 
+export NVM_DIR="$HOME/.nvm"
+if [ -d "$NVM_DIR" ]; then
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
