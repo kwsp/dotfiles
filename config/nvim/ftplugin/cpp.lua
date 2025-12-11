@@ -5,10 +5,10 @@
 
 -- Build and run
 local cpp_run_debug = [[
-  :w | !tmux split-window -h "(set -x; g++ -std=c++20 -g -O0 -Wall -Werror % -o %:r.out); ./%:r.out; echo '$(tput setaf 2)[finished...]'; read"
+  :w | !tmux split-window -h "(set -x; g++ -std=c++20 -g -O0 -Wall -Werror % -o %:r.out) && ./%:r.out; echo '$(tput setaf 2)[finished...]'; read"
 ]]
 local cpp_run_release = [[
-  :w | !tmux split-window -h "(set -x; g++ -std=c++20 -O2 -Wall -Werror % -o %:r.out); ./%:r.out; echo '$(tput setaf 2)[finished...]'; read"
+  :w | !tmux split-window -h "(set -x; g++ -std=c++20 -O2 -Wall -Werror % -o %:r.out) && ./%:r.out; echo '$(tput setaf 2)[finished...]'; read"
 ]]
 
 vim.keymap.set("n", "<leader>rd", cpp_run_debug, {
