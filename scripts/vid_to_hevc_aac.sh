@@ -2,9 +2,9 @@
 # Convert video to HEVC video codec, AAC audio codec, and mp4 container
 
 # Check for parameter
-if [ $# -ne 1 ]; then
-  echo "Error: Please provide one filename."
-  echo "Usage: $0 filename"
+if [ $# -lt 1 ] || [ $# -gt 2 ]; then
+  echo "Error: Please provide one or two parameters."
+  echo "Usage: $0 input_file [output_file]"
   exit 1
 fi
 
@@ -34,7 +34,8 @@ elif [[ "$video_codec" == "av1" ]]; then
   video_args="-c:v copy"
   echo "Video: AV1, copying without re-encoding"
 else
-  video_args="-c:v libx265 -q:v 65 -vtag hvc1"
+  # video_args="-c:v libx265 -q:v 65 -vtag hvc1"
+  video_args="-c:v libx265 -crf 23 -preset medium -vtag hvc1"
   echo "Video: Converting to HEVC"
 fi
 
@@ -48,19 +49,23 @@ else
 fi
 
 # Generate output filename
-# If existing extension is .mp4, add _ to basename
-base_name=$(basename "$input_file")
-dir_part=$(dirname "$input_file")
-base_name_no_ext="${base_name%.*}"
-old_extension=".${base_name##*.}"
-if [ "$old_extension" = ".mp4" ]; then
-  base_name_no_ext="${base_name_no_ext}_"
+if [[ $# -eq 2 ]]; then
+  output_file="$2"
+else
+  # If existing extension is .mp4, add _ to basename
+  base_name=$(basename "$input_file")
+  dir_part=$(dirname "$input_file")
+  base_name_no_ext="${base_name%.*}"
+  old_extension=".${base_name##*.}"
+  if [ "$old_extension" = ".mp4" ]; then
+    base_name_no_ext="${base_name_no_ext}_"
+  fi
+  output_file="${dir_part}/${base_name_no_ext}.mp4"
 fi
-output_file="${dir_part}/${base_name_no_ext}.mp4"
 
 # Convert the video
 echo "Converting '$input_file' to '$output_file'"
-ffmpeg -i "$input_file" $video_args $audio_args "$output_file"
+ffmpeg -i "$input_file" -map_metadata 0 $video_args $audio_args "$output_file"
 
 # Check if ffmpeg succeeded
 if [ $? -ne 0 ]; then
@@ -69,3 +74,4 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Conversion completed successfully!"
+tput bel
