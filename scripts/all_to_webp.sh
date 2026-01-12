@@ -8,30 +8,33 @@ if ! command -v magick &>/dev/null; then
   exit 1
 fi
 
-files=$(find . -type f \( -iname "*.jpeg" -o -iname "*.jpg" -o -iname "*.png" \))
+files=$(find . -maxdepth 1 -type f \( -iname "*.jpeg" -o -iname "*.jpg" -o -iname "*.png" \))
+file_count=$(wc -l < <(echo "$files"))
 
-echo "The following files will be converted to WebP:"
+echo "The following $file_count files will be converted to WebP:"
 echo "$files"
-
-MAX_JOBS=4 # max concurrent jobs
 
 # Ask for confirmation
 read -p "Proceed with conversion? [y/N] " confirm
 if [[ "$confirm" =~ ^[Yy]$ ]]; then
-  echo "$files" | while IFS= read -r input_file; do
-
-    # wait if we're at max capacity
-    while [ $(jobs -r | wc -l) -ge $MAX_JOBS ]; do
-      sleep 0.1
-    done
+  converted=0
+  failed=0
+  while read -r input_file; do
 
     output_file="${input_file%.*}.webp"
-    echo "Converting $input_file -> $output_file"
-    magick "$input_file" "$output_file"
+    if magick "$input_file" "$output_file"; then
+      # Set the modification time of the new file to be the same as the original
+      touch -t $(stat -f "%SB" -t "%Y%m%d%H%M.%S" "$input_file") "$output_file"
+      echo "Converted: $input_file -> $output_file"
+      ((converted++))
+    else
+      echo "Failed: $input_file -> $output_file"
+      ((failed++))
+    fi
+  done < <(echo "$files")
 
-    # Set the modification time of the new file to be the same as the original
-    touch -t $(stat -f "%SB" -t "%Y%m%d%H%M.%S" "$input_file") "$output_file"
-  done
+  echo "Complete. Successfully converted: $converted file(s)"
+  [ "$failed" -gt 0 ] && echo "Failed $failed file(s)"
 else
   echo "Aborted."
 fi
