@@ -73,5 +73,8 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+# Set the modification time of the new file to be the same as the original
+touch -t $(stat -f "%SB" -t "%Y%m%d%H%M.%S" "$input_file") "$output_file"
+
 echo "Conversion completed successfully!"
 tput bel
