@@ -18,16 +18,19 @@ MAX_JOBS=4 # max concurrent jobs
 # Ask for confirmation
 read -p "Proceed with conversion? [y/N] " confirm
 if [[ "$confirm" =~ ^[Yy]$ ]]; then
-  echo "$files" | while IFS= read -r f; do
+  echo "$files" | while IFS= read -r input_file; do
 
     # wait if we're at max capacity
     while [ $(jobs -r | wc -l) -ge $MAX_JOBS ]; do
       sleep 0.1
     done
 
-    out="${f%.*}.webp"
-    echo "Converting $f -> $out"
-    magick "$f" "$out" &
+    output_file="${input_file%.*}.webp"
+    echo "Converting $input_file -> $output_file"
+    magick "$input_file" "$output_file"
+
+    # Set the modification time of the new file to be the same as the original
+    touch -t $(stat -f "%SB" -t "%Y%m%d%H%M.%S" "$input_file") "$output_file"
   done
 else
   echo "Aborted."
