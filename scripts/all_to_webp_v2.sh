@@ -57,7 +57,7 @@ if [[ "$confirm" =~ ^[Yy]$ ]]; then
     magick "$input_file" "$output_file"
 
     # Set the modification time of the new file to be the same as the original
-    touch -t $(stat -f "%SB" -t "%Y%m%d%H%M.%S" "$input_file") "$output_file"
+    touch -r "$input_file" "$output_file"
   done
 else
   echo "Aborted."
