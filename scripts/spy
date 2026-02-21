@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# Start a scientific python computing environment
-python3 -i -c "import numpy as np; import matplotlib.pyplot as plt;"
