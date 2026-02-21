@@ -16,15 +16,39 @@ if [ $# -ge 1 ]; then
   mkdir -p "$output_dir"
 fi
 
-files=$(find . -type f \( -iname "*.jpeg" -o -iname "*.jpg" -o -iname "*.png" \))
+# Find all image files and filter those that need conversion
+files_to_convert=""
+while IFS= read -r input_file; do
+  # Determine output file path
+  if [ -n "$output_dir" ]; then
+    filename=$(basename "$input_file")
+    output_file="${output_dir}/${filename%.*}.webp"
+  else
+    output_file="${input_file%.*}.webp"
+  fi
 
-if [ -z "$files" ]; then
-  echo "No image files found."
+  # Check if conversion is needed:
+  # 1. webp file doesn't exist, OR
+  # 2. webp file and original have different mtime
+  if [ ! -f "$output_file" ] || [ "$input_file" -nt "$output_file" ] || [ "$input_file" -ot "$output_file" ]; then
+    # Store both input and output file paths (tab-separated)
+    if [ -z "$files_to_convert" ]; then
+      files_to_convert="${input_file}\t${output_file}"
+    else
+      files_to_convert="${files_to_convert}\n${input_file}\t${output_file}"
+    fi
+  fi
+done < <(find . -type f \( -iname "*.jpeg" -o -iname "*.jpg" -o -iname "*.png" \))
+
+if [ -z "$files_to_convert" ]; then
+  echo "No image files need conversion (all webp files are up to date)."
   exit 0
 fi
 
 echo "The following files will be converted to WebP:"
-echo "$files"
+echo -e "$files_to_convert" | while IFS=$'\t' read -r input_file output_file; do
+  echo "  $input_file -> $output_file"
+done
 
 if [ -n "$output_dir" ]; then
   echo ""
@@ -36,22 +60,12 @@ MAX_JOBS=4 # max concurrent jobs
 # Ask for confirmation
 read -p "Proceed with conversion? [y/N] " confirm
 if [[ "$confirm" =~ ^[Yy]$ ]]; then
-  echo "$files" | while IFS= read -r input_file; do
+  echo -e "$files_to_convert" | while IFS=$'\t' read -r input_file output_file; do
 
     # wait if we're at max capacity
     while [ $(jobs -r | wc -l) -ge $MAX_JOBS ]; do
       sleep 0.1
     done
-
-    # Determine output file path
-    if [ -n "$output_dir" ]; then
-      # Use output directory with just the filename
-      filename=$(basename "$input_file")
-      output_file="${output_dir}/${filename%.*}.webp"
-    else
-      # Same directory as original (default behavior)
-      output_file="${input_file%.*}.webp"
-    fi
 
     echo "Converting $input_file -> $output_file"
     magick "$input_file" "$output_file"
