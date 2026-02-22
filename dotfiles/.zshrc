@@ -101,8 +101,12 @@ fi
 # Ensure GPG can use the terminal for passphrase input
 export GPG_TTY=$(tty)
 
+# fzf
+if command -v fzf &>/dev/null; then
+  source <(fzf --zsh)
+fi
 
-. "$HOME/.local/bin/env"
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/tnie/.docker/completions $fpath)
 autoload -Uz compinit
@@ -115,6 +119,7 @@ if [ -d "$NVM_DIR" ]; then
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source <(fzf --zsh)
+# OpenClaw Completion
+if [ -f ~/.openclaw/completions/openclaw.zsh ]; then
+  source ~/.openclaw/completions/openclaw.zsh
+fi
