@@ -33,6 +33,7 @@ export GIT_EDITOR=nvim
 alias :q='echo "Nerd..." && sleep 1 && exit'
 alias :e='echo "Nerd..." && sleep 1 && vim'
 alias p1='ping 1.1.1.1'
+alias rsyncone='rsync -avz --partial --stats --progress'
 
 # add some scripts to path
 export PATH=$PATH:~/dotfiles/scripts
