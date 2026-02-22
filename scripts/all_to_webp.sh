@@ -1,5 +1,6 @@
 #!/bin/bash
 # Convert all images to webp
+# Arguments will be forward to the magick command
 set -e
 
 # check dependencies
@@ -11,7 +12,7 @@ fi
 files=$(find . -maxdepth 1 -type f \( -iname "*.jpeg" -o -iname "*.jpg" -o -iname "*.png" \))
 file_count=$(wc -l < <(echo "$files"))
 
-echo "The following $file_count files will be converted to WebP:"
+echo "The following $file_count files will be converted to WebP with arguments $@"
 echo "$files"
 
 # Ask for confirmation
@@ -22,7 +23,7 @@ if [[ "$confirm" =~ ^[Yy]$ ]]; then
   while read -r input_file; do
 
     output_file="${input_file%.*}.webp"
-    if magick "$input_file" "$output_file"; then
+    if magick "$input_file" "$@" "$output_file"; then
       # Set the modification time of the new file to be the same as the original
       touch -t $(stat -f "%SB" -t "%Y%m%d%H%M.%S" "$input_file") "$output_file"
       echo "Converted: $input_file -> $output_file"
