@@ -1,0 +1,12 @@
+.git
+win/
+*.jpeg
+*.jpg
+*.png
+backup.sh
+backup.BAT
+install.BAT
+install-software.ps1
+docker-build.sh
+docker-run.sh
+README.md
