@@ -86,7 +86,7 @@ def compare_dir(dir1: Path, dir2: Path):
     for f1 in files1:
         if f2 := files2dict.get(f1.name):
             files2dict.pop(f2.name)
-            if compare_stat(f1, f2):
+            if not compare_stat(f1, f2):
                 files_different.append((f1, f2))
         else:
             extra_f1.append(f1)
@@ -101,6 +101,7 @@ def compare_dir(dir1: Path, dir2: Path):
             extra_f2.extend(ret.extra_f2)
             extra_dir1.extend(ret.extra_dir1)
             extra_dir2.extend(ret.extra_dir2)
+            files_different.extend(ret.files_different)
         else:
             extra_dir1.append(sd1)
     extra_dir2.extend(subdir2dict.values())
@@ -136,7 +137,7 @@ if ret.extra_dir1:
     print("Subdirectories present in dir1 but not in dir2:")
     print_list_path(ret.extra_dir1, "\t")
 else:
-    print("All subdirectories present in dir1 are also present in dir1.")
+    print("All subdirectories present in dir1 are also present in dir2.")
 
 if ret.extra_dir2:
     print("Subdirectories present in dir2 but not in dir1:")

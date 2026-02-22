@@ -25,7 +25,7 @@ if [[ "$confirm" =~ ^[Yy]$ ]]; then
     output_file="${input_file%.*}.webp"
     if magick "$input_file" "$@" "$output_file"; then
       # Set the modification time of the new file to be the same as the original
-      touch -t $(stat -f "%SB" -t "%Y%m%d%H%M.%S" "$input_file") "$output_file"
+      touch -r "$input_file" "$output_file"
       echo "Converted: $input_file -> $output_file"
       ((converted++))
     else

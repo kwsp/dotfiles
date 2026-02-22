@@ -18,7 +18,7 @@ fi
 
 IN_VIDEO="$1"
 FPS=10
-[ ! -z "$2" ] && FPS="$3"
+[ ! -z "$2" ] && FPS="$2"
 
 if [ ! -f "$IN_VIDEO" ]; then
   echo "Error: File '$IN_VIDEO' doesn't exist."
