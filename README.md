@@ -39,3 +39,15 @@ The Dockerfile completely reproduces the CLI environment. NeoVim will attempt to
 ```bash
 docker run --rm -it kwsp/dotfiles
 ```
+
+For personal use, `docker-run.sh` pre-wires SSH keys, GPG keys, and mounts the current directory as `/workspace`:
+
+```bash
+./docker-run.sh
+```
+
+To inject a GPG key at runtime without a volume mount:
+
+```bash
+docker run --rm -it -e GPG_KEY_B64="$(gpg --export-secret-keys --armor KEY_ID | base64)" kwsp/dotfiles
+```
