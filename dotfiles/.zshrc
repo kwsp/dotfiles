@@ -26,9 +26,9 @@ autoload -Uz tetriscurses
 unsetopt autocd
 
 ### General configuration
-export EDITOR=nvim
+export EDITOR=vim
+export GIT_EDITOR=vim
 alias vim=nvim
-export GIT_EDITOR=nvim
 
 alias :q='echo "Nerd..." && sleep 1 && exit'
 alias :e='echo "Nerd..." && sleep 1 && vim'
@@ -93,10 +93,6 @@ if [ -d ~/vcpkg ]; then
   autoload bashcompinit
   bashcompinit
   source $VCPKG_ROOT/scripts/vcpkg_completion.zsh
-
-  ### VCPKG binary cache
-  # Lab NAS
-  export VCPKG_BINARY_SOURCES="files,/Volumes/Workspace/tnie/vcpkg/binary-cache,readwrite"
 fi
 
 # Ensure GPG can use the terminal for passphrase input
@@ -105,22 +101,4 @@ export GPG_TTY=$(tty)
 # fzf
 if command -v fzf &>/dev/null; then
   source <(fzf --zsh)
-fi
-
-[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/tnie/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
-
-export NVM_DIR="$HOME/.nvm"
-if [ -d "$NVM_DIR" ]; then
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-fi
-
-# OpenClaw Completion
-if [ -f ~/.openclaw/completions/openclaw.zsh ]; then
-  source ~/.openclaw/completions/openclaw.zsh
 fi
