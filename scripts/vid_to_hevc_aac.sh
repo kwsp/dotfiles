@@ -31,7 +31,7 @@ if [[ "$video_codec" == "hevc" ]]; then
   video_args="-c:v copy"
   echo "Video: HEVC, copying without re-encoding"
 elif [[ "$video_codec" == "av1" ]]; then
-  video_args="-c:v copy"
+  video_args="-c:v copy -vtag hvc1"
   echo "Video: AV1, copying without re-encoding"
 else
   # video_args="-c:v libx265 -q:v 65 -vtag hvc1"
