@@ -2,7 +2,6 @@
 [user]
   name = Taylor Nie
   email = tnie@tuta.io
-	signingkey = B4D47AEB6AE70CF1
 [core]
   excludesFile = ~/.gitignore
 [init]
@@ -14,5 +13,3 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[commit]
-	gpgsign = true
