@@ -2,6 +2,15 @@ return {
   {
     "snacks.nvim",
     opts = {
+      scroll = { enabled = false },
+      notifier = {
+        enabled = true,
+        timeout = 3000,
+      },
+      animate = {
+        enabled = true,
+        duration = 500, -- Slow down animations to 500ms so they are visible
+      },
       dashboard = {
         preset = {
           pick = function(cmd, opts)
