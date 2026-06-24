@@ -83,6 +83,21 @@ case "$(uname -s)" in
     export VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json
     export VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d
 
+    # Use coreutils ls if available
+    if command -v gls &>/dev/null; then
+      alias ls='gls --color --hyperlink=auto'
+      alias l='gls --color --hyperlink=auto -lah'
+    fi
+
+
+    # pnpm
+    export PNPM_HOME="~/Library/pnpm"
+    case ":$PATH:" in
+      *":$PNPM_HOME:"*) ;;
+      *) export PATH="$PNPM_HOME:$PATH" ;;
+    esac
+    # pnpm end
+
     ;;
 esac
 
@@ -102,3 +117,20 @@ export GPG_TTY=$(tty)
 if command -v fzf &>/dev/null; then
   source <(fzf --zsh)
 fi
+
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
+
+# Docker CLI completions.
+if [ -f /Users/tnie/.docker/completions/zsh/docker ]; then
+  source /Users/tnie/.docker/completions/zsh/docker
+fi
+
+# bun
+if [ -d "$HOME/.bun" ]; then
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
+
+  # bun completions
+  [ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
+fi 
+
