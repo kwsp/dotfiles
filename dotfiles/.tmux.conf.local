@@ -363,3 +363,12 @@ bind-key -T root 'M-7' select-window -t :=7
 bind-key -T root 'M-8' select-window -t :=8
 bind-key -T root 'M-9' select-window -t :=9
 bind-key -T root 'M-0' select-window -t :=0
+
+# https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/tmux.md
+set -g extended-keys on
+set -g extended-keys-format csi-u
+
+# Claude code shift-enter https://gist.github.com/jftuga/ffa03dbf4cd818f00cc32ce4186d6c1c
+bind-key -n S-Enter send-keys Escape "[13;2u"
+set -s extended-keys on
+set -as terminal-features 'tmux-256color:extkeys'
