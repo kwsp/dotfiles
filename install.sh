@@ -25,6 +25,15 @@ else
     git clone https://github.com/tmux-plugins/tpm "$TPM_DIR" > /dev/null
 fi
 
+# Install rose-pine-man
+mkdir -p ~/.config/zsh/
+pushd ~/.config/zsh
+if [[ ! -d "rose-pine-man" ]]; then
+    echo "$(tput setaf 3)Installing rose-pine-man"
+    git clone https://github.com/const-void/rose-pine-man.git
+fi
+popd
+
 # Install dotfiles
 echo "$(tput setaf 3)Copying dotfiles to $HOME_DIR . . ."
 cp -r "$CWD/dotfiles/." "$HOME_DIR"
