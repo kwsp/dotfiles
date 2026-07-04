@@ -15,7 +15,7 @@ ZSH_THEME="simple"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -33,6 +33,8 @@ else
     export EDITOR=vim
 fi
 export GIT_EDITOR=$EDITOR
+
+alias ta='tmux attach -t'
 
 alias :q='echo "Nerd..." && sleep 1 && exit'
 alias :e='echo "Nerd..." && sleep 1 && vim'
@@ -142,5 +144,6 @@ if [ -d "$HOME/.bun" ]; then
   [ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
 fi 
 
+source ~/.config/zsh/rose-pine-man/rose-pine-man.zsh
 
 alias cdbin='cd bin/linux-pc/relwithdebinfo'

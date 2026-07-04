@@ -76,7 +76,7 @@ USER $USERNAME
 WORKDIR /home/$USERNAME
 ENV SHELL=/usr/bin/zsh
 
-# Install dotfiles, oh-my-zsh, oh-my-tmux, etc.
+# Install dotfiles, oh-my-zsh, TPM, etc.
 RUN cd "/home/$USERNAME/dotfiles" && ./install.sh
 
 # Enable git-lfs for the user

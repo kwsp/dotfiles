@@ -21,7 +21,7 @@ main() {
     # backup config
     rsync -av ~/.config/sway ~/.config/waybar ~/.config/kitty ~/.config/nvim ~/.config/zathura ~/.config/fastfetch config
     # backup dotfiles
-    rsync -av ~/.tmux.conf.local ~/.zshrc ~/.gitconfig dotfiles/
+    rsync -av ~/.tmux.conf ~/.zshrc ~/.gitconfig dotfiles/
 
     echo "Backup complete."
 }

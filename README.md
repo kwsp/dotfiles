@@ -13,7 +13,7 @@ This is my collection of config files for \*nix systems. I mainly use macOS now 
 | Screenshot  | [grim](https://github.com/emersion/grim)                                              | screencapture                                                                         |
 | Terminal    | [kitty](https://sw.kovidgoyal.net/kitty/)                                             | [iTerm2](https://iterm2.com/)                                                         |
 | Shell       | [zsh](http://www.zsh.org/) + [Oh My Zsh](https://ohmyz.sh/)                           | [zsh](http://www.zsh.org/) + [Oh My Zsh](https://ohmyz.sh/)                           |
-| Multiplexer | [tmux](https://github.com/tmux/tmux) + [Oh My Tmux](https://github.com/gpakosz/.tmux) | [tmux](https://github.com/tmux/tmux) + [Oh My Tmux](https://github.com/gpakosz/.tmux) |
+| Multiplexer | [tmux](https://github.com/tmux/tmux) + [TPM](https://github.com/tmux-plugins/tpm) + [Rosé Pine](https://github.com/rose-pine/tmux) | [tmux](https://github.com/tmux/tmux) + [TPM](https://github.com/tmux-plugins/tpm) + [Rosé Pine](https://github.com/rose-pine/tmux) |
 | PDF Viewer  | [zathura](https://pwmt.org/projects/zathura/)                                         | [Skim](https://skim-app.sourceforge.io/)                                              |
 | Editor      | [Neovim](https://neovim.io/)                                                          | [Neovim](https://neovim.io/)                                                          |
 
@@ -25,7 +25,7 @@ I basically live inside tmux, NeoVim and friends (ripgrep, fzf, ...) so a lot of
 
 ## Usage
 
-The install script installs all config files. It also takes care of Oh My Zsh, Oh My Tmux. You need to install some software manually (brew, zsh, NeoVim, fzf, ripgrep).
+The install script installs all config files. It also takes care of Oh My Zsh and TPM (Tmux Plugin Manager). You need to install some software manually (brew, zsh, NeoVim, fzf, ripgrep). After install, open tmux and press `prefix + I` to install tmux plugins.
 
 ```bash
 cd && git clone https://github.com/kwsp/dotfiles && cd dotfiles

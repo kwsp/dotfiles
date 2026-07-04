@@ -5,7 +5,7 @@ CWD=$(cd "$(dirname "$0")" && pwd)
 HOME_DIR=~
 CONFIG_INSTALL_DIR="$HOME_DIR/.config"
 OHMYZSH_DIR="$HOME_DIR/.oh-my-zsh"
-OHMYTMUX_DIR="$HOME_DIR/.tmux"
+TPM_DIR="$HOME_DIR/.tmux/plugins/tpm"
 
 echo "$(tput setaf 4)Hello!"
 
@@ -17,15 +17,12 @@ else
     echo "$(tput setaf 2)Oh My Zsh already installed."
 fi
 
-# Install oh my tmux
-if [[ -d "$OHMYTMUX_DIR" ]]; then
-    echo "$(tput setaf 2)Oh My Tmux already installed."
+# Install TPM (Tmux Plugin Manager)
+if [[ -d "$TPM_DIR" ]]; then
+    echo "$(tput setaf 2)TPM already installed."
 else
-    echo "$(tput setaf 3)Installing Oh My Tmux"
-    cd
-    git clone https://github.com/gpakosz/.tmux.git > /dev/null
-    ln -s -f .tmux/.tmux.conf
-    cd "$CWD"
+    echo "$(tput setaf 3)Installing TPM . . ."
+    git clone https://github.com/tmux-plugins/tpm "$TPM_DIR" > /dev/null
 fi
 
 # Install dotfiles
