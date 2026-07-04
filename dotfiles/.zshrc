@@ -26,9 +26,13 @@ autoload -Uz tetriscurses
 unsetopt autocd
 
 ### General configuration
-export EDITOR=vim
-export GIT_EDITOR=vim
-alias vim=nvim
+if command -v nvim &>/dev/null; then
+    export EDITOR=nvim
+    alias vim=nvim
+else
+    export EDITOR=vim
+fi
+export GIT_EDITOR=$EDITOR
 
 alias :q='echo "Nerd..." && sleep 1 && exit'
 alias :e='echo "Nerd..." && sleep 1 && vim'
@@ -48,6 +52,11 @@ case "$(uname -s)" in
     if [ -d /usr/local/cuda ]; then
       export PATH=/usr/local/cuda/bin:$PATH
       export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+    fi
+
+    # linuxbrew
+    if [ -d /home/linuxbrew/.linuxbrew ]; then
+      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
     fi
 
     ;;
@@ -89,7 +98,6 @@ case "$(uname -s)" in
       alias l='gls --color --hyperlink=auto -lah'
     fi
 
-
     # pnpm
     export PNPM_HOME="~/Library/pnpm"
     case ":$PATH:" in
@@ -121,8 +129,8 @@ fi
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 # Docker CLI completions.
-if [ -f /Users/tnie/.docker/completions/zsh/docker ]; then
-  source /Users/tnie/.docker/completions/zsh/docker
+if [ -f "$HOME/.docker/completions/zsh/docker" ]; then
+  source "$HOME/.docker/completions/zsh/docker"
 fi
 
 # bun
@@ -134,3 +142,5 @@ if [ -d "$HOME/.bun" ]; then
   [ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
 fi 
 
+
+alias cdbin='cd bin/linux-pc/relwithdebinfo'
