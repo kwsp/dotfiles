@@ -43,6 +43,14 @@ cp -r "$CWD/dotfiles/." "$HOME_DIR"
 echo "$(tput setaf 3)Copying config files to $CONFIG_INSTALL_DIR . . ."
 cp -r "$CWD/config/." "$CONFIG_INSTALL_DIR"
 
+# Install tmux plugins declared in .tmux.conf (must run AFTER dotfiles are copied
+# so TPM can read ~/.tmux.conf). Without this, rose-pine/tmux etc. are never
+# fetched and the status bar falls back to unstyled defaults.
+if [[ -x "$TPM_DIR/bin/install_plugins" ]]; then
+    echo "$(tput setaf 3)Installing tmux plugins . . ."
+    "$TPM_DIR/bin/install_plugins"
+fi
+
 ### Install platform specific config
 case "$(uname -s)" in
   Linux*)
