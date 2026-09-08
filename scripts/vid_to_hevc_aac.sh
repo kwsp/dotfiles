@@ -1,6 +1,8 @@
 #!/bin/bash
 # Convert video to HEVC video codec, AAC audio codec, and mp4 container
 
+set -o pipefail
+
 # Check for parameter
 if [ $# -lt 1 ] || [ $# -gt 2 ]; then
   echo "Error: Please provide one or two parameters."
@@ -15,16 +17,18 @@ if [ ! -f "$input_file" ]; then
   exit 1
 fi
 
-# Get video and audio codec information
-video_codec=$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$input_file")
-audio_codec=$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$input_file")
-if [ $? -ne 0 ]; then
+# Get video and audio stream information
+if ! video_codec=$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$input_file" | sed -n '1p') ||
+  ! audio_codec=$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$input_file" | sed -n '1p') ||
+  ! audio_channels=$(ffprobe -v error -select_streams a:0 -show_entries stream=channels -of default=noprint_wrappers=1:nokey=1 "$input_file" | sed -n '1p') ||
+  ! audio_channel_layout=$(ffprobe -v error -select_streams a:0 -show_entries stream=channel_layout -of default=noprint_wrappers=1:nokey=1 "$input_file" | sed -n '1p'); then
   echo "Error: Could not analyze video file '$input_file'"
   exit 1
 fi
 
 echo "Video codec: $video_codec"
 echo "Audio codec: $audio_codec"
+echo "Audio channels: $audio_channels${audio_channel_layout:+ ($audio_channel_layout)}"
 
 # Determine video conversion strategy
 if [[ "$video_codec" == "hevc" ]]; then
@@ -40,11 +44,17 @@ else
 fi
 
 # Determine audio conversion strategy
-if [[ "$audio_codec" == "aac" ]]; then
-  audio_args="-c:a copy"
+# AAC has no standard channel configuration for 5.1(side).
+# FFmpeg otherwise writes it using a Program Config Element, which AVFoundation
+# does not expose as an audio track. Convert it to canonical 5.1 instead.
+if [[ "$audio_channels" == "6" && ( "$audio_channel_layout" == "5.1(side)" || "$audio_channel_layout" == "unknown" || -z "$audio_channel_layout" ) ]]; then
+  audio_args=(-c:a aac -b:a 192k -channel_layout 5.1)
+  echo "Audio: converting to AAC with a standard 5.1 channel layout"
+elif [[ "$audio_codec" == "aac" ]]; then
+  audio_args=(-c:a copy)
   echo "Audio: AAC, copying without re-encoding"
 else
-  audio_args="-c:a aac -b:a 192k"
+  audio_args=(-c:a aac -b:a 192k)
   echo "Audio: converting to AAC"
 fi
 
@@ -65,7 +75,7 @@ fi
 
 # Convert the video
 echo "Converting '$input_file' to '$output_file'"
-ffmpeg -i "$input_file" -map_metadata 0 $video_args $audio_args "$output_file"
+ffmpeg -i "$input_file" -map_metadata 0 $video_args "${audio_args[@]}" "$output_file"
 
 # Check if ffmpeg succeeded
 if [ $? -ne 0 ]; then
