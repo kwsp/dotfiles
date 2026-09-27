@@ -8,6 +8,8 @@ map K zoom in
 map i recolor
 map p print
 
+map <C-l> feedkeys ":blist <Tab>"
+
 set selection-clipboard clipboard
 set font 20
 set statusbar-h-padding 0

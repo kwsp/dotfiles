@@ -7,3 +7,6 @@ vim.g.snacks_animate = true
 
 -- Enable smooth scrolling by reducing the number of lines scrolled per mouse click
 vim.opt.mousescroll = "ver:1,hor:1"
+
+-- Disable format on write
+vim.g.autoformat = false

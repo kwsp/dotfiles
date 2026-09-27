@@ -146,4 +146,3 @@ fi
 
 source ~/.config/zsh/rose-pine-man/rose-pine-man.zsh
 
-alias cdbin='cd bin/linux-pc/relwithdebinfo'
