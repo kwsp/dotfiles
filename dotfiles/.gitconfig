@@ -8,6 +8,9 @@
   defaultBranch = main
 [pull]
   rebase = false
+[alias]
+  fpull = !git fetch && git reset --hard @{u}
+  spull = pull --rebase --autostash
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
