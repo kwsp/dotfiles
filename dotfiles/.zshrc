@@ -34,7 +34,7 @@ else
 fi
 export GIT_EDITOR=$EDITOR
 
-alias ta='tmux attach -t'
+ta() { tmux attach ${1:+-t "$1"}; }
 
 alias :q='echo "Nerd..." && sleep 1 && exit'
 alias :e='echo "Nerd..." && sleep 1 && vim'
